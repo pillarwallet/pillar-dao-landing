@@ -3,7 +3,6 @@ const withImages = require('next-images');
 
 module.exports = withPlugins([withImages], {
   reactStrictMode: true,
-  swcMinify: false,
   images: {
     disableStaticImages: true,
   },
