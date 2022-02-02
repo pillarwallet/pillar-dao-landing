@@ -9,5 +9,5 @@ module.exports = withPlugins([withImages], {
 });
 
 module.exports = {
-  swcMinify: true,
+  swcMinify: false,
 }
