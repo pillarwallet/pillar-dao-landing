@@ -7,3 +7,7 @@ module.exports = withPlugins([withImages], {
     disableStaticImages: true,
   },
 });
+
+module.exports = {
+  swcMinify: true,
+}
