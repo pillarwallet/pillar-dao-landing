@@ -33,3 +33,27 @@ export const isCaseInsensitiveMatch = (a, b) => {
   if (!a || !b) return false;
   return a.toLowerCase() === b.toLowerCase();
 };
+
+/**
+  * @name interpretNftMedia
+  * @description Attempts to parse the mediaUri parameter
+  * and, if needed, returns a web friendly URI
+  *
+  * @param {string} mediaUri
+  * @returns {string}
+  */
+export const interpretNftMedia = (mediaUri) => {
+  // If we have an IPFS asset, load from HTTP wrapper service
+  // Note: right now we're only interpreting ipfs locators.
+  if (mediaUri.startsWith('ipfs://')) {
+    const ipfsAsset = mediaUri.split('//')[1];
+    const ipfsAssetWithoutTokenId = ipfsAsset.slice(0, ipfsAsset.lastIndexOf('/'));
+    const newUri = `https://cloudflare-ipfs.com/ipfs/${ipfsAssetWithoutTokenId}`;
+
+    // Return the new mediaUri
+    return newUri;
+  }
+
+  // Otherwise return the original mediaUri
+  return mediaUri;
+};
