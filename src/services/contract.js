@@ -178,11 +178,16 @@ export const getRequiredStakeAmount = async (provider) => {
   return 0;
 }
 
-export const getMembershipId = async (provider) => {
-  const signer = provider.getSigner();
+export const getMembershipId = async (provider, address) => {
+  try {
+  // const signer = provider.getSigner();
   const contract = getPlrDAOContract(provider);
-  const membershipId = await contract.membershipId(signer);
+  const membershipId = await contract.membershipId(address);
   return membershipId;
+  } catch(err) {
+    console.log(err);
+    return null;
+  }
 }
 
 export const waitForTransaction = async (hash) => {
@@ -193,6 +198,14 @@ export const waitForTransaction = async (hash) => {
   }
 
   return null;
+}
+
+export const getTokenUri = async (provider, address) => {
+  const plrContract = getPlrDAOContract(provider);
+  const membershipId = await plrContract.membershipId(address);
+  const membershipIdContract = getMembershipContract(provider);
+  const tokenURI = await membershipIdContract.tokenURI(membershipId);
+  return { tokenURI, membershipId: membershipId.toString() };
 }
 
 export const getOpenSeaApiHost = () => `https://${isMainnet ? '' : 'testnets-'}api.opensea.io`;

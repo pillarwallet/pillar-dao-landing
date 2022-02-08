@@ -190,6 +190,37 @@ const ConnectedAddress = styled.p`
   font-size: 15px;
 `;
 
+const ConnectedMembership = styled.p`
+  font-family: ${fonts.secondary};
+  font-size: 40px;
+  font-weight: 600;
+`;
+
+const NFTImage = styled.img`
+  margin-left: 20px;
+  height: 100px;
+  width: 100px;
+  // box-shadow: 1px 2px 34px 12px rgba(0,0,0,0.15);
+  border-radius: 0.5rem;
+
+  @media (max-width: 700px) {
+    height: auto;
+    width: 100%;
+  }
+`;
+
+const ConnectedMembershipWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+
+  @media (max-width: 700px) {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+`;
+
 const ActionDetailsText = styled.p`
   margin-top: ${({ marginTop }) => marginTop ?? 5}px;
   font-size: 15px;
@@ -280,6 +311,8 @@ const Hero = () => {
     unstake,
     isUnstakeAvailable,
     requiredStakeAmount,
+    membershipId,
+    tokenImageUrl,
   } = useStake();
 
   const connectDisabled = !!(isConnecting || connectedAddress);
@@ -289,7 +322,7 @@ const Hero = () => {
   };
 
   const balanceLoading = balanceAvailable === null;
-  const hasEnoughBalanceAvailable = balanceAvailable !== null && balanceAvailable > requiredStakeAmount;
+  const hasEnoughBalanceAvailable = balanceAvailable !== null && balanceAvailable >= requiredStakeAmount;
 
   const stakingDisabled = !hasEnoughBalanceAvailable || isApproving || isStaking || isStaked;
   const onStakingApproveClick = () => {
@@ -331,6 +364,12 @@ const Hero = () => {
                   <ConnectedAddress>{connectedAddress}</ConnectedAddress>
                   <DisconnectButton onClick={reset}>Disconnect</DisconnectButton>
                 </ConnectedAddressWrapper>
+                { !!isStaked && (
+                <ConnectedMembershipWrapper>
+                  { !!membershipId && <ConnectedMembership>MEMBERSHIP ID: {membershipId} </ConnectedMembership>}
+                  { !!tokenImageUrl && <NFTImage src={tokenImageUrl} />}
+                </ConnectedMembershipWrapper>
+                )}
               </>
             )}
           </MintWrapper>

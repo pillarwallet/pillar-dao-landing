@@ -15,7 +15,12 @@ import {
   stakePlr,
   unstakePlr,
   waitForTransaction,
+  getMembershipId,
+  getTokenUri,
 } from '../services/contract';
+
+// utils 
+import { interpretNftMedia } from '../utils/common'
 
 export const StakeContext = createContext(null);
 
@@ -34,6 +39,8 @@ const StakeContextProvider = ({ children }) => {
   const [balanceAvailable, setBalanceAvailable] = useState(null);
   const [isStaked, setIsStaked] = useState(null);
   const [requiredStakeAmount, setRequiredStakeAmount] = useState(0);
+  const [membershipId, setMembershipId] = useState(null);
+  const [tokenImageUrl, setTokenImageUrl] = useState(null);
 
   const stake = useCallback(async () => {
     setIsStaking(true);
@@ -150,6 +157,29 @@ const StakeContextProvider = ({ children }) => {
     checkIfUnstakeAvailable();
   }, [checkIfUnstakeAvailable]);
 
+  const checkmembershipId = useCallback(async () => {
+    console.log('in here', connectedAddress, connectedProvider);
+    if (!connectedAddress) {
+      setMembershipId(null);
+      setTokenImageUrl(null);
+      return;
+    }
+    // const membershipId = await getMembershipId(connectedProvider, connectedAddress);
+    // console.log(membershipId)
+    if(isStaked){
+      const { tokenURI, membershipId } = await getTokenUri(connectedProvider, connectedAddress);
+      console.log(tokenURI, membershipId);
+      setMembershipId(membershipId);
+      const decodedUrl = interpretNftMedia(tokenURI);
+      console.log(decodedUrl);
+      setTokenImageUrl(decodedUrl);
+    }
+  }, [connectedAddress, connectedProvider, isStaked]);
+
+  useEffect(() => {
+    checkmembershipId();
+  }, [checkmembershipId]);
+
   const updateRequiredStakeAmount = useCallback(async () => {
     const stakeAmount = await getRequiredStakeAmount(connectedProvider);
     setRequiredStakeAmount(stakeAmount);
@@ -171,6 +201,8 @@ const StakeContextProvider = ({ children }) => {
     approveForStaking,
     isUnstakeAvailable,
     requiredStakeAmount,
+    membershipId,
+    tokenImageUrl,
   }), [
     stake,
     unstake,
@@ -183,6 +215,8 @@ const StakeContextProvider = ({ children }) => {
     approveForStaking,
     isUnstakeAvailable,
     requiredStakeAmount,
+    membershipId,
+    tokenImageUrl,
   ]);
 
   return (
