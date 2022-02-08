@@ -199,7 +199,7 @@ export const waitForTransaction = async (hash) => {
 
   return null;
 }
-_
+
 export const getTokenUri = async (provider, address) => {
   const plrContract = getPlrDAOContract(provider);
   const membershipId = await plrContract.membershipId(address);
