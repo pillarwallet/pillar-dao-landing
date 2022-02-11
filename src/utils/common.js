@@ -42,16 +42,18 @@ export const isCaseInsensitiveMatch = (a, b) => {
   * @param {string} mediaUri
   * @returns {string}
   */
-export const interpretNftMedia = (mediaUri) => {
+export const interpretNftMedia = async (mediaUri) => {
   // If we have an IPFS asset, load from HTTP wrapper service
   // Note: right now we're only interpreting ipfs locators.
   if (mediaUri.startsWith('ipfs://')) {
     const ipfsAsset = mediaUri.split('//')[1];
-    const ipfsAssetWithoutTokenId = ipfsAsset.slice(0, ipfsAsset.lastIndexOf('/'));
-    const newUri = `https://cloudflare-ipfs.com/ipfs/${ipfsAssetWithoutTokenId}`;
+    const newUri = `https://cloudflare-ipfs.com/ipfs/${ipfsAsset}`;
 
+    const response = await fetch(newUri,{crossDomain:true});
+    const metadata = await response.json();
+    const imageUrl = metadata.image.split('//')[1];
     // Return the new mediaUri
-    return newUri;
+    return `https://cloudflare-ipfs.com/ipfs/${imageUrl.slice(0,imageUrl.lastIndexOf('/'))}`;
   }
 
   // Otherwise return the original mediaUri

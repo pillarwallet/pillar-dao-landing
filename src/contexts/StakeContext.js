@@ -106,7 +106,6 @@ const StakeContextProvider = ({ children }) => {
     if (isApproving) return;
 
     const hash = await approveTokensForStaking(requiredStakeAmount, connectedProvider);
-    console.log('Hash ',hash);
     if (!hash) {
       setIsApproving(false);
       return;
@@ -158,20 +157,16 @@ const StakeContextProvider = ({ children }) => {
   }, [checkIfUnstakeAvailable]);
 
   const checkmembershipId = useCallback(async () => {
-    console.log('in here', connectedAddress, connectedProvider);
     if (!connectedAddress) {
       setMembershipId(null);
       setTokenImageUrl(null);
       return;
     }
-    // const membershipId = await getMembershipId(connectedProvider, connectedAddress);
-    // console.log(membershipId)
+
     if(isStaked){
       const { tokenURI, membershipId } = await getTokenUri(connectedProvider, connectedAddress);
-      console.log(tokenURI, membershipId);
       setMembershipId(membershipId);
       const decodedUrl = interpretNftMedia(tokenURI);
-      console.log(decodedUrl);
       setTokenImageUrl(decodedUrl);
     }
   }, [connectedAddress, connectedProvider, isStaked]);

@@ -185,7 +185,6 @@ export const getMembershipId = async (provider, address) => {
   const membershipId = await contract.membershipId(address);
   return membershipId;
   } catch(err) {
-    console.log(err);
     return null;
   }
 }

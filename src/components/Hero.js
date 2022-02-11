@@ -331,7 +331,6 @@ const Hero = () => {
   };
 
   const onStakeClick = () => {
-    console.log('stakingDisabled', stakingDisabled);
     if (stakingDisabled) return;
     stake();
   };
