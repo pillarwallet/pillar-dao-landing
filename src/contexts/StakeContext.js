@@ -166,7 +166,7 @@ const StakeContextProvider = ({ children }) => {
     if(isStaked){
       const { tokenURI, membershipId } = await getTokenUri(connectedProvider, connectedAddress);
       setMembershipId(membershipId);
-      const decodedUrl = interpretNftMedia(tokenURI);
+      const decodedUrl = await interpretNftMedia(tokenURI);
       setTokenImageUrl(decodedUrl);
     }
   }, [connectedAddress, connectedProvider, isStaked]);
