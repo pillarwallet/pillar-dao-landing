@@ -7,6 +7,11 @@ import useWeb3 from '../hooks/web3';
 import useStake from '../hooks/stake';
 import { formatNumber } from '../utils/common';
 
+import heroBackground from '../assets/images/hero-bg.png';
+import stakeBackground from '../assets/images/stake-bg.png';
+import terminateBackground from '../assets/images/terminate-bg.png';
+import polygonIcon from '../assets/images/polygon-icon.png';
+
 const OuterWrapper = styled.div`
   min-height: 100vh;
   display: flex;
@@ -15,6 +20,7 @@ const OuterWrapper = styled.div`
   flex-direction: column;
   position: relative;
   padding: 100px 0;
+  background: linear-gradient(180deg, #6D00A0 0%, #000000 100%);
 
   @media (max-width: 700px) {
     padding: 100px 30px 80px;
@@ -39,10 +45,27 @@ const InnerWrapper = styled.div`
 
 const HeroRight = styled.div`
   position: relative;
-  padding-left: 40px;
+  background-image: url('${heroBackground}');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding: 150px 20px 150px 20px;
+  margin-top: 100px;
+  position: relative;
+  
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(108, 1, 159, 0.5);
+    filter: blur(100px);
+    border-radius: 50%;
+  }
 
   @media (max-width: 700px) {
-    padding-left: 0;
     margin-top: 20px;
   }
 `;
@@ -60,9 +83,13 @@ const HeroImage = styled.img`
 
 const Title = styled.h1`
   position: relative;
-  font-size: 50px;
-  line-height: 60px;
+  font-size: 65px;
+  line-height: 1.1;
   color: #fff;
+  text-align: center;
+  max-width: 25ch;
+  font-weight: 600;
+  margin: 0 auto;
 
   @media (max-width: 700px) {
     font-size: 40px;
@@ -78,12 +105,11 @@ const Title = styled.h1`
 
 const SecondaryTitle = styled.h3`
   position: relative;
-  font-size: 30px;
+  font-size: 32px;
   line-height: 40px;
   color: #fff;
-  margin-bottom: 20px;
-  padding-bottom: 5px;
-  border-bottom: 3px solid #fff;
+  max-width: ${({ maxWidth }) => maxWidth ?? 10}ch;
+  margin-top: ${({ marginTop }) => marginTop ?? 0}px;
 
   @media (max-width: 700px) {
     font-size: 40px;
@@ -99,11 +125,14 @@ const SecondaryTitle = styled.h3`
 
 const Paragraph = styled.p`
   font-family: ${fonts.secondary};
-  font-size: 18px;
+  font-size: 48px;
   color: #fff;
-  margin-top: ${({ marginTop }) => marginTop ?? 20}px;
-  font-weight: 200;
+  max-width: ${({ maxWidth }) => maxWidth ?? 22}ch;
+  font-weight: 300;
   ${({ center }) => center && `text-align: center;`}
+  ${({ marginCenter }) => marginCenter && `margin: 0 auto;`}
+  margin-top: ${({ marginTop }) => marginTop ?? 20}px;
+  position: relative;
   
   & > strong {
     color: ${colors.yellow};
@@ -149,6 +178,7 @@ const MintWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
 
   @media (max-width: 700px) {
     margin: 20px auto 0;
@@ -270,13 +300,79 @@ const DisconnectButton = styled.div`
 const HeroBottomWrapper = styled.div`
   margin-top: 90px;
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1164px;
+  background: rgba(43, 1, 64, 0.5);
+  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.25), inset 2px 2px 4px rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(3px);
+  border-radius: 30px;
+  padding: 35px 35px 15px 35px;
   justify-content: space-between;
-  align-items: flex-start;
-  max-width: 1200px;
+  
   
   & > div {
-    width: 29%;
+    width: 49%;
+    background: rgba(43, 1, 64, 0.7);
+    backdrop-filter: blur(3px);
+    border-radius: 30px;
+    padding: 30px 35px;
+    position: relative;
+  }
+  
+  
+  & > div:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 30px;
+    padding: 1px;
+    background: linear-gradient(90deg, rgba(2,253,255,1) 0%, rgba(255,0,245,1) 100%);
+    -webkit-mask: linear-gradient(#ffffff 0 0) content-box,
+        linear-gradient(#ffffff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  
+  
+  & > div > img {
+    position: absolute;
+    top: 10px;
+    right: -25px;
+    width: 42%;
+  }
+  
+  & > div > p {
+    font-size: 16px;
+    opacity: 0.6;
+  }
+  
+  & > div > div {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 20px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  & > div > div > p {
+    font-size: 25px;
+  }
+  
+  & > div > div > p strong {
+    color: #FFFFFF;
+  }
+  
+  & > div > div > p strong span {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 100px;
+    padding: 10px 30px;
+    margin-right: 10px
   }
 
   @media (max-width: 700px) {
@@ -286,6 +382,49 @@ const HeroBottomWrapper = styled.div`
       width: auto;
       margin-bottom: 50px;
     }
+  }
+  
+  & > div:last-child {
+    width: 100%;
+    background: transparent;
+    backdrop-filter: none;
+    border-radius: 0;
+    padding: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  & > div:last-child:before {
+    content: none;
+  }
+  
+  & > div:last-child > div {
+    border-top: none;
+    margin-top: 20px;
+    padding-top: 0;
+    padding-left: 50px;
+    display: flex;
+    justify-content: space-between;
+    background: #8000FF;
+    box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.25);
+    border-radius: 35px;
+    color: #FFFFFF;
+    position: relative;
+  }
+  
+  & > div:last-child > div:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 5px;
+    width: 50px;
+    height: 50px;
+    background-image: url('${polygonIcon}');
+    background-size: 150%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    
   }
 `
 
@@ -346,39 +485,20 @@ const Hero = () => {
       <InnerWrapper>
         <HeroRight>
           <Title>
-            Pillar DAO MEMBERSHIP
+            PillarDAO Governor Portal Own your life.
           </Title>
-          <Paragraph>Become a member of the Pillar DAO after staking 10,000 $PLR tokens(built on the Polygon Network).</Paragraph>
-          <MintWrapper>
-            {!connectedAddress && (
-              <>
-                <ActionButton disabled={connectDisabled} onClick={onConnectClick} marginBottom={20}>
-                  {isConnecting ? `Connecting...` : `Connect wallet`}
-                </ActionButton>
-              </>
-            )}
-            {!!connectedAddress && (
-              <>
-                <ConnectedAddressWrapper>
-                  <ConnectedAddress>{connectedAddress}</ConnectedAddress>
-                  <DisconnectButton onClick={reset}>Disconnect</DisconnectButton>
-                </ConnectedAddressWrapper>
-                { !!isStaked && (
-                <ConnectedMembershipWrapper>
-                  { !!membershipId && <ConnectedMembership>MEMBERSHIP ID: {membershipId} </ConnectedMembership>}
-                  { !!tokenImageUrl && <NFTImage src={tokenImageUrl} />}
-                </ConnectedMembershipWrapper>
-                )}
-              </>
-            )}
-          </MintWrapper>
+          <Paragraph center marginCenter marginTop={40}>Now is the time to stand up and be an integral part of something spectacular</Paragraph>
         </HeroRight>
       </InnerWrapper>
       <HeroBottomWrapper>
         <div>
-          <SecondaryTitle>Become a Member</SecondaryTitle>
-          <Paragraph marginTop={0}>Stake your 10,000 $PLR tokens on Polygon and become a member.</Paragraph>
-          <Paragraph marginTop={20}>Your balance: {connectedAddress && balanceLoading ? 'Loading...' : <strong>{formatNumber(balanceAvailable)} $PLR</strong>}</Paragraph>
+          <SecondaryTitle>Governor Stake</SecondaryTitle>
+          <img src={stakeBackground} alt="Governor Stake" title="Governor Stake" />
+          <Paragraph marginTop={20} maxWidth={25}>Stake 10k PLR tokens on Polygon Network to become a governor of PillarDAO and own your future</Paragraph>
+          <div>
+            <Paragraph marginTop={0}>Your balance: </Paragraph>
+            <Paragraph marginTop={0}>{connectedAddress && balanceLoading ? 'Loading...' : <strong><span>{formatNumber(balanceAvailable)}</span> PLR</strong>}</Paragraph>
+          </div>
           <InputActionWrapper marginTop={20}>
             {!isApprovedForStaking && (
               <ActionButton
@@ -401,9 +521,13 @@ const Hero = () => {
           </InputActionWrapper>
         </div>
         <div>
-          <SecondaryTitle>Terminate Membership</SecondaryTitle>
-          <Paragraph marginTop={0}>After a lock-in of 52 weeks, you are eligible to terminate your membership.</Paragraph>
-          <Paragraph marginTop={20}>Your staked balance: <strong>{isStaked ? requiredStakeAmount : 0} $PLR</strong></Paragraph>
+          <SecondaryTitle>Terminate Governorship</SecondaryTitle>
+          <img src={terminateBackground} alt="Terminate Governorship" title="Terminate Governorship" />
+          <Paragraph marginTop={20} maxWidth={25}>After a lock in of 52 weeks, you are eligible to terminate your membership</Paragraph>
+          <div>
+            <Paragraph marginTop={0}>Your staked balance: </Paragraph>
+            <Paragraph marginTop={0}><strong><span>{isStaked ? requiredStakeAmount : 0}</span> PLR</strong></Paragraph>
+          </div>
           <InputActionWrapper marginTop={20}>
             <ActionButton
               onClick={onUnstakeClick}
@@ -414,6 +538,29 @@ const Hero = () => {
             </ActionButton>
           </InputActionWrapper>
         </div>
+        <MintWrapper>
+            {!connectedAddress && (
+              <>
+                <ActionButton disabled={connectDisabled} onClick={onConnectClick} marginBottom={20}>
+                  {isConnecting ? `Connecting...` : `Connect Polygon Wallet`}
+                </ActionButton>
+              </>
+            )}
+            {!!connectedAddress && (
+              <>
+                <ConnectedAddressWrapper>
+                  <ConnectedAddress>{connectedAddress}</ConnectedAddress>
+                  <DisconnectButton onClick={reset}>Disconnect</DisconnectButton>
+                </ConnectedAddressWrapper>
+                { !!isStaked && (
+                <ConnectedMembershipWrapper>
+                  { !!membershipId && <ConnectedMembership>MEMBERSHIP ID: {membershipId} </ConnectedMembership>}
+                  { !!tokenImageUrl && <NFTImage src={tokenImageUrl} />}
+                </ConnectedMembershipWrapper>
+                )}
+              </>
+            )}
+          </MintWrapper>
       </HeroBottomWrapper>
     </OuterWrapper>
   )
