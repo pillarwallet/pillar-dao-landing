@@ -17,7 +17,6 @@ const HomePage = () => {
         <StakeContextProvider>
             <Wrapper>
               <Hero />
-              <TopIconLinks />
             </Wrapper>
             <ToastContainer
               position="top-right"
