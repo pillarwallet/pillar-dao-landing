@@ -8,6 +8,8 @@ import StakeContextProvider from '../contexts/StakeContext';
 // components
 import Hero from '../components/Hero';
 import TopIconLinks from '../components/TopIconLinks';
+import TopHeader from '../components/TopHeader';
+import BottomFooter from '../components/BottomFooter';
 
 const Wrapper = styled.div``;
 
@@ -16,7 +18,9 @@ const HomePage = () => {
     <Web3ContextProvider chainId={4}>
         <StakeContextProvider>
             <Wrapper>
+              <TopHeader />
               <Hero />
+              <BottomFooter />
             </Wrapper>
             <ToastContainer
               position="top-right"
