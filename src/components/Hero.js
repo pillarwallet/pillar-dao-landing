@@ -11,6 +11,11 @@ import heroBackground from '../assets/images/hero-bg.png';
 import stakeBackground from '../assets/images/stake-bg.png';
 import terminateBackground from '../assets/images/terminate-bg.png';
 import polygonIcon from '../assets/images/polygon-icon.png';
+import pillarIcon from '../assets/images/pillar-icon.png';
+import featureIconOne from '../assets/images/feature-icon-1.png';
+import featureIconTwo from '../assets/images/feature-icon-2.png';
+import featureIconThree from '../assets/images/feature-icon-3.png';
+import featureIconFour from '../assets/images/feature-icon-4.png';
 
 const OuterWrapper = styled.div`
   min-height: 100vh;
@@ -19,11 +24,11 @@ const OuterWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   position: relative;
-  padding: 100px 0;
+  padding: 0 40px 100px 40px;
   background: linear-gradient(180deg, #6D00A0 0%, #000000 100%);
 
   @media (max-width: 700px) {
-    padding: 100px 30px 80px;
+    padding: 50px 20px 80px 20px;
     height: auto;
     display: block;
   }
@@ -66,7 +71,8 @@ const HeroRight = styled.div`
   }
 
   @media (max-width: 700px) {
-    margin-top: 20px;
+    margin-top: 0;
+    padding: 0 20px 50px 20px;
   }
 `;
 
@@ -143,7 +149,7 @@ const Paragraph = styled.p`
   }
 
   @media (max-width: 700px) {
-    font-size: 18px;
+    font-size: 20px;
     line-height: 25px;
   }
 `;
@@ -375,14 +381,7 @@ const HeroBottomWrapper = styled.div`
     margin-right: 10px
   }
 
-  @media (max-width: 700px) {
-    display: block;
-
-    & > div {
-      width: auto;
-      margin-bottom: 50px;
-    }
-  }
+  
   
   & > div:last-child {
     width: 100%;
@@ -426,7 +425,172 @@ const HeroBottomWrapper = styled.div`
     background-repeat: no-repeat;
     
   }
+
+  @media (max-width: 700px) {
+    display: block;
+    margin-top: 20px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+
+    & > div {
+      width: auto;
+      margin-bottom: 30px;
+      padding: 20px 20px;
+    }
+
+    & h3 {
+      font-size: 32px;
+      line-height: 1.25;
+    }
+
+    &  > div > div > p {
+      font-size: 18px;
+      line-height: 1.25;
+    }
+    
+  }
 `
+
+const HeroFeatureWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+  width: 100%;
+  max-width: 1200px;
+
+  & > a {
+    background: #8000FF;
+    box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.25);
+    border-radius: 35px;
+    color: #FFFFFF;
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    display: inline-block;
+    text-decoration: none;
+    padding: 0 50px;
+    position: relative;
+  }
+  
+
+  & > a:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 5px;
+    width: 50px;
+    height: 50px;
+    background-image: url('${pillarIcon}');
+    background-size: 150%;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  & > a:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 5px;
+    width: 50px;
+    height: 50px;
+    background-image: url('${polygonIcon}');
+    background-size: 150%;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  & > a:hover {
+    opacity: 0.7;
+  }
+  
+
+  @media (max-width: 700px) {
+    height: auto;
+    padding-top: 0px;
+
+    & > a {
+      margin-top: 20px;
+    }
+  }
+`;
+
+const FeatureTitle = styled.h2`
+  position: relative;
+  font-size: 40px;
+  line-height: 1.1;
+  color: #fff;
+  text-align: center;
+  font-weight: 600;
+  margin: 0 auto;
+
+  & > span {
+    font-weight: 300;
+  }
+
+  @media (max-width: 700px) {
+    font-size: 36px;
+  }
+`;
+
+const HeroFeatureDetailWrapper = styled.div`
+  display: flex;
+  padding: 70px 0;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    padding: 0 0;
+  }
+`;
+
+const HeroFeatureDetail = styled.div`
+  width: 25%;
+  text-align: center;
+  padding: 0 25px;
+  border-right: solid 1px #3D204A; 
+
+  &:last-of-type {
+    border: none;
+  }
+
+  & > h3 {
+    font-size: 25px;
+    max-width: none;
+    font-family: ${fonts.secondary};
+    font-weight: 300;
+    line-height: 1.25;
+  }
+
+  & > img {
+    width: 100%;
+    display: block;
+  }
+
+  & > p {
+    font-size: 16px;
+    max-width: none;
+    line-height: 1.5;
+    color: #FFFFFF;
+    opacity: 0.6;
+    font-weight: 100;
+  }
+
+  @media (max-width: 700px) {
+    width: 100%;
+    border-right: none; 
+    padding: 25px 0;
+
+    & > img {
+      max-width: 150px;
+      margin: 0 auto;
+    }
+
+  }
+
+`;
+
 
 const Hero = () => {
   const [mintAmount, setMintAmount] = useState(2);
@@ -560,8 +724,42 @@ const Hero = () => {
                 )}
               </>
             )}
-          </MintWrapper>
+        </MintWrapper>
       </HeroBottomWrapper>
+      <HeroFeatureWrapper>
+          <FeatureTitle>Governor <span>Powers</span></FeatureTitle>
+          <HeroFeatureDetailWrapper>
+            <HeroFeatureDetail>
+              <img src={featureIconOne} alt="Proposal Creation & Voting" title="Proposal Creation & Voting" />
+              <SecondaryTitle>
+                Proposal Creation &&nbsp;Voting
+              </SecondaryTitle>
+              <Paragraph>Create or vote on proposals to shape the project</Paragraph>
+            </HeroFeatureDetail>
+            <HeroFeatureDetail>
+              <img src={featureIconTwo} alt="In-Built Governor Rewards" title="In-Built Governor Rewards" />
+              <SecondaryTitle>
+                In-Built Governor Rewards
+              </SecondaryTitle>
+              <Paragraph>Access member exclusive&nbsp;rewards</Paragraph>
+            </HeroFeatureDetail>
+            <HeroFeatureDetail>
+              <img src={featureIconThree} alt="Project Equity" title="Project Equity" />
+              <SecondaryTitle>
+                Project Equity
+              </SecondaryTitle>
+              <Paragraph>Be an owner of PillarDAO</Paragraph>
+            </HeroFeatureDetail>
+            <HeroFeatureDetail>
+              <img src={featureIconFour} alt="Ability to Define Your Financial Future" title="Ability to Define Your Financial Future" />
+              <SecondaryTitle>
+                Ability to Define Your Financial&nbsp;Future
+              </SecondaryTitle>
+              <Paragraph>Have a direct say in how PillarDAO runs</Paragraph>
+            </HeroFeatureDetail>
+          </HeroFeatureDetailWrapper>
+          <a href="https://polygonscan.com/" target="_blank">Get Pillar Tokens on Polygon</a>
+      </HeroFeatureWrapper>
     </OuterWrapper>
   )
 };
