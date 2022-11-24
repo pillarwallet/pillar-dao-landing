@@ -758,7 +758,7 @@ const Hero = () => {
               <Paragraph>Have a direct say in how PillarDAO runs</Paragraph>
             </HeroFeatureDetail>
           </HeroFeatureDetailWrapper>
-          <a href="https://polygonscan.com/" target="_blank">Get Pillar Tokens on Polygon</a>
+          <a href="https://polygonscan.com/" target="_blank" rel="noreferrer">Get Pillar Tokens on Polygon</a>
       </HeroFeatureWrapper>
     </OuterWrapper>
   )
