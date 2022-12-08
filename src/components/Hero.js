@@ -746,9 +746,9 @@ const Hero = () => {
             <HeroFeatureDetail>
               <img src={featureIconThree} alt="DAO User Ownership" title="DAO User Ownership" />
               <SecondaryTitle>
-                DAO User Ownership
+                DAO User<br />Ownership
               </SecondaryTitle>
-              <Paragraph>Join the community that runs PillarDAO</Paragraph>
+              <Paragraph>Join the community that <br />runs PillarDAO</Paragraph>
             </HeroFeatureDetail>
             <HeroFeatureDetail>
               <img src={featureIconFour} alt="Ability to Define Your Financial Future" title="Ability to Define Your Financial Future" />
