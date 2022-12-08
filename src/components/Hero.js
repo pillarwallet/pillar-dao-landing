@@ -131,9 +131,9 @@ const SecondaryTitle = styled.h3`
 
 const Paragraph = styled.p`
   font-family: ${fonts.secondary};
-  font-size: 48px;
+  font-size: 30px;
   color: #fff;
-  max-width: ${({ maxWidth }) => maxWidth ?? 22}ch;
+  max-width: ${({ maxWidth }) => maxWidth ?? 33}ch;
   font-weight: 300;
   ${({ center }) => center && `text-align: center;`}
   ${({ marginCenter }) => marginCenter && `margin: 0 auto;`}
@@ -744,11 +744,11 @@ const Hero = () => {
               <Paragraph>Access member exclusive&nbsp;rewards</Paragraph>
             </HeroFeatureDetail>
             <HeroFeatureDetail>
-              <img src={featureIconThree} alt="Project Equity" title="Project Equity" />
+              <img src={featureIconThree} alt="DAO User Ownership" title="DAO User Ownership" />
               <SecondaryTitle>
-                Project Equity
+                DAO User Ownership
               </SecondaryTitle>
-              <Paragraph>Be an owner of PillarDAO</Paragraph>
+              <Paragraph>Join the community that runs PillarDAO</Paragraph>
             </HeroFeatureDetail>
             <HeroFeatureDetail>
               <img src={featureIconFour} alt="Ability to Define Your Financial Future" title="Ability to Define Your Financial Future" />
@@ -758,7 +758,7 @@ const Hero = () => {
               <Paragraph>Have a direct say in how PillarDAO runs</Paragraph>
             </HeroFeatureDetail>
           </HeroFeatureDetailWrapper>
-          <a href="https://polygonscan.com/" target="_blank">Get Pillar Tokens on Polygon</a>
+          <a href="https://polygonscan.com/" target="_blank" rel="noreferrer">Get Pillar Tokens on Polygon</a>
       </HeroFeatureWrapper>
     </OuterWrapper>
   )
