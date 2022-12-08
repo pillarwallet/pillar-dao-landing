@@ -649,7 +649,7 @@ const Hero = () => {
       <InnerWrapper>
         <HeroRight>
           <Title>
-            PillarDAO Governor Portal Own your life.
+            PillarDAO Governor Portal<br /> Own your life.
           </Title>
           <Paragraph center marginCenter marginTop={40}>Now is the time to stand up and be an integral part of something spectacular</Paragraph>
         </HeroRight>
@@ -744,9 +744,9 @@ const Hero = () => {
               <Paragraph>Access member exclusive&nbsp;rewards</Paragraph>
             </HeroFeatureDetail>
             <HeroFeatureDetail>
-              <img src={featureIconThree} alt="DAO User Ownership" title="DAO User Ownership" />
+              <img src={featureIconThree} alt="DAO Ownership" title="DAO Ownership" />
               <SecondaryTitle>
-                DAO User<br />Ownership
+                DAO<br />Ownership
               </SecondaryTitle>
               <Paragraph>Join the community that <br />runs PillarDAO</Paragraph>
             </HeroFeatureDetail>
