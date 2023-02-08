@@ -1,5 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 const Hero = () => {
+
+  const [timerDays, setTimerDays] = useState('00');
+  const [timerHours, setTimerHours] = useState('00');
+  const [timerMinutes, setTimerMinutes] = useState('00');
+
+  let interval = useRef();
+
+  const startTimer = () => {
+    const countdownDate = new Date('June 1, 2023 00:00:00').getTime();
+    interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24) / (1000 * 60 * 60)));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+      if (distance < 0) {
+        clearInterval(interval.current);
+      } else {
+        setTimerDays(days);
+        setTimerHours(hours);
+        setTimerMinutes(minutes);
+      }
+    }, 1000);
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => {
+      clearInterval(interval.current);
+    };
+  });
+
+
   return (
     <>
       <section className="hero" id="hero">
@@ -27,15 +61,15 @@ const Hero = () => {
             <div className="hero__countdown__detail">
               <ul>
                   <li className="gradient_border">
-                    <h2>00</h2>
+                    <h2>{timerDays}</h2>
                   </li>
                   <h2>:</h2>
                   <li className="gradient_border">
-                    <h2>00</h2>
+                    <h2>{timerHours}</h2>
                   </li>
                   <h2>:</h2>
                   <li className="gradient_border">
-                    <h2>00</h2>
+                    <h2>{timerMinutes}</h2>
                   </li>
               </ul>
             </div>
