@@ -874,8 +874,15 @@ ul li {
     margin: 2.5rem auto;
 }
 
-.dao__ecosystem__detail img {
+.dao__ecosystem__detail__list {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.dao__ecosystem__detail__list img {
     max-width: 100%;
+    display: block;
 }
 
 /* Footer */

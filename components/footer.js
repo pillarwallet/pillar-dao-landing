@@ -20,7 +20,7 @@ const Footer = () => {
               <a href="https://twitter.com/PillarWallet" target="_blank" rel="noopener noreferrer">
                 <img src={socialTwitter} alt="" />
               </a>
-              <a href="https://chat.pillar.fi/" target="_blank" rel="noopener noreferrer">
+              <a href="https://t.me/pillarofficial" target="_blank" rel="noopener noreferrer">
                 <img src={socialTelegram} alt="" />
               </a>
             </div>

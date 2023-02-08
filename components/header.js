@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import pillarLogo from "../assets/images/pillar-dao-logo.png";
+import pillarLogo from "../assets/images/logo-pillar.png";
 
 const Header = () => {
   return (

@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import stakeIcon from "../assets/images/stake-icon.png";
 import mintIcon from "../assets/images/mint-icon.png";
 import communityIcon from "../assets/images/community-icon.png";
-import ecosystemLogo from "../assets/images/dao-ecosystem-logos.png";
+import logoEtherspotBuidler from "../assets/images/logo-etherspot-buidler.png";
+import logoEtherspotSdk from "../assets/images/logo-etherspot-sdk.png";
+import logoEtherspotDashboard from "../assets/images/logo-etherspot-dashboard.png";
+import logoPillar from "../assets/images/logo-pillar.png";
+import logoAirdropme from "../assets/images/logo-airdropme.png";
 
 const Dao = () => {
   return (
@@ -63,7 +67,23 @@ const Dao = () => {
               <h2>PillarDAO’s growing ecosystem</h2>
               <h3>PillarDAO is BUIDLing!</h3>
               <p>All revenue from Pillar Project’s tools are directed to the PillarDAO treasury. The treasury was donated to the PillarDAO by Pillar Foundation</p>
-              <img src={ecosystemLogo} alt="Etherspot BUIDLer | Etherspot SDK | Etherspot Dashboard | Pillar | AirdropMe" title="Etherspot BUIDLer | Etherspot SDK | Etherspot Dashboard | Pillar | AirdropMe" />
+              <div className="dao__ecosystem__detail__list">
+                <a href="http://buidler.etherspot.io/?utm_source=plrstakinglp&utm_medium=website&utm_campaign=plr_staking" target="_blank" rel="noopener noreferrer">
+                  <img src={logoEtherspotBuidler} alt="Etherspot BUIDLer" title="Etherspot BUIDLer" />
+                </a>
+                <a href="https://etherspot.io/?utm_source=plrstakinglp&utm_medium=website&utm_campaign=plr_staking" target="_blank" rel="noopener noreferrer">
+                  <img src={logoEtherspotSdk} alt="Etherspot SDK" title="Etherspot SDK" />
+                </a>
+                <a href="https://dashboard.etherspot.io/?utm_source=plrstakinglp&utm_medium=website&utm_campaign=plr_staking" target="_blank" rel="noopener noreferrer">
+                  <img src={logoEtherspotDashboard} alt="Etherspot Dashboard" title="Etherspot Dashboard" />
+                </a>
+                <a href="https://www.pillar.fi/?utm_source=plrstakinglp&utm_medium=website&utm_campaign=plr_staking" target="_blank" rel="noopener noreferrer">
+                  <img src={logoPillar} alt="Pillar" title="Pillar" />
+                </a>
+                <a href="https://airdropme.io/?utm_source=plrstakinglp&utm_medium=website&utm_campaign=plr_staking" target="_blank" rel="noopener noreferrer">
+                  <img src={logoAirdropme} alt="AirdropMe" title="AirdropMe" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
