@@ -8,7 +8,7 @@ const Hero = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date('June 1, 2023 00:00:00').getTime();
+    const countdownDate = new Date('May 15, 2023 14:00:00 UTC').getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;
