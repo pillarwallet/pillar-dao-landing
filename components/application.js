@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useFormFields, useMailChimpForm } from "use-mailchimp-form";
 const Application = () => {
 
-  const mailchimpURL = "https://etherspot.us14.list-manage.com/subscribe/post?u=0056162978ccced9e0e2e2939&amp;id=279c3e8526&amp;f_id=00e9c2e1f0";
+  const mailchimpURL = "https://pillarproject.us14.list-manage.com/subscribe/post?u=0056162978ccced9e0e2e2939&amp;id=a32643eea2&amp;f_id=00edc2e1f0";
   const { loading, error, success, message, handleSubmit } = useMailChimpForm( mailchimpURL);
   const { fields, handleFieldChange } = useFormFields({EMAIL: ""});
 
@@ -16,7 +16,7 @@ const Application = () => {
 
           <div className="application__form">
               <div className="application__form__detail">
-                <h3>PillarDAO staking will be open for 1 month</h3>
+                <h3>PillarDAO staking will be open for 1&nbsp;month</h3>
                 <p>Submit your email address & we'll notify you as soon as it begins, so you don't miss out</p>
                 <form
                   onSubmit={event => {

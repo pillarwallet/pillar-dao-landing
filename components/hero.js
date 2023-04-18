@@ -57,7 +57,7 @@ const Hero = () => {
 
           {/* Countdown */}
           <div className="hero__countdown">
-            <p>Time Left Until Staking Window Opens</p>
+            <p>Time Left Until Staking Window&nbsp;Opens</p>
             <div className="hero__countdown__detail">
               <ul>
                   <li className="gradient_border">
