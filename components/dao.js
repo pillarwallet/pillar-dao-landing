@@ -16,7 +16,7 @@ const Dao = () => {
         <div className="dao__staking">
           <div className="container">
             <div className="dao__staking__headline">
-              <h2>How <span>PillarDAO Staking</span> Works</h2>
+              <h2>How <span>PillarDAO Staking</span>&nbsp;Works</h2>
             </div>
 
             <div className="dao__staking__cards">
@@ -52,11 +52,7 @@ const Dao = () => {
           <div className="container">
             <div className="dao__faq__detail">
               <h2>Withdrawals & Staking Terms</h2>
-              <p>The Ethereum Foundation has stated that withdrawals of staked ETH and rewards will not be available for 12 months after The Merge. With this in mind, all staked PLR will be locked until after this period has completed. Then the personally set stake period will commence. <br/><br/>Once the personally set period has concluded, ETH rewards will be open for withdrawal and un-staking PLR tokens can also be done.</p>
-            </div>
-            <div className="dao__faq__detail">
-              <h3>When can I claim <br/> my ETH?</h3>
-              <p>Withdraw functionality is expected to be included in the next network upgrade, named Shanghai. This network upgrade is estimated for the first half of 2023, subject to change until completed. After the Shanghai update, stakers will then be able to withdraw their rewards from their validator balance if they choose.</p>
+              <p>The PLR staking dapp is run by a smart contract that locks all PLR tokens that are staked for a minimum period of 52 weeks. People who stake PLR will, however, be able to withdraw staking rewards periodically during these 52 weeks.<br/><br/>Claiming will become possible at the end of each calendar quarter. Stakers will be notified when the claiming periods go live. Users can follow Pillar Wallet’s social media channels (<a href="https://twitter.com/PillarWallet" target="_blank" rel="noopener noreferrer">Twitter</a>, <a href="https://chat.pillar.fi/" target="_blank" rel="noopener noreferrer">Discord</a>, <a href="https://t.me/pillarofficial" target="_blank" rel="noopener noreferrer">Telegram</a>) for the updates or alternatively sign up for email notifications here.</p>
             </div>
           </div>
         </div>

@@ -11,7 +11,7 @@ const Application = () => {
       <section className="application" id="application">
         <div className="container">
           <div className="application__headline">
-            <h2>All Staked Funds Will Be Locked for 52 Weeks <span>Claim and unstake will be available at the end of this period</span></h2>
+            <h2>All Staked Funds Will Be Locked for 52&nbsp;Weeks. <span>ETH Rewards will be available on a quarterly&nbsp;basis.</span></h2>
           </div>
 
           <div className="application__form">
