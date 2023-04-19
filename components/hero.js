@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-const Hero = () => {
 
+const Hero = () => {
   const [timerDays, setTimerDays] = useState('00');
   const [timerHours, setTimerHours] = useState('00');
   const [timerMinutes, setTimerMinutes] = useState('00');
+  const [totalETHStacked, setTotalETHStacked] = useState('0');
+  const [currentAPY, setCurrentAPY] = useState('0');
 
   let interval = useRef();
 
@@ -33,6 +35,23 @@ const Hero = () => {
     };
   });
 
+  useEffect(() => {
+    try {
+      fetch('https://beacon-chain-analytics.pillar-project.workers.dev')
+        .then((res) => res.json())
+        .then(({ staked_ether, apr }) => {
+          if (staked_ether) {
+            staked_ether = staked_ether.split(' ')[0];
+            setTotalETHStacked(staked_ether);
+          }
+          if (apr) {
+            setCurrentAPY(apr);
+          }
+        });
+    } catch {
+      //
+    }
+  }, []);
 
   return (
     <>
@@ -46,11 +65,11 @@ const Hero = () => {
           <div className="hero__stats">
             <div className="hero__stats__detail">
               <p>Total ETH Staked</p>
-              <h4 className="gradient_border">16,183,945</h4>
+              <h4 className="gradient_border">{totalETHStacked}</h4>
             </div>
             <div className="hero__stats__detail">
               <p>Current APY</p>
-              <h4 className="gradient_border">5.2%</h4>
+              <h4 className="gradient_border">{currentAPY}</h4>
             </div>
             <p className="hero__stats__status">Live°</p>
           </div>
