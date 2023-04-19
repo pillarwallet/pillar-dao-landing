@@ -1461,54 +1461,101 @@ ul li {
 /* Footer */
 
 .footer {
-    padding: 1.5rem 0;
+    padding: 3rem 0;
     background-color: #250137;
+}
+
+@media only screen and (max-width: 767px) {
+    .footer {
+        padding: 1.25rem 0;
+    }
 }
 
 .footer__wrapper {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    gap: 2rem;
 }
 
 @media only screen and (max-width: 767px) {
     .footer__wrapper {
         flex-direction: column;
-        gap: 2rem;
     }
 }
 
-.footer__links a {
+.footer__links {
+    display: flex;
+    gap: 3rem;
+}
+
+.footer__links ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+.footer__links ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer__links ul li a {
     color: var(--white);
-    margin-right: 3rem;
     text-decoration: none;
+    font-size: 1rem;
 }
 
 @media only screen and (max-width: 767px) {
-    .footer__links a {
-        display: block;
-        margin-right: 0;
-        margin-bottom: 1rem;
+    .footer__links ul li a {
+        font-size: 0.8rem;
     }
 }
 
-.footer__links a:hover {
+.footer__links ul li a:hover {
     opacity: 0.7;
-    text-decoration: underline;
 }
 
-.footer__social a {
-    margin-left: 1.5rem;
+.footer__social {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 16rem;
+}
+
+.footer__social__icons {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0;
+    list-style-type: none;
+}
+
+.footer__social__icons li a {
     text-decoration: none;
 }
 
-@media only screen and (max-width: 767px) {
-    .footer__social a:first-child {
-        margin-left: 0;
-    }
-}
-
-.footer__social a:hover {
+.footer__social__icons li a:hover {
     opacity: 0.7;
 }
 
+.footer__social__logos {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0;
+    list-style-type: none;
+}
+
+.footer__social__logos li {
+    width: 100%;
+}
+
+.footer__social__logos li a {
+    text-decoration: none;
+}
+
+.footer__social__logos li a:hover {
+    opacity: 0.7;
+}
+
+.footer__social__logos li a img {
+    width: auto;
+    height: 2rem;
+    display: block;
+}
