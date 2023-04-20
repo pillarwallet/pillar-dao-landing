@@ -26,7 +26,6 @@ const Application = () => {
                 >
                   <input
                     id="EMAIL"
-                    autoFocus
                     type="email"
                     placeholder="E-mail"
                     value={fields.EMAIL}
