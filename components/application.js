@@ -16,7 +16,7 @@ const Application = () => {
 
           <div className="application__form">
               <div className="application__form__detail">
-                <h3>PillarDAO staking will be open for 1&nbsp;month</h3>
+                <h3>PLR staking will be open for 1&nbsp;month</h3>
                 <p>Submit your email address & we'll notify you as soon as it begins, so you don't miss out</p>
                 <form
                   onSubmit={event => {
