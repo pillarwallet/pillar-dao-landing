@@ -1,19 +1,21 @@
 import React from "react";
 import Layout from "@components/layout";
 import Header from "@components/header";
-import Hero from "@components/hero";
-import About from "@components/about";
-import Application from "@components/application";
-import Dao from "@components/dao";
+import HomeHero from "@components/home-hero";
+import HomeDao from "@components/home-dao";
+import HomeProducts from "@components/home-products";
+import HomeGovernance from "@components/home-governance";
+import HomeAbout from "@components/home-about";
 import Footer from "@components/footer";
 const Index = () => {
   return (
     <Layout pageTitle="PillarDAO">
       <Header />
-      <Hero />
-      <About />
-      <Application />
-      <Dao />
+      <HomeHero />
+      <HomeDao />
+      <HomeProducts />
+      <HomeGovernance />
+      <HomeAbout />
       <Footer />
     </Layout>
   );

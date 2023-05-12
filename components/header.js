@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
-import pillarLogo from "../assets/images/logo-pillar.png";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import pillarDaoLogo from "../assets/images/pillar-dao-logo.png";
+
+const links = [
+  { href: "/staking#home", label: "PLR Staking", scroll: false},
+  { href: "/#governor", label: "Join PillarDAO", scroll: false},
+  { href: "/#products", label: "Products", scroll: false},
+  { href: "/#governance", label: "Governance", scroll: false},
+  { href: "/#about", label: "About", scroll: false},
+]
 
 const Header = () => {
-
+  const router = useRouter();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   return (
@@ -10,34 +20,22 @@ const Header = () => {
       <header className="header" id="header">
         <div className="container">
           
-          <a href="https://www.pillar.fi" className="header__logo">
-            <img src={pillarLogo} />
-          </a>
+          <Link href="/#home" className="header__logo" scroll={false}>
+            <img src={pillarDaoLogo} />
+          </Link>
           
           <nav className= {showMobileMenu ? "header__menu header__menu--show" : "header__menu"}>
-              
-              <ul id="menu">
-                  <li>
-                      <a href="https://www.pillar.fi/#multichain">Multichain wallet</a>
-                  </li>
-                  <li>
-                      <a href="https://www.pillar.fi/dao/">DAO</a>
-                  </li>
-                  <li>
-                      <a href="https://www.pillar.fi/#plr-token">PLR Token</a>
-                  </li>
-                  <li>
-                      <a href="https://www.pillar.fi/genesis/">NFTs</a>
-                  </li>
-                  <li>
-                      <a href="https://www.pillar.fi/about/">About us</a>
-                  </li>
-                  <li>
-                      <a href="https://www.pillar.fi/blog/">Blog</a>
-                  </li>
-              </ul>
-              
-              <a href="https://chat.pillar.fi/" target="_blank" rel="noopener noreferrer" className="header__discord">Join Discord</a>              
+            <ul id="menu" onClick={() => setShowMobileMenu(!showMobileMenu)}>
+            
+              {links.map((link) => (
+                <li className={router.pathname == link.href ? "active" : ""}>
+                  <Link href={link.href} target={link.target} scroll={link.scroll}>{link.label}</Link>
+                </li>
+              ))}
+                
+            </ul>
+            
+            <Link href="https://chat.pillar.fi/" target="_blank" rel="noopener noreferrer" className="header__discord" onClick={() => setShowMobileMenu(!showMobileMenu)}>Join Discord</Link>
           </nav>
 
           <div className= {showMobileMenu ? "header__mobile_menu header__mobile_menu--change" : "header__mobile_menu"} onClick={() => setShowMobileMenu(!showMobileMenu)}>

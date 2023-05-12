@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const Hero = () => {
+const StakingHero = () => {
   const [timerDays, setTimerDays] = useState('00');
   const [timerHours, setTimerHours] = useState('00');
   const [timerMinutes, setTimerMinutes] = useState('00');
@@ -55,29 +55,29 @@ const Hero = () => {
 
   return (
     <>
-      <section className="hero" id="hero">
+      <section className="staking_hero" id="home">
         <div className="container">
-          <div className="hero__headline">
+          <div className="staking_hero__headline">
             <h1>Earn ETH rewards for staking PLR token</h1>
           </div>
 
           {/* Current Stats */}
-          <div className="hero__stats">
-            <div className="hero__stats__detail">
+          <div className="staking_hero__stats">
+            <div className="staking_hero__stats__detail">
               <p>Total ETH Staked</p>
               <h4 className="gradient_border">{totalETHStacked}</h4>
             </div>
-            <div className="hero__stats__detail">
+            <div className="staking_hero__stats__detail">
               <p>Current APY</p>
               <h4 className="gradient_border">{currentAPY}</h4>
             </div>
-            <p className="hero__stats__status">Live°</p>
+            <p className="staking_hero__stats__status">Live°</p>
           </div>
 
           {/* Countdown */}
-          <div className="hero__countdown">
+          <div className="staking_hero__countdown">
             <p>Time Left Until Staking Window&nbsp;Opens</p>
-            <div className="hero__countdown__detail">
+            <div className="staking_hero__countdown__detail">
               <ul>
                   <li className="gradient_border">
                     <h2>{timerDays}</h2>
@@ -100,4 +100,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default StakingHero;
