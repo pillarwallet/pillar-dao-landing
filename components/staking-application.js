@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFormFields, useMailChimpForm } from "use-mailchimp-form";
-const Application = () => {
+const StakingApplication = () => {
 
   const mailchimpURL = "https://pillarproject.us14.list-manage.com/subscribe/post?u=0056162978ccced9e0e2e2939&amp;id=a32643eea2&amp;f_id=00edc2e1f0";
   const { loading, error, success, message, handleSubmit } = useMailChimpForm( mailchimpURL);
@@ -8,14 +8,14 @@ const Application = () => {
 
   return (
     <>
-      <section className="application" id="application">
+      <section className="staking_application" id="application">
         <div className="container">
-          <div className="application__headline">
+          <div className="staking_application__headline">
             <h2>All Staked Funds Will Be Locked for 52&nbsp;Weeks. <span>ETH Rewards will be available on a quarterly&nbsp;basis.</span></h2>
           </div>
 
-          <div className="application__form">
-              <div className="application__form__detail">
+          <div className="staking_application__form">
+              <div className="staking_application__form__detail">
                 <h3>PLR staking will be open for 1&nbsp;month</h3>
                 <p>Submit your email address & we'll notify you as soon as it begins, so you don't miss out</p>
                 <form
@@ -40,7 +40,7 @@ const Application = () => {
           </div>
 
           {/* 
-          <div className="application__wrapper">
+          <div className="staking_application__wrapper">
             <div></div>
             <div></div>
           </div> 
@@ -52,4 +52,4 @@ const Application = () => {
   );
 };
 
-export default Application;
+export default StakingApplication;
