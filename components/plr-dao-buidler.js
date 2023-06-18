@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import Web3 from 'web3';
 import { useAccount, useDisconnect } from 'wagmi';
 
-import buidlerTheme from '../styles/buidlerTheme';
+import { themeOverride } from '../styles/buidlerTheme';
 
 const Etherspot = dynamic(() => import('@etherspot/react-transaction-buidler').then((mod) => mod.Etherspot), {
   ssr: false,
@@ -49,7 +49,7 @@ const PlrDaoStakingBuilder = () => {
       <Etherspot
         provider={connectedProvider}
         chainId={1}
-        themeOverride={buidlerTheme}
+        themeOverride={themeOverride}
         defaultTransactionBlocks={[
           { type: "PLR_DAO_STAKE" },
         ]}
