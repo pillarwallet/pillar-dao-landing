@@ -1,4 +1,3 @@
-import React from 'react';
 import { configureChains, createClient, mainnet, WagmiConfig } from 'wagmi';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';

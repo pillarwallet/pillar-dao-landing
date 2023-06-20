@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import governanceBg from "../assets/images/home-governance-bg.png";
 import governanceNFT from "../assets/images/home-governance-nft.png";
