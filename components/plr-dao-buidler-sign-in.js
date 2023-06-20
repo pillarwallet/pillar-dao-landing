@@ -24,7 +24,7 @@ const APP_INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
 const Wrapper = styled.div`
   width: 100%;
   max-width: 100%;
-  padding: 14px 20px 26px;
+  padding: 0.875rem 1.25rem 1.625rem;
   border-radius: 24px;
   background: rgba(43, 1, 64, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -36,33 +36,33 @@ const Wrapper = styled.div`
 
 const WrapperTitle = styled.h1`
   color: #78e8f6;
-  font-size: 20px;
-  margin-bottom: 30px;
+  font-size: 1.25rem;
+  margin-bottom: 1.875rem;
 `;
 
 const WrapperText = styled.span`
-  font-size: 14px;
+  font-size: 0.875rem;
   text-align: ${({ textAlign }) => textAlign ?? 'center'};
 `;
 
 const LoadingBarWrapper = styled.div`
   height: 6px;
-  padding: 2px 118px 2px 2px;
+  padding: 2px 7.375rem 2px 2px;
   border-radius: 5px;
   background-color: rgba(71, 64, 120, 0.4);
-  margin-bottom: 13px;
+  margin-bottom: 0.813rem;
 `;
 
 const LoadingBar = styled.div`
   height: 6px;
   border-radius: 3px;
-  width: 214px;
+  width: 13.375rem;
   background: #720898;
 `;
 
 const ErrorMessage = styled.p`
-  font-size: 16px;
-  margin-bottom: 30px;
+  font-size: 1rem;
+  margin-bottom: 1.875rem;
   text-decoration: underline;
 `;
 
@@ -83,19 +83,19 @@ const SwitchWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 1.875rem;
 `;
 
 const SwitchOption = styled.div`
-  font-size: 14px;
+  font-size: 0.875rem;
   width: 50%;
   text-align: center;
-  min-height: 28px;
-  line-height: 34px;
+  min-height: 1.75rem;
+  line-height: 2.125rem;
   cursor: pointer;
   color: #78e8f6;
   background: #4e0372;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   padding: 1px;
 
   ${({ isActive }) =>
@@ -108,12 +108,12 @@ const SwitchOption = styled.div`
     border-width: 1px;
     border-image-slice: 1;
     background: #78e8f6;
-    line-height: 32px;
+    line-height: 2rem;
   `}
 `;
 
 const SignInOptionsWrapper = styled.div`
-  margin-bottom: 14px;
+  margin-bottom: 0.875rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -124,7 +124,7 @@ const SignInOptionWrapper = styled.div`
   width: ${({ half }) => (half ? 'calc(50% - 7px)' : '100%')};
   ${({ half }) =>
     half && `
-  min-width: 150px;
+  min-width: 9.375rem;
   flex: 1;
   margin: 0px 4px;
   `}
@@ -134,10 +134,10 @@ const SignInOptionIcon = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 12px;
+  margin-right: 0.75rem;
   img {
     margin: 0;
-    height: 24px;
+    height: 1.5rem;
   }
 `;
 
@@ -147,11 +147,11 @@ const SignInOption = styled.div`
   align-items: center;
   font-family: 'PTRootUIWebMedium', sans-serif;
   color: #fff;
-  font-size: 16px;
-  padding: 28px 34px;
-  border-radius: 24px;
+  font-size: 1rem;
+  padding: 1.75rem 2.125rem;
+  border-radius: 1.5rem;
   background-color: #5c0088;
-  margin-bottom: 14px;
+  margin-bottom: 0.875rem;
   cursor: pointer;
 
   &:hover {
@@ -160,12 +160,12 @@ const SignInOption = styled.div`
 `;
 
 const EmailInput = styled.input`
-  margin-bottom: 30px;
-  padding: 16px 13px;
-  border-radius: 12px;
+  margin-bottom: 1.875rem;
+  padding: 1rem 0.813rem;
+  border-radius: 0.75rem;
   border: solid 1px #49437d;
   font-family: 'PTRootUIWebMedium', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   color: #fff;
   background-color: #1a1726;
   width: calc(100% - 34px);
@@ -181,16 +181,16 @@ const EmailInput = styled.input`
 
 const EmailSubmitButton = styled.button`
   cursor: pointer;
-  margin-bottom: 14px;
-  padding: 17px;
-  border-radius: 16px;
+  margin-bottom: 0.875rem;
+  padding: 1rem;
+  border-radius: 1rem;
   box-shadow: 0 2px 4px 0 rgba(95, 0, 1, 0.13);
   border: none;
   background: #890df8;
   font-family: 'PTRootUIWebRegular', sans-serif;
   text-align: center;
   color: #fff;
-  font-size: 20px;
+  font-size: 1.25rem;
   width: 100%;
   &:disabled {
     cursor: not-allowed;
