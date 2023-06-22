@@ -304,17 +304,17 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet }) => {
         return;
       }
 
-    if (!web3authProvider) {
-      setErrorMessage('Failed to get connected provider!');
-      setIsSigningIn(false);
-      return;
-    }
+      if (!web3authProvider) {
+        setErrorMessage('Failed to get connected provider!');
+        setIsSigningIn(false);
+        return;
+      }
 
-    onWeb3ProviderSet(web3authProvider);
-    setEmail('');
-    setShowEmailLogin(false);
-    setIsSigningIn(false);
-  }, [web3Auth, onWeb3ProviderSet]);
+      onWeb3ProviderSet(web3authProvider);
+      setEmail('');
+      setShowEmailLogin(false);
+      setIsSigningIn(false);
+    }, [web3Auth, onWeb3ProviderSet]);
 
   const loginWithOpenLogin = useCallback(
     async (loginProvider, login_hint) =>

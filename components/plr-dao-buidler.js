@@ -6,24 +6,22 @@ import { useAccount, useDisconnect } from 'wagmi';
 
 import { themeOverride } from '../styles/buidlerTheme';
 
+const LoadingComponent = () => <p>Loading...</p>
+
 const Etherspot = dynamic(() => import('@etherspot/react-transaction-buidler').then((mod) => mod.Etherspot), {
   ssr: false,
-  loading: () => <p>Loading...</p>,
+  loading: () => <LoadingComponent />,
 });
 
 const SignIn = dynamic(() => import('./plr-dao-buidler-sign-in'), {
   ssr: false,
-  loading: () => <p>Loading...</p>,
+  loading: () => <LoadingComponent />,
 });
-
-const PlrDaoStakingBuilderWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 const PlrDaoStakingBuilder = () => {
   const [connectedProvider, setConnectedProvider] = useState(null);
   const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
+
   const { disconnect: wagmiDisconnect } = useDisconnect();
   const { connector, isConnected } = useAccount();
 
@@ -34,10 +32,29 @@ const PlrDaoStakingBuilder = () => {
     }
 
     const web3 = new Web3(web3Provider);
-
     setConnectedProvider(web3.currentProvider);
   }
-  
+
+  const onLogout = async () => {
+    try {
+      if (isConnected) wagmiDisconnect();
+      if (connector) await connector.disconnect();
+    } catch (e) {
+      //
+    }
+
+    try {
+      if (web3AuthInstance) {
+        await web3AuthInstance.logout({ cleanup: true });
+        web3AuthInstance.clearCache();
+      }
+    } catch (e) {
+      //
+    }
+
+    setConnectedProvider(null);
+  }
+
   return <PlrDaoStakingBuilderWrapper>
     {!connectedProvider && (
       <SignIn
@@ -59,26 +76,14 @@ const PlrDaoStakingBuilder = () => {
         hideWalletSwitch
         hideBuyButton
         showMenuLogout
-        onLogout={async () => {
-          try {
-            if (isConnected) wagmiDisconnect();
-            if (connector) await connector.disconnect();
-          } catch (e) {
-            //
-          }
-
-          try {
-            if (web3AuthInstance) {
-              await web3AuthInstance.logout({ cleanup: true });
-              web3AuthInstance.clearCache();
-            }
-          } catch (e) {
-            //
-          }
-
-          setConnectedProvider(null);
-        }}
+        onLogout={onLogout}
       />)}
   </PlrDaoStakingBuilderWrapper>
 }
+
 export default PlrDaoStakingBuilder;
+
+const PlrDaoStakingBuilderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
