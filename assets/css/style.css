@@ -682,10 +682,6 @@ ul li {
     text-align: left;
 }
 
-.home_dao__intro__text a {
-    text-decoration: none;
-}
-
 @media only screen and (max-width: 767px) {
     .home_dao__intro__text {
         width: 100%;
