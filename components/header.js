@@ -4,11 +4,11 @@ import Link from "next/link";
 import pillarDaoLogo from "../assets/images/pillar-dao-logo.png";
 
 const links = [
-  { href: "/staking#home", label: "PLR Staking", scroll: false},
-  { href: "/#governor", label: "Join PillarDAO", scroll: false},
-  { href: "/#products", label: "Products", scroll: false},
-  { href: "/#governance", label: "Governance", scroll: false},
-  { href: "/#about", label: "About", scroll: false},
+  { key: 1, href: "/staking#home", label: "PLR Staking", scroll: false },
+  { key: 2, href: "/#governor", label: "Join PillarDAO", scroll: false },
+  { key: 3, href: "https://pillardao.substack.com", label: "Blog", scroll: false, target: '_blank' },
+  { key: 4, href: "/#governance", label: "Governance", scroll: false },
+  { key: 5, href: "/#about", label: "About", scroll: false },
 ]
 
 const Header = () => {
@@ -28,7 +28,7 @@ const Header = () => {
             <ul id="menu" onClick={() => setShowMobileMenu(!showMobileMenu)}>
             
               {links.map((link) => (
-                <li className={router.pathname == link.href ? "active" : ""}>
+                <li key={link.key} className={router.pathname == link.href ? "active" : ""}>
                   <Link href={link.href} target={link.target} scroll={link.scroll}>{link.label}</Link>
                 </li>
               ))}

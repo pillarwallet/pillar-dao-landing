@@ -29,23 +29,8 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://www.youtube.com/c/PillarProject" target="_blank" rel="noopener noreferrer">
-                    <img src={socialyoutube} alt="" />
-                  </Link>
-                </li>
-                <li>
-                  <Link href="https://twitter.com/PillarWallet" target="_blank" rel="noopener noreferrer">
+                  <Link href="https://twitter.com/pillar_dao" target="_blank" rel="noopener noreferrer">
                     <img src={socialTwitter} alt="" />
-                  </Link>
-                </li>
-                <li>
-                  <Link href="https://t.me/pillarofficial" target="_blank" rel="noopener noreferrer">
-                    <img src={socialTelegram} alt="" />
-                  </Link>
-                </li>
-                <li>
-                  <Link href="https://github.com/pillarwallet" target="_blank" rel="noopener noreferrer">
-                    <img src={socialGithub} alt="" />
                   </Link>
                 </li>
               </ul>
