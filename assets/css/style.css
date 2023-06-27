@@ -1039,8 +1039,14 @@ ul li {
     }
 }
 
-.home_governance__app__detail p {
+.home_governance__app__detail .home_governance__app__detail_paragraph {
     opacity: 0.6;
+}
+
+.home_governance__app__detail .plr_dao_block p {
+    margin: 0;
+    line-height: 0.7rem;
+    font-size: 12px;
 }
 
 .home_governance__app__detail ul {
