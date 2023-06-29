@@ -35,7 +35,7 @@ const HomeGovernance = () => {
                 </div>
               </div>
               <div className="home_governance__app__detail">
-                <p className="home_governance__app__detail_paragraph">Once locked each member will receive a membership NFT signalling their governor status and&nbsp;used for verification.Your membership address will be stored, you may be asked to provide name and address in the future to retain membership.</p>
+                <p className="home_governance__app__detail_paragraph">Once locked each member will receive a membership NFT signalling their governor status and&nbsp;used for verification. Your membership address will be stored, you may be asked to provide name and address in the future to retain membership.</p>
                 <img className="dao_member_img" src={governanceNFT} alt="" />
                 <ul>
                   <li>The lock-in period is for 52 weeks after which a member can optionally burn their membership NFT and unlock their PLR tokens, deactivating governor status.</li>
