@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@etherspot/react-transaction-buidler": "github:etherspot/etherspot-react-transaction-buidler#1036f96e72a6626e7d5cdd50084f44490e9145ef",
+    "@etherspot/react-transaction-buidler": "github:etherspot/etherspot-react-transaction-buidler#5656b1f571d1d24fbd25734adb7c439ac27c253d",
     "@next/font": "13.1.6",
     "@web3auth/base": "^5.2.0",
     "@web3auth/no-modal": "^5.2.0",
