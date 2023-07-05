@@ -2,11 +2,7 @@ import Link from "next/link";
 import governanceBg from "../assets/images/home-governance-bg.png";
 import governanceNFT from "../assets/images/home-governance-nft.png";
 import PlrDaoStakingBuilder from "./plr-dao-buidler";
-
-import dynamic from "next/dynamic";
-const WagmiProvider = dynamic(() => import('../components/WagmiProvider'), {
-  ssr: false,
-});
+import WagmiProvider from "../components/WagmiProvider";
 
 const HomeGovernance = () => {
   return (
