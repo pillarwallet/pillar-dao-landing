@@ -1,4 +1,4 @@
-import { configureChains, createConfig, mainnet, WagmiConfig } from 'wagmi';
+import { configureChains, createClient, mainnet, WagmiConfig } from 'wagmi';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
@@ -12,9 +12,7 @@ const { chains, provider, webSocketProvider } = configureChains(
   [infuraProvider({ apiKey: APP_INFURA_ID ?? '' }), publicProvider()],
 );
 
-console.log('New Wagmi Provider');
-
-const config = createConfig({
+const client = createClient({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({ chains }),
@@ -27,7 +25,8 @@ const config = createConfig({
     new WalletConnectConnector({
       chains,
       options: {
-        projectId: '15fcfb7323fcce5aa1b58afe4dc6d847',
+        version: '1',
+        qrcode: true,
       },
     }),
   ],
@@ -36,7 +35,7 @@ const config = createConfig({
 });
 
 const WagmiProvider = ({ children }) => (
-  <WagmiConfig config={config}>
+  <WagmiConfig client={client}>
     {children}
   </WagmiConfig>
 );

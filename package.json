@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@etherspot/react-transaction-buidler": "github:etherspot/etherspot-react-transaction-buidler#5656b1f571d1d24fbd25734adb7c439ac27c253d",
+    "@etherspot/react-transaction-buidler": "github:etherspot/etherspot-react-transaction-buidler#d27587b22aa1af4dfaca591f7b704b0db0310e5a",
     "@next/font": "13.1.6",
     "@web3auth/base": "^5.2.0",
     "@web3auth/no-modal": "^5.2.0",
@@ -21,7 +21,7 @@
     "react-dom": "18.2.0",
     "styled-components": "^5.3.5",
     "use-mailchimp-form": "^3.1.0",
-    "wagmi": "^1.3.7",
+    "wagmi": "^0.11.6",
     "web3": "^4.0.1"
   }
 }
