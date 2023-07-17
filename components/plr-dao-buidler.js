@@ -19,6 +19,7 @@ const SignIn = dynamic(() => import('./plr-dao-buidler-sign-in'), {
 });
 
 const PlrDaoStakingBuilder = () => {
+  console.log('PLR STAKING WITH 0.24.5');
   const [connectedProvider, setConnectedProvider] = useState(null);
   const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
 
