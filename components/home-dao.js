@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import daoBg from "../assets/images/home-dao-bg.png";
+
 const HomeDao = () => {
   return (
     <>
@@ -8,7 +10,9 @@ const HomeDao = () => {
           <div className="home_dao__intro">
             <div className="home_dao__intro__text">
               <h2>What is <span>PillarDAO</span></h2>
-              <p>PillarDAO builds, funds and explores web3, multichain infrastructure and technology for a decentralised future. The DAO is collectively run and member owned - anyone, anywhere can participate and influence the direction of the DAO. <br/><br/><strong>PillarDAO is completely decentralized and the community owns and governs the products that the Pillar Project team have created and worked on from the beginning. All profits from these products (current & future) are routed directly into the DAO treasury.</strong></p>
+              <p>PillarDAO builds, funds and explores web3, multichain infrastructure and technology for a decentralised future. The DAO is collectively run and member owned - anyone, anywhere can participate and influence the direction of the DAO. <br /><br /><strong>PillarDAO is completely decentralized and the community owns and governs <Link href="https://www.pillar.fi/?utm_source=pillar_website&utm_medium=page&utm_campaign=pillar_dao" target="_blank" rel="noopener noreferrer">
+                Pillar Wallet
+              </Link>. All profits from this product (current & future) are routed directly into the DAO treasury.</strong></p>
             </div>
             <div className="home_dao__intro__image">
               <img src={daoBg} alt="" />
