@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import Web3 from 'web3';
 import { useAccount, useDisconnect } from 'wagmi';
 
 import { themeOverride } from '../styles/buidlerTheme';
+import PlrDaoForm from "./form";
 
 const LoadingComponent = () => <p>Loading...</p>
 
@@ -19,9 +20,16 @@ const SignIn = dynamic(() => import('./plr-dao-buidler-sign-in'), {
 });
 
 const PlrDaoStakingBuilder = () => {
-  console.log('PLR STAKING WITH 0.24.5');
   const [connectedProvider, setConnectedProvider] = useState(null);
   const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
+  const [shouldDisplayPlrDaoForm, sethShouldDisplayPlrDaoForm] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      var isFormSubmitted = localStorage.getItem('plt-dao-form-submitted');
+      sethShouldDisplayPlrDaoForm(!isFormSubmitted);
+    }
+  }, []);
 
   const { disconnect: wagmiDisconnect } = useDisconnect();
   const { connector, isConnected } = useAccount();
@@ -37,6 +45,9 @@ const PlrDaoStakingBuilder = () => {
   }
 
   const onLogout = async () => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem('plt-dao-form-submitted');
+    }
     try {
       if (isConnected) wagmiDisconnect();
       if (connector) await connector.disconnect();
@@ -52,8 +63,15 @@ const PlrDaoStakingBuilder = () => {
     } catch (e) {
       //
     }
-
+    sethShouldDisplayPlrDaoForm(true);
     setConnectedProvider(null);
+  }
+
+  const onSubmitForm = () => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem('plt-dao-form-submitted', true);
+    }
+    sethShouldDisplayPlrDaoForm(false);
   }
 
   return <PlrDaoStakingBuilderWrapper>
@@ -63,22 +81,27 @@ const PlrDaoStakingBuilder = () => {
         onWeb3AuthInstanceSet={setWeb3AuthInstance}
       />
     )}
-    {connectedProvider && (
-      <Etherspot
-        provider={connectedProvider}
-        chainId={1}
-        themeOverride={themeOverride}
-        defaultTransactionBlocks={[
-          { type: "PLR_DAO_STAKE" },
-        ]}
-        hideWalletToggle
-        hideAddTransactionButton
-        hideCloseTransactionBlockButton
-        hideWalletSwitch
-        hideBuyButton
-        showMenuLogout
-        onLogout={onLogout}
-      />)}
+    {connectedProvider &&
+      <>
+        {shouldDisplayPlrDaoForm ?
+          <PlrDaoForm onSubmitForm={onSubmitForm} /> :
+          <Etherspot
+            provider={connectedProvider}
+            chainId={1}
+            themeOverride={themeOverride}
+            defaultTransactionBlocks={[
+              { type: "PLR_DAO_STAKE" },
+            ]}
+            hideWalletToggle
+            hideAddTransactionButton
+            hideCloseTransactionBlockButton
+            hideWalletSwitch
+            hideBuyButton
+            showMenuLogout
+            onLogout={onLogout}
+          />}
+      </>
+    }
   </PlrDaoStakingBuilderWrapper>
 }
 
