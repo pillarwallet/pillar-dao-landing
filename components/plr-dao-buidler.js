@@ -22,17 +22,17 @@ const SignIn = dynamic(() => import('./plr-dao-buidler-sign-in'), {
 const PlrDaoStakingBuilder = () => {
   const [connectedProvider, setConnectedProvider] = useState(null);
   const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
-  const [shouldDisplayPlrDaoForm, sethShouldDisplayPlrDaoForm] = useState(false);
+  const [shouldDisplayPlrDaoForm, setShouldDisplayPlrDaoForm] = useState(true);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       var isFormSubmitted = localStorage.getItem('plt-dao-form-submitted');
-      sethShouldDisplayPlrDaoForm(!isFormSubmitted);
+      setShouldDisplayPlrDaoForm(!isFormSubmitted);
     }
-  }, []);
+  }, [connectedProvider]);
 
   const { disconnect: wagmiDisconnect } = useDisconnect();
-  const { connector, isConnected } = useAccount();
+  const { connector, isConnected, address } = useAccount();
 
   const onWeb3ProviderSet = async (web3Provider) => {
     if (!web3Provider) {
@@ -43,6 +43,32 @@ const PlrDaoStakingBuilder = () => {
     const web3 = new Web3(web3Provider);
     setConnectedProvider(web3.currentProvider);
   }
+
+  const getNotionData = async () => {
+    try {
+      const response = await fetch('/api/plr-dao-data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          walletAddress: address
+        }),
+      })
+      const { data } = await response.json();
+      if(data?.length) {
+        setShouldDisplayPlrDaoForm(false);
+        localStorage.setItem('plt-dao-form-submitted', true);
+      }
+    } catch(error) {
+      //
+    }
+  }
+
+  useEffect(() => {
+    if(!address) return;
+    getNotionData();
+  }, [address, connectedProvider]);
 
   const onLogout = async () => {
     if (typeof window !== "undefined") {
@@ -63,7 +89,7 @@ const PlrDaoStakingBuilder = () => {
     } catch (e) {
       //
     }
-    sethShouldDisplayPlrDaoForm(true);
+    setShouldDisplayPlrDaoForm(true);
     setConnectedProvider(null);
   }
 
@@ -71,7 +97,7 @@ const PlrDaoStakingBuilder = () => {
     if (typeof window !== "undefined") {
       localStorage.setItem('plt-dao-form-submitted', true);
     }
-    sethShouldDisplayPlrDaoForm(false);
+    setShouldDisplayPlrDaoForm(false);
   }
 
   return <PlrDaoStakingBuilderWrapper>
@@ -81,26 +107,25 @@ const PlrDaoStakingBuilder = () => {
         onWeb3AuthInstanceSet={setWeb3AuthInstance}
       />
     )}
-    {connectedProvider &&
-      <>
-        {shouldDisplayPlrDaoForm ?
-          <PlrDaoForm onSubmitForm={onSubmitForm} /> :
-          <Etherspot
-            provider={connectedProvider}
-            chainId={1}
-            themeOverride={themeOverride}
-            defaultTransactionBlocks={[
-              { type: "PLR_DAO_STAKE" },
-            ]}
-            hideWalletToggle
-            hideAddTransactionButton
-            hideCloseTransactionBlockButton
-            hideWalletSwitch
-            hideBuyButton
-            showMenuLogout
-            onLogout={onLogout}
-          />}
-      </>
+    {connectedProvider && !shouldDisplayPlrDaoForm &&
+      (<Etherspot
+        provider={connectedProvider}
+        chainId={1}
+        themeOverride={themeOverride}
+        defaultTransactionBlocks={[
+          { type: "PLR_DAO_STAKE" },
+        ]}
+        hideWalletToggle
+        hideAddTransactionButton
+        hideCloseTransactionBlockButton
+        hideWalletSwitch
+        hideBuyButton
+        showMenuLogout
+        onLogout={onLogout}
+      />)
+    }
+    {connectedProvider && shouldDisplayPlrDaoForm &&
+      (<PlrDaoForm defaultWalletAddress={address} onSubmitForm={onSubmitForm} />)
     }
   </PlrDaoStakingBuilderWrapper>
 }

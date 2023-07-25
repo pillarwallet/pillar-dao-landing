@@ -29,7 +29,7 @@ const Input = styled.input`
 
 const SubmitButton = styled.button`
   cursor: pointer;
-  margin: 0.875rem 0rem;
+  margin: 1rem 0rem;
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: 0 2px 4px 0 rgba(95, 0, 1, 0.13);
@@ -63,42 +63,44 @@ const RadioButtonWrapper = styled.div`
   flex-direction: column;
 `;
 
-const PlrDaoForm = ({ onSubmitForm }) => {
+const PlrDaoForm = ({ defaultWalletAddress, onSubmitForm }) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [walletType, setWalletType] = useState('Wallet');
   const [address, setAddress] = useState();
+  const [walletAddress, setWalletAddress] = useState();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    getNotionData();
-  }, [])
+    setWalletAddress(defaultWalletAddress)
+  }, [defaultWalletAddress]);
 
-  const getNotionData = async (data) => {
-    try {
-      console.log("success");
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = {
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    const submitPayload = {
       Name: name,
       Email: email,
-      Wallet: walletType,
+      WalletType: walletType,
       Address: address,
+      WalletAddress: walletAddress,
     }
 
-    const response = await fetch('/api/plr-dao-form', {
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    })
-    await response.json();
-    onSubmitForm();
+    try {
+      const response = await fetch('/api/plr-dao-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitPayload),
+      })
+      const { data } = await response.json();
+      if(data) {
+        onSubmitForm();
+      }
+    } catch(error) {
+      //
+    }
+    setIsSubmitting(false);
   }
 
   const validateEmail = (email) => EMAIL_REGX.test(email);
@@ -110,43 +112,44 @@ const PlrDaoForm = ({ onSubmitForm }) => {
       <div>
         <div>
           <Label>Name</Label>
-          <Input type="text" id="first" name="first" onChange={(event) => setName(event.target.value)} />
+          <Input type="text" id="first" name="first" value={name} onChange={(event) => setName(event.target.value)} />
         </div>
         <div>
           <Label>Address</Label>
-          <Input type="text" id="last" name="last" onChange={(event) => setAddress(event.target.value)} />
+          <Input type="text" id="last" name="last" value={address} onChange={(event) => setAddress(event.target.value)} />
         </div>
         <div>
           <Label>Email</Label>
-          <Input type="text" id="last" name="last" onChange={(event) => setEmail(event.target.value)} />
+          <Input type="text" id="last" name="last" value={email} onChange={(event) => setEmail(event.target.value)} />
         </div>
         <div>
-          <Label>Wallet</Label>
-          <RadioButtonWrapper>
-            <RadioButton>
-              <input
-                type="radio"
-                name="Wallet"
-                value="Wallet"
-                checked={walletType === 'Wallet'}
-                onChange={(event) => setWalletType(event.target.value)}
-              />
-              Wallet
-            </RadioButton>
-            <RadioButton>
-              <input
-                type="radio"
-                name="Smart Wallet"
-                value="Smart Wallet"
-                checked={walletType === 'Smart Wallet'}
-                onChange={(event) => setWalletType(event.target.value)}
-              />
-              Smart Wallet
-            </RadioButton>
-          </RadioButtonWrapper>
+          <Label>Wallet Address</Label>
+          <Input type="text" id="last" name="last" value={walletAddress} onChange={(event) => setWalletAddress(event.target.value)} />
         </div>
+        <RadioButtonWrapper>
+          <RadioButton>
+            <input
+              type="radio"
+              name="Wallet"
+              value="Wallet"
+              checked={walletType === 'Wallet'}
+              onChange={(event) => setWalletType(event.target.value)}
+            />
+            Wallet
+          </RadioButton>
+          <RadioButton>
+            <input
+              type="radio"
+              name="Smart Wallet"
+              value="Smart Wallet"
+              checked={walletType === 'Smart Wallet'}
+              onChange={(event) => setWalletType(event.target.value)}
+            />
+            Smart Wallet
+          </RadioButton>
+        </RadioButtonWrapper>
         <SubmitButton
-          disabled={!name || !address || !walletType || !email || !validateEmail(email) || !validateWalletAddress(address)} onClick={handleSubmit}>Submit</SubmitButton>
+          disabled={isSubmitting || !name || !address || !walletType || !email || !address || !validateEmail(email) || !validateWalletAddress(walletAddress)} onClick={handleSubmit}>Submit</SubmitButton>
       </div>
     </FormContainer>
   );

@@ -1,32 +1,37 @@
 const { Client } = require('@notionhq/client');
 
-const NOTION_SECRET_KEY = 'secret_Q2oNtNIPK2eaAuurEhsGgdNg5nS1iOeDDPxDyfWWMKE';
-const NOTION_DATABASE = 'b076399f028f4d5ab3482f855172e566';
+const NOTION_SECRET_KEY = process.env.NEXT_PUBLIC_NOTION_SECRET_KEY;
+const NOTION_DATABASE = process.env.NEXT_PUBLIC_NOTION_DATABASE;
 
 const notion = new Client({ auth: NOTION_SECRET_KEY });
+
 export default async function handleForm(req, res) {
-  if (req.method === 'POST') {
-    const body = req.body
+  try {
+    if (req.method === 'POST') {
+      const body = req.body
 
-    if (!body.Name || !body.Email || !body.Name || !body.Wallet || !body.Address) {
-      return res.json({ data: 'First or last name not found' })
-    }
-
-    const response = await notion.pages.create({
-      parent: {
-        database_id: NOTION_DATABASE,
-      },
-      properties: {
-        "title": [{ "type": "text", "text": { "content": "PLR DAO Member" } }],
-        "Name": [{ "type": "text", "text": { "content": body.Name } }],
-        "Email": [{ "type": "text", "text": { "content": body.Email } }],
-        "Wallet": [{ "type": "text", "text": { "content": body.Wallet } }],
-        "Address": [{ "type": "text", "text": { "content": body.Address } }],
+      if (!body.Name || !body.Address || !body.Email || !body.Name || !body.WalletType || !body.WalletAddress) {
+        res.status(404).json({ message: 'Invalid data request' })
       }
-    });
-    res.json({ data: response })
-  } else {
-    return res.status(404).json({ message: 'Method not allowed!' })
 
+      const response = await notion.pages.create({
+        parent: {
+          database_id: NOTION_DATABASE,
+        },
+        properties: {
+          "title": [{ "type": "text", "text": { "content": "PLR DAO Member" } }],
+          "Name": [{ "type": "text", "text": { "content": body.Name } }],
+          "Address": [{ "type": "text", "text": { "content": body.Address } }],
+          "Email": [{ "type": "text", "text": { "content": body.Email } }],
+          "WalletType": [{ "type": "text", "text": { "content": body.WalletType } }],
+          "WalletAddress": [{ "type": "text", "text": { "content": body.WalletAddress } }],
+        }
+      });
+      res.status(200).json({ data: response })
+    } else {
+      res.status(404).json({ message: 'Method not allowed!' });
+    }
+  } catch (error) {
+    res.status(404).json({ message: 'Something went wrong.' })
   }
 }
