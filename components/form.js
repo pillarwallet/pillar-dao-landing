@@ -63,6 +63,11 @@ const RadioButtonWrapper = styled.div`
   flex-direction: column;
 `;
 
+const Error = styled.div`
+  margin: 1rem 0rem 0.5rem 0rem;
+  color: red;
+`;
+
 const PlrDaoForm = ({ defaultWalletAddress, onSubmitForm }) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
@@ -70,6 +75,7 @@ const PlrDaoForm = ({ defaultWalletAddress, onSubmitForm }) => {
   const [address, setAddress] = useState();
   const [walletAddress, setWalletAddress] = useState();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasFormError, setFormError] = useState();
 
   useEffect(() => {
     setWalletAddress(defaultWalletAddress)
@@ -93,12 +99,16 @@ const PlrDaoForm = ({ defaultWalletAddress, onSubmitForm }) => {
         },
         body: JSON.stringify(submitPayload),
       })
-      const { data } = await response.json();
+      const { data, message } = await response.json();
       if(data) {
         onSubmitForm();
+        return
+      }
+      if(message){
+        setFormError(message);
       }
     } catch(error) {
-      //
+      setFormError('Please try again.')
     }
     setIsSubmitting(false);
   }
@@ -115,7 +125,7 @@ const PlrDaoForm = ({ defaultWalletAddress, onSubmitForm }) => {
           <Input type="text" id="first" name="first" value={name} onChange={(event) => setName(event.target.value)} />
         </div>
         <div>
-          <Label>Address</Label>
+          <Label>Postal Address</Label>
           <Input type="text" id="last" name="last" value={address} onChange={(event) => setAddress(event.target.value)} />
         </div>
         <div>
@@ -148,6 +158,11 @@ const PlrDaoForm = ({ defaultWalletAddress, onSubmitForm }) => {
             Smart Wallet
           </RadioButton>
         </RadioButtonWrapper>
+        {hasFormError &&
+          (<Error>
+            {hasFormError}
+          </Error>
+          )}
         <SubmitButton
           disabled={isSubmitting || !name || !address || !walletType || !email || !address || !validateEmail(email) || !validateWalletAddress(walletAddress)} onClick={handleSubmit}>Submit</SubmitButton>
       </div>

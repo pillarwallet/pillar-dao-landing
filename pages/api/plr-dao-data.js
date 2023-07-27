@@ -9,7 +9,7 @@ export default async function handleData(req, res) {
   const body = req.body;
 
   if (!body.walletAddress) {
-    res.status(404).json({ data: 'Please provide wallet address.' })
+    return res.status(404).json({ data: 'Please provide wallet address.' })
   }
 
   try {
@@ -40,11 +40,11 @@ export default async function handleData(req, res) {
           Address: field5Value,
         };
       });
-      res.status(200).json({ data: tableData })
+      return res.status(200).json({ data: tableData })
     } else {
-      res.status(404).json({ message: 'Method not allowed!' });
+      return res.status(404).json({ message: 'Method not allowed!' });
     }
   } catch (error) {
-    res.status(404).json({ message: 'Something went wrong!' });
+    return res.status(404).json({ message: 'Something went wrong!' });
   }
 }

@@ -11,7 +11,7 @@ export default async function handleForm(req, res) {
       const body = req.body
 
       if (!body.Name || !body.Address || !body.Email || !body.Name || !body.WalletType || !body.WalletAddress) {
-        res.status(404).json({ message: 'Invalid data request' })
+        return res.status(404).json({ message: 'Please enter valid input values.' })
       }
 
       const response = await notion.pages.create({
@@ -27,11 +27,11 @@ export default async function handleForm(req, res) {
           "WalletAddress": [{ "type": "text", "text": { "content": body.WalletAddress } }],
         }
       });
-      res.status(200).json({ data: response })
+      return res.status(200).json({ data: response })
     } else {
-      res.status(404).json({ message: 'Method not allowed!' });
+      return res.status(404).json({ message: 'Method not allowed!' });
     }
   } catch (error) {
-    res.status(404).json({ message: 'Something went wrong.' })
+    return res.status(404).json({ message: 'Something went wrong. Please try again.' })
   }
 }
