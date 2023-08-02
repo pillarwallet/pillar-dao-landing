@@ -9,7 +9,7 @@ import HomeAbout from "@components/home-about";
 import Footer from "@components/footer";
 const Index = () => {
   return (
-    <Layout pageTitle="PillarDAO">
+    <Layout pageTitle="Pillar DAO - Empowering Decentralized Governance">
       <Header />
       <HomeHero />
       <HomeDao />

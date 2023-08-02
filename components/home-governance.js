@@ -26,7 +26,10 @@ const HomeGovernance = () => {
                 <p className="home_governance__app__detail_paragraph">In order to take part in the governance of PillarDAO, Members are required to lock-in 10,000 PLR tokens into the Polygon smart contract on the membership dApp below.</p>
                 <div className='plr_dao_block' >
                   <WagmiProvider>
-                    <PlrDaoStakingBuilder />
+                    <PlrDaoStakingBuilder
+                      defaultTransactionBlock={"PLR_DAO_STAKE"}
+                      shouldDisplayForm={true}
+                    />
                   </WagmiProvider>
                 </div>
               </div>
