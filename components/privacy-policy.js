@@ -36,7 +36,7 @@ const PrivacyPolicy = () => {
           <strong>Hosting and backend infrastructure</strong>
         </h3>
         <ul>
-          <li>Digital Ocean — Personal Data: various types of Data as specified in the privacy policy of the service</li>
+          <li>Vercel — Personal Data: various types of Data as specified in the privacy policy of the service</li>
         </ul>
         <h3 className="legal-content-heading">
           <img draggable="false" role="img" className="emoji" alt="🌐" src="https://s.w.org/images/core/emoji/14.0.0/svg/1f310.svg" />
@@ -64,19 +64,20 @@ const PrivacyPolicy = () => {
           <strong>User database management</strong>
         </h3>
         <ul>
-          <li>Intercom — Personal Data: Cookies; email address; Usage Data; various types of Data as specified in the privacy policy of the service</li>
+          <li>Notion — Personal Data: Cookies; email address; Usage Data; various types of Data as specified in the privacy policy of the service</li>
         </ul>
         <h2 className="legal-content-heading">
           <strong>Contact information</strong>
         </h2>
         <p>Owner and Data Controller:</p>
         <p>
-          <strong>Pillar Project A.G.</strong><br />
-          <strong>Bahnhofstrasse 21, 6300 Zug,</strong><br />
+          <strong>Pillar Project Association</strong><br />
+          <strong>Blattweid 1,</strong><br />
+          <strong>6345 Neuheim,</strong><br />
           <strong>Switzerland</strong><br />
         </p>
         <p>Owner contact email:<br />
-          <strong><a href="mailto:dpo@pillarproject.io">dpo@pillarproject.io</a></strong>
+          <strong><a href="mailto:dpo@pillardao.org">dpo@pillardao.org</a></strong>
         </p>
       </div>
     </div>
