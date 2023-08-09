@@ -17,16 +17,12 @@ const Layout = ({ pageTitle, children }) => {
         <meta
           property="og:description"
           content="PillarDAO builds, funds and explores web3, multichain infrastructure and technology for a decentralised future. Join us now!" />
-        <meta
-          property="og:image"
-          content="https://pillar-dao-landing-git-feature-plr-dao-sta-12c318-etherspot-new.vercel.app/pillar_dao.png" />
+        <meta property="og:image" content="https://pillardao.org/pillar_dao.png" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content={pageTitle} />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content="PillarDAO builds, funds and explores web3, multichain infrastructure and technology for a decentralised future. Join us now!" />
-        <meta
-          name="twitter:image"
-          content="https://pillar-dao-landing-git-feature-plr-dao-sta-12c318-etherspot-new.vercel.app/pillar_dao.png" />
+        <meta name="twitter:image" content="https://pillardao.org/pillar_dao.png" />
       </Head>
       <div className="page-wrapper" id="wrapper">
         {children}
