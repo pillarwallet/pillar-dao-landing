@@ -7,6 +7,9 @@ import { useAccount, useDisconnect } from 'wagmi';
 import { themeOverride } from '../styles/buidlerTheme';
 import PlrDaoForm from "./form";
 
+export const OPENLOGIN_STORE = 'openlogin_store';
+export const WAGMI_STORE = 'wagmi.store';
+
 const LoadingComponent = () => <p>Loading...</p>
 
 const Etherspot = dynamic(() => import('@etherspot/react-transaction-buidler').then((mod) => mod.Etherspot), {
@@ -23,16 +26,13 @@ const PlrDaoStakingBuilder = () => {
   const [connectedProvider, setConnectedProvider] = useState(null);
   const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
   const [shouldDisplayPlrDaoForm, setShouldDisplayPlrDaoForm] = useState(true);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      var isFormSubmitted = localStorage.getItem('plt-dao-form-submitted');
-      setShouldDisplayPlrDaoForm(!isFormSubmitted);
-    }
-  }, [connectedProvider]);
+  const [defaultFormData, setDefaultFormData] = useState({
+    email: null,
+    walletAddress: null,
+  });
 
   const { disconnect: wagmiDisconnect } = useDisconnect();
-  const { connector, isConnected, address } = useAccount();
+  const { connector, isConnected } = useAccount();
 
   const onWeb3ProviderSet = async (web3Provider) => {
     if (!web3Provider) {
@@ -44,21 +44,19 @@ const PlrDaoStakingBuilder = () => {
     setConnectedProvider(web3.currentProvider);
   }
 
-  const getNotionData = async () => {
+  const getNotionData = async (payload) => {
     try {
       const response = await fetch('/api/plr-dao-data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          walletAddress: address
-        }),
+        body: JSON.stringify(payload),
       })
-      const { data } = await response.json();
-      if(data?.length) {
+      const { isFormSubmitted } = await response.json();
+
+      if(isFormSubmitted) {
         setShouldDisplayPlrDaoForm(false);
-        localStorage.setItem('plt-dao-form-submitted', true);
       }
     } catch(error) {
       //
@@ -66,14 +64,26 @@ const PlrDaoStakingBuilder = () => {
   }
 
   useEffect(() => {
-    if(!address) return;
-    getNotionData();
-  }, [address, connectedProvider]);
+    if(!connectedProvider) return;
+    if (typeof window !== "undefined") {
+      const wagmiStoreString = localStorage.getItem(WAGMI_STORE);
+      const wagmiStoreStore = wagmiStoreString && JSON.parse(wagmiStoreString);
+
+      const openLoginStoreString = localStorage.getItem(OPENLOGIN_STORE);
+      const openLoginStore = openLoginStoreString && JSON.parse(openLoginStoreString);
+
+      if(!openLoginStore?.email && !wagmiStoreStore?.state?.data?.account) return;
+
+      const payload = {
+        email: openLoginStore?.email,
+        walletAddress: wagmiStoreStore.state.data.account,
+      }
+      setDefaultFormData({ ...defaultFormData, ...payload });
+      getNotionData(payload);
+    }
+  }, [connectedProvider]);
 
   const onLogout = async () => {
-    if (typeof window !== "undefined") {
-      localStorage.removeItem('plt-dao-form-submitted');
-    }
     try {
       if (isConnected) wagmiDisconnect();
       if (connector) await connector.disconnect();
@@ -94,9 +104,6 @@ const PlrDaoStakingBuilder = () => {
   }
 
   const onSubmitForm = () => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem('plt-dao-form-submitted', true);
-    }
     setShouldDisplayPlrDaoForm(false);
   }
 
@@ -125,7 +132,11 @@ const PlrDaoStakingBuilder = () => {
       />)
     }
     {connectedProvider && shouldDisplayPlrDaoForm &&
-      (<PlrDaoForm defaultWalletAddress={address} onSubmitForm={onSubmitForm} />)
+      (<PlrDaoForm
+        defaultWalletAddress={defaultFormData.walletAddress}
+        defaultEmail={defaultFormData.email}
+        onSubmitForm={onSubmitForm}
+      />)
     }
   </PlrDaoStakingBuilderWrapper>
 }
