@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import socialDiscord from "../assets/images/social-discord.png";
-import socialyoutube from "../assets/images/social-youtube.png";
 import socialTwitter from "../assets/images/social-twitter.png";
-import socialTelegram from "../assets/images/social-telegram.png";
-import socialGithub from "../assets/images/social-github.png";
-import footerMTV from "../assets/images/footer-mtv.png";
-import footerETH from "../assets/images/footer-eth.png";
 
 const Footer = () => {
   return (
@@ -17,7 +12,7 @@ const Footer = () => {
             <div className="footer__links">
               <ul>
                 <li>
-                  <Link href="https://www.pillar.fi/privacy-policy/">Privacy Policy</Link>
+                  <Link href="https://www.pillardao.org/privacy-policy">Privacy Policy</Link>
                 </li>
               </ul>
             </div>
