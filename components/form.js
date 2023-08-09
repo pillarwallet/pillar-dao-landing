@@ -68,27 +68,39 @@ const Error = styled.div`
   color: red;
 `;
 
-const PlrDaoForm = ({ defaultWalletAddress, onSubmitForm }) => {
+const PlrDaoForm = ({ defaultWalletAddress, defaultEmail, onSubmitForm }) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
+  const [address1, setAddress1] = useState();
+  const [address2, setAddress2] = useState();
+  const [state, setState] = useState();
+  const [city, setCity] = useState();
+  const [country, setCountry] = useState();
+  const [zipcode, setZipcode] = useState();
   const [walletType, setWalletType] = useState('Wallet');
-  const [address, setAddress] = useState();
   const [walletAddress, setWalletAddress] = useState();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasFormError, setFormError] = useState();
 
   useEffect(() => {
     setWalletAddress(defaultWalletAddress)
-  }, [defaultWalletAddress]);
+    setEmail(defaultEmail);
+  }, [defaultWalletAddress, defaultEmail]);
 
+  
   const handleSubmit = async () => {
     setIsSubmitting(true);
     const submitPayload = {
-      Name: name,
-      Email: email,
-      WalletType: walletType,
-      Address: address,
-      WalletAddress: walletAddress,
+      name,
+      email,
+      address1,
+      address2,
+      city,
+      state,
+      country,
+      zipcode,
+      walletType,
+      walletAddress,
     }
 
     try {
@@ -125,12 +137,32 @@ const PlrDaoForm = ({ defaultWalletAddress, onSubmitForm }) => {
           <Input type="text" id="first" name="first" value={name} onChange={(event) => setName(event.target.value)} />
         </div>
         <div>
-          <Label>Postal Address</Label>
-          <Input type="text" id="last" name="last" value={address} onChange={(event) => setAddress(event.target.value)} />
-        </div>
-        <div>
           <Label>Email</Label>
           <Input type="text" id="last" name="last" value={email} onChange={(event) => setEmail(event.target.value)} />
+        </div>
+        <div>
+          <Label>Address 1</Label>
+          <Input type="text" id="last" name="last" value={address1} onChange={(event) => setAddress1(event.target.value)} />
+        </div>
+        <div>
+          <Label>Address 2</Label>
+          <Input type="text" id="last" name="last" value={address2} onChange={(event) => setAddress2(event.target.value)} />
+        </div>
+        <div>
+          <Label>City</Label>
+          <Input type="text" id="last" name="last" value={city} onChange={(event) => setCity(event.target.value)} />
+        </div>
+        <div>
+          <Label>State</Label>
+          <Input type="text" id="last" name="last" value={state} onChange={(event) => setState(event.target.value)} />
+        </div>
+        <div>
+          <Label>Country</Label>
+          <Input type="text" id="last" name="last" value={country} onChange={(event) => setCountry(event.target.value)} />
+        </div>
+        <div>
+          <Label>Zipcode</Label>
+          <Input type="text" id="last" name="last" value={zipcode} onChange={(event) => setZipcode(event.target.value)} />
         </div>
         <div>
           <Label>Wallet Address</Label>
@@ -164,7 +196,7 @@ const PlrDaoForm = ({ defaultWalletAddress, onSubmitForm }) => {
           </Error>
           )}
         <SubmitButton
-          disabled={isSubmitting || !name || !address || !walletType || !email || !address || !validateEmail(email) || !validateWalletAddress(walletAddress)} onClick={handleSubmit}>Submit</SubmitButton>
+          disabled={isSubmitting || !name || !address1 || !city || !state || !country || !zipcode || !walletType || !email || !validateEmail(email) || !validateWalletAddress(walletAddress)} onClick={handleSubmit}>Submit</SubmitButton>
       </div>
     </FormContainer>
   );

@@ -5,12 +5,25 @@ const NOTION_DATABASE = process.env.NEXT_PUBLIC_NOTION_DATABASE;
 
 const notion = new Client({ auth: NOTION_SECRET_KEY });
 
-export default async function handleForm(req, res) {
+const handleForm = async (req, res) => {
   try {
     if (req.method === 'POST') {
-      const body = req.body
+      if (!req?.body) return res.status(404).json({ message: 'Please enter valid input values.' });
 
-      if (!body.Name || !body.Address || !body.Email || !body.Name || !body.WalletType || !body.WalletAddress) {
+      const {
+        name,
+        email,
+        walletType,
+        address1,
+        address2,
+        city,
+        state,
+        country,
+        zipcode,
+        walletAddress,
+      } = req?.body;
+
+      if (!name || !email || !address1 || !city || !state || !country || !zipcode || !walletType || !walletAddress) {
         return res.status(404).json({ message: 'Please enter valid input values.' })
       }
 
@@ -20,11 +33,16 @@ export default async function handleForm(req, res) {
         },
         properties: {
           "title": [{ "type": "text", "text": { "content": "PLR DAO Member" } }],
-          "Name": [{ "type": "text", "text": { "content": body.Name } }],
-          "Address": [{ "type": "text", "text": { "content": body.Address } }],
-          "Email": [{ "type": "text", "text": { "content": body.Email } }],
-          "WalletType": [{ "type": "text", "text": { "content": body.WalletType } }],
-          "WalletAddress": [{ "type": "text", "text": { "content": body.WalletAddress } }],
+          "Name": [{ "type": "text", "text": { "content": name } }],
+          "Email": [{ "type": "text", "text": { "content": email } }],
+          "Address1": [{ "type": "text", "text": { "content": address1 } }],
+          "Address2": [{ "type": "text", "text": { "content": address2 || '' } }],
+          "City": [{ "type": "text", "text": { "content": city } }],
+          "State": [{ "type": "text", "text": { "content": state } }],
+          "Country": [{ "type": "text", "text": { "content": country } }],
+          "Zipcode": [{ "type": "text", "text": { "content": zipcode } }],
+          "WalletType": [{ "type": "text", "text": { "content": walletType } }],
+          "WalletAddress": [{ "type": "text", "text": { "content": walletAddress } }],
         }
       });
       return res.status(200).json({ data: response })
@@ -35,3 +53,5 @@ export default async function handleForm(req, res) {
     return res.status(404).json({ message: 'Something went wrong. Please try again.' })
   }
 }
+
+export default handleForm;
