@@ -21,7 +21,7 @@ export default async function handleForm(req, res) {
         walletAddress,
       } = req.body;
 
-      if (!name || !email || !address1 || !address2 || !city || !state || !country || !zipcode || !walletType || !walletAddress) {
+      if (!name || !email || !address1 || !city || !state || !country || !zipcode || !walletType || !walletAddress) {
         return res.status(404).json({ message: 'Please enter valid input values.' })
       }
 
@@ -34,7 +34,7 @@ export default async function handleForm(req, res) {
           "Name": [{ "type": "text", "text": { "content": name } }],
           "Email": [{ "type": "text", "text": { "content": email } }],
           "Address1": [{ "type": "text", "text": { "content": address1 } }],
-          "Address2": [{ "type": "text", "text": { "content": address2 } }],
+          "Address2": [{ "type": "text", "text": { "content": address2 || '' } }],
           "City": [{ "type": "text", "text": { "content": city } }],
           "State": [{ "type": "text", "text": { "content": state } }],
           "Country": [{ "type": "text", "text": { "content": country } }],

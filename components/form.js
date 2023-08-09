@@ -196,7 +196,7 @@ const PlrDaoForm = ({ defaultWalletAddress, defaultEmail, onSubmitForm }) => {
           </Error>
           )}
         <SubmitButton
-          disabled={isSubmitting || !name || !address1 || !address2 || !city || !state || !country || !zipcode || !walletType || !email || !validateEmail(email) || !validateWalletAddress(walletAddress)} onClick={handleSubmit}>Submit</SubmitButton>
+          disabled={isSubmitting || !name || !address1 || !city || !state || !country || !zipcode || !walletType || !email || !validateEmail(email) || !validateWalletAddress(walletAddress)} onClick={handleSubmit}>Submit</SubmitButton>
       </div>
     </FormContainer>
   );
