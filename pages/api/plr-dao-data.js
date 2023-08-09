@@ -5,28 +5,28 @@ const NOTION_DATABASE = process.env.NEXT_PUBLIC_NOTION_DATABASE;
 
 const notion = new Client({ auth: NOTION_SECRET_KEY });
 
-export default async function handleData(req, res) {
-  const { walletAddress, email } = req.body;
+const handleData = async (req, res) => {
+  const body = req?.body;
 
-  if (!walletAddress && !email) {
+  if (!body?.walletAddress && !body?.email) {
     return res.status(404).json({ data: 'Please provide wallet address or email.' })
   }
 
-  var filterCondition = [];
-  if (walletAddress) {
+  let filterCondition = [];
+  if (body?.walletAddress) {
     filterCondition.push({
       property: 'WalletAddress',
       rich_text: {
-        equals: walletAddress
+        equals: body.walletAddress
       },
     });
   }
 
-  if(email) {
+  if (body?.email) {
     filterCondition.push({
       property: 'Email',
       rich_text: {
-        equals: email
+        equals: body.email
       },
     });
   }
@@ -49,3 +49,5 @@ export default async function handleData(req, res) {
     return res.status(404).json({ message: 'Something went wrong!' });
   }
 }
+
+export default handleData;

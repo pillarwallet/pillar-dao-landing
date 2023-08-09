@@ -53,9 +53,9 @@ const PlrDaoStakingBuilder = () => {
         },
         body: JSON.stringify(payload),
       })
-      const { isFormSubmitted } = await response.json();
+      const data = await response.json();
 
-      if(isFormSubmitted) {
+      if(data?.isFormSubmitted) {
         setShouldDisplayPlrDaoForm(false);
       }
     } catch(error) {
@@ -67,16 +67,16 @@ const PlrDaoStakingBuilder = () => {
     if(!connectedProvider) return;
     if (typeof window !== "undefined") {
       const wagmiStoreString = localStorage.getItem(WAGMI_STORE);
-      const wagmiStoreStore = wagmiStoreString && JSON.parse(wagmiStoreString);
+      const wagmiLocalStorageData = wagmiStoreString && JSON.parse(wagmiStoreString);
 
       const openLoginStoreString = localStorage.getItem(OPENLOGIN_STORE);
-      const openLoginStore = openLoginStoreString && JSON.parse(openLoginStoreString);
+      const openLoginLocalStorageData = openLoginStoreString && JSON.parse(openLoginStoreString);
 
-      if(!openLoginStore?.email && !wagmiStoreStore?.state?.data?.account) return;
+      if(!openLoginLocalStorageData?.email && !wagmiLocalStorageData?.state?.data?.account) return;
 
       const payload = {
-        email: openLoginStore?.email,
-        walletAddress: wagmiStoreStore.state.data.account,
+        email: openLoginLocalStorageData?.email,
+        walletAddress: wagmiLocalStorageData.state.data.account,
       }
       setDefaultFormData({ ...defaultFormData, ...payload });
       getNotionData(payload);

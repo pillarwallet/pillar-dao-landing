@@ -5,9 +5,11 @@ const NOTION_DATABASE = process.env.NEXT_PUBLIC_NOTION_DATABASE;
 
 const notion = new Client({ auth: NOTION_SECRET_KEY });
 
-export default async function handleForm(req, res) {
+const handleForm = async (req, res) => {
   try {
     if (req.method === 'POST') {
+      if (!req?.body) return res.status(404).json({ message: 'Please enter valid input values.' });
+
       const {
         name,
         email,
@@ -19,7 +21,7 @@ export default async function handleForm(req, res) {
         country,
         zipcode,
         walletAddress,
-      } = req.body;
+      } = req?.body;
 
       if (!name || !email || !address1 || !city || !state || !country || !zipcode || !walletType || !walletAddress) {
         return res.status(404).json({ message: 'Please enter valid input values.' })
@@ -51,3 +53,5 @@ export default async function handleForm(req, res) {
     return res.status(404).json({ message: 'Something went wrong. Please try again.' })
   }
 }
+
+export default handleForm;
