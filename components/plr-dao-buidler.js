@@ -22,7 +22,7 @@ const SignIn = dynamic(() => import('./plr-dao-buidler-sign-in'), {
   loading: () => <LoadingComponent />,
 });
 
-const PlrDaoStakingBuilder = () => {
+const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
   const [connectedProvider, setConnectedProvider] = useState(null);
   const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
   const [shouldDisplayPlrDaoForm, setShouldDisplayPlrDaoForm] = useState(true);
@@ -54,17 +54,16 @@ const PlrDaoStakingBuilder = () => {
         body: JSON.stringify(payload),
       })
       const data = await response.json();
-
-      if(data?.isFormSubmitted) {
+      if (data?.isFormSubmitted) {
         setShouldDisplayPlrDaoForm(false);
       }
-    } catch(error) {
+    } catch (error) {
       //
     }
   }
 
   useEffect(() => {
-    if(!connectedProvider) return;
+    if (!connectedProvider) return;
     if (typeof window !== "undefined") {
       const wagmiStoreString = localStorage.getItem(WAGMI_STORE);
       const wagmiLocalStorageData = wagmiStoreString && JSON.parse(wagmiStoreString);
@@ -72,7 +71,7 @@ const PlrDaoStakingBuilder = () => {
       const openLoginStoreString = localStorage.getItem(OPENLOGIN_STORE);
       const openLoginLocalStorageData = openLoginStoreString && JSON.parse(openLoginStoreString);
 
-      if(!openLoginLocalStorageData?.email && !wagmiLocalStorageData?.state?.data?.account) return;
+      if (!openLoginLocalStorageData?.email && !wagmiLocalStorageData?.state?.data?.account) return;
 
       const payload = {
         email: openLoginLocalStorageData?.email,
@@ -99,7 +98,9 @@ const PlrDaoStakingBuilder = () => {
     } catch (e) {
       //
     }
-    setShouldDisplayPlrDaoForm(true);
+    if (shouldDisplayForm) {
+      setShouldDisplayPlrDaoForm(true);
+    }
     setConnectedProvider(null);
   }
 
@@ -120,7 +121,7 @@ const PlrDaoStakingBuilder = () => {
         chainId={1}
         themeOverride={themeOverride}
         defaultTransactionBlocks={[
-          { type: "PLR_DAO_STAKE" },
+          { type: defaultTransactionBlock },
         ]}
         hideWalletToggle
         hideAddTransactionButton
@@ -131,7 +132,7 @@ const PlrDaoStakingBuilder = () => {
         onLogout={onLogout}
       />)
     }
-    {connectedProvider && shouldDisplayPlrDaoForm &&
+    {shouldDisplayForm && connectedProvider && shouldDisplayPlrDaoForm &&
       (<PlrDaoForm
         defaultWalletAddress={defaultFormData.walletAddress}
         defaultEmail={defaultFormData.email}

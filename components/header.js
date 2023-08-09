@@ -4,7 +4,7 @@ import Link from "next/link";
 import pillarDaoLogo from "../assets/images/pillar-dao-logo.png";
 
 const links = [
-  // { key: 1, href: "/staking#home", label: "PLR Staking", scroll: false },
+  // { key: 1, href: "/plr-dao-staking#home", label: "PLR Staking", scroll: false },
   { key: 2, href: "/#governor", label: "Join PillarDAO", scroll: false },
   { key: 3, href: "https://pillardao.substack.com", label: "Blog", scroll: false, target: '_blank' },
   { key: 4, href: "/#governance", label: "Governance", scroll: false },
