@@ -19,12 +19,13 @@ const SignIn = dynamic(() => import('./plr-dao-buidler-sign-in'), {
   loading: () => <LoadingComponent />,
 });
 
-const PlrDaoStakingBuilder = () => {
+const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
   const [connectedProvider, setConnectedProvider] = useState(null);
   const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
-  const [shouldDisplayPlrDaoForm, setShouldDisplayPlrDaoForm] = useState(true);
+  const [shouldDisplayPlrDaoForm, setShouldDisplayPlrDaoForm] = useState(shouldDisplayForm);
 
   useEffect(() => {
+    if (!shouldDisplayForm) return;
     if (typeof window !== "undefined") {
       var isFormSubmitted = localStorage.getItem('plt-dao-form-submitted');
       setShouldDisplayPlrDaoForm(!isFormSubmitted);
@@ -56,17 +57,17 @@ const PlrDaoStakingBuilder = () => {
         }),
       })
       const { data } = await response.json();
-      if(data?.length) {
+      if (data?.length) {
         setShouldDisplayPlrDaoForm(false);
         localStorage.setItem('plt-dao-form-submitted', true);
       }
-    } catch(error) {
+    } catch (error) {
       //
     }
   }
 
   useEffect(() => {
-    if(!address) return;
+    if (!address || !shouldDisplayForm) return;
     getNotionData();
   }, [address, connectedProvider]);
 
@@ -89,7 +90,9 @@ const PlrDaoStakingBuilder = () => {
     } catch (e) {
       //
     }
-    setShouldDisplayPlrDaoForm(true);
+    if (shouldDisplayForm) {
+      setShouldDisplayPlrDaoForm(true);
+    }
     setConnectedProvider(null);
   }
 
@@ -113,7 +116,7 @@ const PlrDaoStakingBuilder = () => {
         chainId={1}
         themeOverride={themeOverride}
         defaultTransactionBlocks={[
-          { type: "PLR_DAO_STAKE" },
+          { type: defaultTransactionBlock },
         ]}
         hideWalletToggle
         hideAddTransactionButton
@@ -124,7 +127,7 @@ const PlrDaoStakingBuilder = () => {
         onLogout={onLogout}
       />)
     }
-    {connectedProvider && shouldDisplayPlrDaoForm &&
+    {shouldDisplayForm && connectedProvider && shouldDisplayPlrDaoForm &&
       (<PlrDaoForm defaultWalletAddress={address} onSubmitForm={onSubmitForm} />)
     }
   </PlrDaoStakingBuilderWrapper>
