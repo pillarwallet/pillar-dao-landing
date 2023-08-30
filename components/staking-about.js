@@ -11,24 +11,24 @@ const StakingAbout = () => {
           </div>
 
           {/* Stake Details */}
-          <div className="staking_about__stake">
+          {/* <div className="staking_about__stake">
             <div className="staking_about__stake__detail">
               <p>Total vaulted PLR</p>
-              <h3>0 PLR</h3>
+              <h3>6,000,000 PLR</h3>
             </div>
             <div className="staking_about__stake__detail">
               <p>% filled</p>
-              <h3>0% filled</h3>
+              <h3>85% filled</h3>
             </div>
             <div className="staking_about__stake__detail">
               <p>Total Rewards Accrued</p>
-              <h3>0 ETH</h3>
+              <h3>15 ETH</h3>
             </div>
             <div className="staking_about__stake__detail">
               <p>Stakers</p>
-              <h3>0</h3>
+              <h3>85</h3>
             </div>
-          </div>
+          </div> */}
 
         </div>
       </section>

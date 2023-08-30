@@ -26,7 +26,7 @@ const StakingDao = () => {
               <div className="staking_dao__staking__cards__detail">
                 <img src={stakeIcon} alt="" />
                 <h3>Stake</h3>
-                <p>Stake PLR tokens for rewards paid by our Ethereum validator node in ETH. The minimum staking amount is 10,000 PLR. Each account can stake up to 250,000 PLR tokens.</p>
+                <p>Stake PLR tokens for rewards paid by our Ethereum validator node in ETH. Each account can stake up to 250,000 PLR tokens.</p>
               </div>
               <div className="staking_dao__staking__cards__detail">
                 <img src={mintIcon} alt="" />
@@ -36,7 +36,7 @@ const StakingDao = () => {
               <div className="staking_dao__staking__cards__detail">
                 <img src={communityIcon} alt="" />
                 <h3>Claim</h3>
-                <p>PLR stakers will be able to claim their rewards on the dapp three months after staking has initiated and every three months after that.</p>
+                <p>PLR stakers will be able to claim their rewards on the dapp after the locked period ends (52&nbsp;weeks).</p>
               </div>
             </div>
             
@@ -60,7 +60,7 @@ const StakingDao = () => {
           <div className="container">
             <div className="staking_dao__foundation__headline">
               <h2>How Did We Get Here?</h2>
-              <h3>Pillar Project Foundation, after receiving a successfully passed proposal by Pillarstaking_dao, has set up an Ethereum Network validation node and funded it with the required 32 ETH. The node will receive <Link href="https://ethereum.org/en/staking/" target="_blank" rel="noopener noreferrer">percentage rewards</Link> of the validator amount. This percentage is a fluctuating amount. All&nbsp;accounts that stake PLR tokens on our smart contract will share the node validators rewards proportionally.</h3>
+              <h3>After PillarDAO successfully passed a governance proposal, an Ethereum Network validation node was established and funded with the required 32 ETH. The node will receive <Link href="https://ethereum.org/en/staking/" target="_blank" rel="noopener noreferrer">percentage rewards</Link> for staking the 32 ETH. This percentage is a fluctuating amount. All users who stake PLR tokens on the PillarDAO smart contract will share the node validator rewards proportionally.</h3>
             </div>
           </div>
         </div>
@@ -69,12 +69,12 @@ const StakingDao = () => {
           <div className="container">
             <div className="staking_dao__faq__detail">
               <h2>Withdrawals & Staking Terms</h2>
-              <p>The PLR staking dapp is run by a smart contract that locks all PLR tokens that are staked for a minimum period of 52 weeks. People who stake PLR will, however, be able to withdraw staking rewards periodically during these 52 weeks.<br/><br/>Claiming will become possible after three months after staking has initiated and every three months after that. Stakers will be notified when the claiming periods go live. Users can follow Pillar Wallet’s social media channels (<Link href="https://twitter.com/PillarWallet" target="_blank" rel="noopener noreferrer">Twitter</Link>, <Link href="https://chat.pillar.fi/" target="_blank" rel="noopener noreferrer">Discord</Link>, <Link href="https://t.me/pillarofficial" target="_blank" rel="noopener noreferrer">Telegram</Link>) for the&nbsp;updates or alternatively sign up for email notifications&nbsp;<Link href="https://www.pillar.fi/#footer">here</Link>.</p>
+              <p>The PLR staking dapp is run by a smart contract that locks all PLR tokens that are staked for a minimum period of 52 weeks. <br/><br/> Stakers will be notified when the claiming period goes live. Users can follow PillarDAO’s social media channels (<Link href="https://twitter.com/pillar_dao" target="_blank" rel="noopener noreferrer">Twitter</Link>, <Link href="https://chat.pillar.fi/" target="_blank" rel="noopener noreferrer">Discord</Link>).</p>
             </div>
           </div>
         </div>
 
-        <div className="staking_dao__ecosystem">
+        {/* <div className="staking_dao__ecosystem">
           <div className="container">
             <div className="staking_dao__ecosystem__detail">
               <h2>PillarDAO’s growing ecosystem</h2>
@@ -99,7 +99,7 @@ const StakingDao = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
       </section>
     </>
