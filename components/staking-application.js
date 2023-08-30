@@ -11,13 +11,13 @@ const StakingApplication = () => {
       <section className="staking_application" id="application">
         <div className="container">
           <div className="staking_application__headline">
-            <h2>All Staked Funds Will Be Locked for 52&nbsp;Weeks. <span>ETH Rewards will be available on a quarterly&nbsp;basis.</span></h2>
+            <h2>All Staked Funds Will Be Locked for 52&nbsp;Weeks. <span>ETH Rewards will be available after the locked period&nbsp;ends.</span></h2>
           </div>
 
           <div className="staking_application__form">
               <div className="staking_application__form__detail">
                 <h3>PLR staking will be open for 1&nbsp;month</h3>
-                <p>Submit your email address & we'll notify you as soon as it begins, so you don't miss out</p>
+                <p>Sign up for access & we'll notify you as&nbsp;soon&nbsp;as&nbsp;it begins.</p>
                 <form
                   onSubmit={event => {
                     event.preventDefault();
@@ -31,7 +31,7 @@ const StakingApplication = () => {
                     value={fields.EMAIL}
                     onChange={handleFieldChange}
                   />
-                  <button>Subscribe</button>
+                  <button>Sign up</button>
                 </form>
                 {loading && "Submitting"}
                 {error && message}

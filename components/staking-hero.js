@@ -10,7 +10,7 @@ const StakingHero = () => {
   let interval = useRef();
 
   const startTimer = () => {
-    const countdownDate = new Date('May 15, 2023 14:00:00 UTC').getTime();
+    const countdownDate = new Date('September 21, 2023 14:00:00 UTC').getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownDate - now;
@@ -72,6 +72,11 @@ const StakingHero = () => {
               <h4 className="gradient_border">{currentAPY}</h4>
             </div>
             <p className="staking_hero__stats__status">Live°</p>
+          </div>
+
+          <div className="staking_hero__footnote">
+            <p>No Reward Fees Apply! <span className="gradient_border">?</span></p>
+            <p className="staking_hero__footnote__tooltip gradient_border">Most staking programs charge a 'Reward Fee' which is charged as a % of your earned rewards. It is often 10% of your rewards. PillarDAO charges no fees.</p>
           </div>
 
           {/* Countdown */}
