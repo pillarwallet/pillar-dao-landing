@@ -9,31 +9,32 @@ const StakingHero = () => {
 
   let interval = useRef();
 
-  const startTimer = () => {
-    const countdownDate = new Date('September 21, 2023 14:00:00 UTC').getTime();
-    interval = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = countdownDate - now;
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24) / (1000 * 60 * 60)));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  // const startTimer = () => {
+  //   const countdownDate = new Date('September 21, 2023 14:00:00 UTC').getTime();
+  //   interval = setInterval(() => {
+  //     const now = new Date().getTime();
+  //     const distance = countdownDate - now;
+  //     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  //     const hours = Math.floor((distance % (1000 * 60 * 60 * 24) / (1000 * 60 * 60)));
+  //     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
-      if (distance < 0) {
-        clearInterval(interval.current);
-      } else {
-        setTimerDays(days);
-        setTimerHours(hours);
-        setTimerMinutes(minutes);
-      }
-    }, 1000);
-  };
+  //     if (distance < 0) {
+  //       clearInterval(interval.current);
+  //       document.getElementsByClassName('staking_hero__countdown')[0].style.display = 'none';
+  //     } else {
+  //       setTimerDays(days);
+  //       setTimerHours(hours);
+  //       setTimerMinutes(minutes);
+  //     }
+  //   }, 1000);
+  // };
 
-  useEffect(() => {
-    startTimer();
-    return () => {
-      clearInterval(interval.current);
-    };
-  });
+  // useEffect(() => {
+  //   startTimer();
+  //   return () => {
+  //     clearInterval(interval.current);
+  //   };
+  // });
 
   useEffect(() => {
     try {
@@ -79,7 +80,7 @@ const StakingHero = () => {
             <p className="staking_hero__footnote__tooltip gradient_border">Most staking programs charge a 'Reward Fee' which is charged as a % of your earned rewards. It is often 10% of your rewards. PillarDAO charges no fees.</p>
           </div>
 
-          {/* Countdown */}
+          {/* Countdown 
           <div className="staking_hero__countdown">
             <p>Time Left Until Staking Window&nbsp;Opens</p>
             <div className="staking_hero__countdown__detail">
@@ -98,6 +99,7 @@ const StakingHero = () => {
               </ul>
             </div>
           </div>
+          */}
 
         </div>
       </section>

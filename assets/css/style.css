@@ -1865,7 +1865,6 @@ ul li {
 
 .staking_application__form__detail h3 {
     font-size: 2rem;
-    max-width: 18ch;
 }
 
 @media only screen and (max-width: 1023px) {

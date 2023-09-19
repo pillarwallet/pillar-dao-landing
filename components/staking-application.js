@@ -16,8 +16,8 @@ const StakingApplication = () => {
 
           <div className="staking_application__form">
               <div className="staking_application__form__detail">
-                <h3>PLR staking will be open for 1&nbsp;month</h3>
-                <p>Sign up for access & we'll notify you as&nbsp;soon&nbsp;as&nbsp;it begins.</p>
+                <h3>Sign up to receive updates on the PLR staking campaign</h3>
+                {/* <p>Sign up to receive updates on the PLR staking campaign</p> */} 
                 <form
                   onSubmit={event => {
                     event.preventDefault();
