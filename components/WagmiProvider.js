@@ -1,4 +1,18 @@
-import { configureChains, createClient, mainnet, WagmiConfig } from 'wagmi';
+import {
+  gnosis,
+  mainnet,
+  polygon,
+  arbitrum,
+  bsc,
+  optimism,
+  avalanche,
+  celo,
+  okc,
+  moonbeam,
+  fantom,
+  aurora,
+} from 'wagmi/chains';
+import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
@@ -7,12 +21,12 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 
 const APP_INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
 
-const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet],
-  [infuraProvider({ apiKey: APP_INFURA_ID ?? '' }), publicProvider()],
+const { chains, publicClient, webSocketPublicClient } = configureChains(
+  [mainnet, polygon, gnosis, arbitrum, bsc, optimism, avalanche, celo, okc, moonbeam, fantom, aurora],
+  [infuraProvider({ apiKey: APP_INFURA_ID ?? '' }), publicProvider()]
 );
 
-const client = createClient({
+const client = createConfig({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({ chains }),
@@ -25,19 +39,16 @@ const client = createClient({
     new WalletConnectConnector({
       chains,
       options: {
-        version: '1',
-        qrcode: true,
+        isNewChainsStale: false,
+        projectId: process.env.WALLET_CONNECT_PROJECT_ID ?? '15fcfb7323fcce5aa1b58afe4dc6d847',
+        showQrModal: true,
       },
     }),
   ],
-  provider,
-  webSocketProvider,
+  publicClient,
+  webSocketPublicClient,
 });
 
-const WagmiProvider = ({ children }) => (
-  <WagmiConfig client={client}>
-    {children}
-  </WagmiConfig>
-);
+const WagmiProvider = ({ children }) => <WagmiConfig config={client}>{children}</WagmiConfig>;
 
 export default WagmiProvider;
