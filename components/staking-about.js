@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import pillarIcon from '../assets/images/pillar-icon.png';
-import etherspot from 'pages/services/etherspot';
+import etherspot from '../services/etherspot';
 import { getRemoteConfig, ensureInitialized, getValue } from 'firebase/remote-config';
-import { app } from 'pages/services/firebase';
+import { app } from '../services/firebase';
 
 const StakingAbout = () => {
   const [stakingData, setStakingData] = useState(null);

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getRemoteConfig, ensureInitialized, getValue } from 'firebase/remote-config';
-import { app } from 'pages/services/firebase';
+import { app } from '../services/firebase';
 
 const StakingHero = () => {
   const [timerDays, setTimerDays] = useState('00');

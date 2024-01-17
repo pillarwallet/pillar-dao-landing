@@ -3,7 +3,7 @@ import { Sdk as EtherspotSdk, EnvNames as EtherspotEnvNames } from 'etherspot';
 import { CHAIN_ID_TO_NETWORK_NAME } from 'etherspot/dist/sdk/network/constants';
 import { sessionStorageInstance } from './storage';
 
-import plrStakingAbi from '../../plrStaking.json';
+import plrStakingAbi from '../plrStaking.json';
 
 const sessionStorage = sessionStorageInstance;
 

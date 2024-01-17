@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormFields, useMailChimpForm } from 'use-mailchimp-form';
 import { ensureInitialized, isSupported, getRemoteConfig, getValue } from 'firebase/remote-config';
-import { app } from 'pages/services/firebase';
+import { app } from '../services/firebase';
 import WagmiProvider from '../components/WagmiProvider';
 import PlrStakingBuilder from './plr-staking-buidler';
 
