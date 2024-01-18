@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getRemoteConfig, ensureInitialized, getValue } from 'firebase/remote-config';
+import { getRemoteConfig, ensureInitialized, getValue, fetchAndActivate } from 'firebase/remote-config';
 import { app } from '../services/firebase';
 
 const StakingHero = () => {
@@ -36,8 +36,9 @@ const StakingHero = () => {
       remoteConfig.defaultConfig = {
         stakingStartTime: '1692806084',
       };
-      await ensureInitialized(remoteConfig)
-        .then(async () => {
+      await ensureInitialized(remoteConfig);
+      await fetchAndActivate(remoteConfig)
+        .then(() => {
           const stakeStartDate = getValue(remoteConfig, 'stakingStartTime');
           startTimer(stakeStartDate.asNumber());
         })

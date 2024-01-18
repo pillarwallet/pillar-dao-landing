@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useFormFields, useMailChimpForm } from 'use-mailchimp-form';
-import { ensureInitialized, isSupported, getRemoteConfig, getValue } from 'firebase/remote-config';
+import { ensureInitialized, getRemoteConfig, getValue, fetchAndActivate } from 'firebase/remote-config';
 import { app } from '../services/firebase';
 import WagmiProvider from '../components/WagmiProvider';
 import PlrStakingBuilder from './plr-staking-buidler';
@@ -21,10 +21,9 @@ const StakingApplication = () => {
         stakingStartTime: '1692806084',
         stakingLockedStartTime: '1693666484',
       };
-
-      await ensureInitialized(remoteConfig)
+      await ensureInitialized(remoteConfig);
+      await fetchAndActivate(remoteConfig)
         .then(() => {
-          if (!isSupported) return;
           const stakeStartDate = getValue(remoteConfig, 'stakingStartTime');
           const stakeLockedTime = getValue(remoteConfig, 'stakingLockedStartTime');
 
@@ -33,8 +32,8 @@ const StakingApplication = () => {
           const lockedTimeDistance = stakeLockedTime.asNumber() * 1000 - now;
           setVisiblePLRStaking(distance < 0 && lockedTimeDistance > 0);
         })
-        .catch((e) => {
-          console.log('ensureInitialized Failed!', e);
+        .catch((err) => {
+          console.log('fetchAndActivate Failed!', err);
         });
     })();
   });

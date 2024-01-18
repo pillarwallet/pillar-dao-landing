@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import pillarIcon from '../assets/images/pillar-icon.png';
 import etherspot from '../services/etherspot';
-import { getRemoteConfig, ensureInitialized, getValue } from 'firebase/remote-config';
+import { getRemoteConfig, fetchAndActivate, ensureInitialized, getValue } from 'firebase/remote-config';
 import { app } from '../services/firebase';
 
 const StakingAbout = () => {
@@ -18,14 +18,15 @@ const StakingAbout = () => {
         plrStakingContract: '0x4fa3d9Cf11Dc94e5E0f3BCCa980aA8FB3a0d27f3',
       };
 
-      await ensureInitialized(remoteConfig)
+      await ensureInitialized(remoteConfig);
+      await fetchAndActivate(remoteConfig)
         .then(async () => {
           const contractAddress = getValue(remoteConfig, 'plrStakingContract');
           const data = await etherspot.getPLRStakingData(contractAddress.asString());
           setStakingData(data);
         })
         .catch((e) => {
-          console.log('ensureInitialized Failed!', e);
+          console.log('fetchAndActivate Failed!', e);
         });
     })();
   }, []);
