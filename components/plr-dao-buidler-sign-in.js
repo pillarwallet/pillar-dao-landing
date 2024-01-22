@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { ADAPTER_EVENTS, CHAIN_NAMESPACES, WALLET_ADAPTERS } from '@web3auth/base';
-import { Web3AuthNoModal } from "@web3auth/no-modal";
+import { Web3AuthNoModal } from '@web3auth/no-modal';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import { BsGithub, BsTwitter } from 'react-icons/bs';
 import { AiOutlineMail } from 'react-icons/ai';
@@ -123,7 +123,8 @@ const SignInOptionsWrapper = styled.div`
 const SignInOptionWrapper = styled.div`
   width: ${({ half }) => (half ? 'calc(50% - 7px)' : '100%')};
   ${({ half }) =>
-    half && `
+    half &&
+    `
   min-width: 9.375rem;
   flex: 1;
   margin: 0px 4px;
@@ -275,13 +276,9 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet }) => {
       if (!connector?.ready || !isConnected) return;
       const wagmiWeb3Provider = await connector.getProvider();
       onWeb3ProviderSet(wagmiWeb3Provider);
-    }
+    };
     update();
-  }, [
-    connector,
-    isConnected,
-    onWeb3ProviderSet,
-  ]);
+  }, [connector, isConnected, onWeb3ProviderSet]);
 
   const { connect, connectors } = useConnect();
 
@@ -314,11 +311,12 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet }) => {
       setEmail('');
       setShowEmailLogin(false);
       setIsSigningIn(false);
-    }, [web3Auth, onWeb3ProviderSet]);
+    },
+    [web3Auth, onWeb3ProviderSet]
+  );
 
   const loginWithOpenLogin = useCallback(
-    async (loginProvider, login_hint) =>
-      loginWithAdapter(WALLET_ADAPTERS.OPENLOGIN, loginProvider, login_hint),
+    async (loginProvider, login_hint) => loginWithAdapter(WALLET_ADAPTERS.OPENLOGIN, loginProvider, login_hint),
     [loginWithAdapter]
   );
 
