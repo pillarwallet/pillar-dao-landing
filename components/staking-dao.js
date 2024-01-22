@@ -129,43 +129,6 @@ const StakingDao = () => {
                 to the PillarDAO by Pillar Foundation
               </p>
               <img style={{ width: '100%' }} src={ecoSystemLogo} aria-setsize={'15px'} />
-              {/* <div className="staking_dao__ecosystem__detail__list">
-                <Link
-                  href="https://etherspot.io/?utm_source=plrstakinglp&utm_medium=website&utm_campaign=plr_staking"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={logoEtherspotSdk} alt="Etherspot SDK" title="Etherspot SDK" />
-                </Link>
-                <Link
-                  href="http://buidler.etherspot.io/?utm_source=plrstakinglp&utm_medium=website&utm_campaign=plr_staking"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={logoEtherspotBuidler} alt="Etherspot BUIDLer" title="Etherspot BUIDLer" />
-                </Link>
-                <Link
-                  href="https://etherspot.io/transactionkit/?utm_source=plrstakinglp&utm_medium=website&utm_campaign=plr_staking"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={logoTransactionKit} alt="TransactionKit" title="TransactionKit" />
-                </Link>
-                <Link
-                  href="https://www.pillar.fi/?utm_source=plrstakinglp&utm_medium=website&utm_campaign=plr_staking"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={logoPillar} alt="Pillar" title="Pillar" />
-                </Link>
-                <Link
-                  href="https://airdropme.io/?utm_source=plrstakinglp&utm_medium=website&utm_campaign=plr_staking"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={logoAirdropme} alt="AirdropMe" title="AirdropMe" />
-                </Link>
-              </div> */}
             </div>
           </div>
         </div>

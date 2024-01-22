@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { ethers } from 'ethers';
+
 import pillarIcon from '../assets/images/pillar-icon.png';
 import etherspot from '../services/etherspot';
 import { getRemoteConfig, fetchAndActivate, ensureInitialized, getValue } from 'firebase/remote-config';
@@ -9,8 +11,8 @@ const StakingAbout = () => {
 
   useEffect(() => {
     (async () => {
-      let privateKey = '0x673c79ab4c60f8d9e343aebc147d9e5cd670cab76c7328b03a23d0fef0aa734f';
-      await etherspot.init(privateKey);
+      const randomWallet = ethers.Wallet.createRandom();
+      await etherspot.init(randomWallet.privateKey);
 
       const remoteConfig = getRemoteConfig(app);
       remoteConfig.settings.minimumFetchIntervalMillis = 3600000;

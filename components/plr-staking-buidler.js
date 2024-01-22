@@ -43,7 +43,7 @@ const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
       if (isConnected) wagmiDisconnect();
       if (connector) await connector.disconnect();
     } catch (e) {
-      //
+      console.error('onLogout', e);
     }
 
     try {
@@ -52,7 +52,7 @@ const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
         web3AuthInstance.clearCache();
       }
     } catch (e) {
-      //
+      console.error('onLogout', e);
     }
     if (shouldDisplayForm) {
       setShouldDisplayPlrDaoForm(true);
