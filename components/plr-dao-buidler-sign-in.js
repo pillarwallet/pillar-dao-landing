@@ -209,7 +209,7 @@ const iconById = {
   coinbaseWallet: <img src={iconCoinbase} alt="coinbase" />,
 };
 
-const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet }) => {
+const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyWC, onClickShowMore }) => {
   const [showSocialLogins, setShowSocialLogins] = useState(true);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [web3Auth, setWeb3Auth] = useState(null);
@@ -325,6 +325,23 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet }) => {
   }, [showSocialLogins, showMoreOptions]);
 
   const visibleSignInOptions = useMemo(() => {
+    if (onlyWC) {
+      const wc = connectors.find((connector) => connector.id === 'walletConnect');
+      const metaMask = connectors.find((connector) => connector.id === 'metaMask');
+      return [
+        {
+          title: 'Connect Wallet',
+          icon: iconById[wc.id],
+          onClick: () => connect({ connector: wc }),
+        },
+        {
+          title: metaMask.name,
+          icon: iconById[metaMask.id],
+          onClick: () => connect({ connector: metaMask }),
+        },
+      ];
+    }
+
     const signInOptions = {
       social: [
         { title: 'Google', icon: <img src={iconGoogle} alt="google" />, onClick: () => loginWithOpenLogin('google') },
@@ -417,14 +434,16 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet }) => {
     <Wrapper>
       <WrapperTitle>Sign in</WrapperTitle>
       <>
-        <SwitchWrapper>
-          <SwitchOption isActive={showSocialLogins} onClick={() => setShowSocialLogins(true)}>
-            Social
-          </SwitchOption>
-          <SwitchOption isActive={!showSocialLogins} onClick={() => setShowSocialLogins(false)}>
-            Web3
-          </SwitchOption>
-        </SwitchWrapper>
+        {!onlyWC && (
+          <SwitchWrapper>
+            <SwitchOption isActive={showSocialLogins} onClick={() => setShowSocialLogins(true)}>
+              Social
+            </SwitchOption>
+            <SwitchOption isActive={!showSocialLogins} onClick={() => setShowSocialLogins(false)}>
+              Web3
+            </SwitchOption>
+          </SwitchWrapper>
+        )}
         <SignInOptionsWrapper>
           {visibleSignInOptions.map((signInOption) => (
             <SignInOptionWrapper
@@ -440,7 +459,15 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet }) => {
           ))}
         </SignInOptionsWrapper>
         {!!errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-        <WrapperTextClickable onClick={() => setShowMoreOptions(!showMoreOptions)}>
+
+        <WrapperTextClickable
+          onClick={() => {
+            if (!showMoreOptions) {
+              onClickShowMore && onClickShowMore();
+            }
+            setShowMoreOptions(!showMoreOptions);
+          }}
+        >
           Show {showMoreOptions ? 'less' : 'more'} options
         </WrapperTextClickable>
       </>

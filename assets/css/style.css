@@ -1247,6 +1247,23 @@ ul li {
     transition: all .3s ease;
 }
 
+.staking__learn__more__text__discord {
+    display: inline-block;
+    background: #8000FF;
+    box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+    text-decoration: none;
+    border: 0;
+    padding: 0.7rem 1.5rem;
+    margin-top: 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 30px;
+    transition: opacity .5s ease;
+    position: relative;
+    transition: all .3s ease;
+}
+
 .home_about__detail__text__discord::before {
     content: url('../images/social-discord.png');
     position: absolute;
@@ -1810,7 +1827,7 @@ ul li {
 
 .staking_application__headline h2 {
     font-size: 2rem;
-    width: 60%;
+    width: 45%;
 }
 
 .staking_application__headline h2 span {
@@ -1989,6 +2006,29 @@ ul li {
     border-right:  solid 1px #331A3F;
 }
 
+.staking_application__detail {
+    width: 56%;
+    padding: 1rem 2rem;
+}
+
+.staking_application__detail p {
+    opacity: 0.6;
+}
+
+
+
+@media only screen and (max-width: 767px) {
+    .staking_application__detail  {
+        width: 100%;
+    }
+}
+
+.staking_application_cards__detail {
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+}
+
 .staking_dao__staking__cards__detail:last-child {
     border-right:  none;
 }
@@ -2108,7 +2148,7 @@ ul li {
 }
 
 .staking_dao__foundation__headline {
-    width: 70%;
+    width: 55%;
     margin: 0 auto;
     padding: 8rem 0;
     position: relative;
@@ -2123,7 +2163,7 @@ ul li {
 
 @media only screen and (max-width: 767px) {
     .staking_dao__foundation__headline {
-        width: 90%;
+        width: 80%;
     } 
 }
 
@@ -2149,11 +2189,25 @@ ul li {
     font-size: 2rem;
     font-weight: 500;
     position: relative;
+    padding-top: 2rem;
+}
+
+.staking_dao__foundation__headline h4 {
+    font-size: 3rem;
+    font-weight: 600;
+    position: relative;
 }
 
 
 @media only screen and (max-width: 767px) {
     .staking_dao__foundation__headline h3 {
+        font-size: 1.25rem;
+        padding-top: 0.7rem;
+    } 
+}
+
+@media only screen and (max-width: 767px) {
+    .staking_dao__foundation__headline h4 {
         font-size: 1.25rem;
     } 
 }
@@ -2174,24 +2228,31 @@ ul li {
     border-radius: 50%;
 }
 
-
 .staking_dao__faq .container {
     border-bottom: solid 1px #331A3F;
-    padding-top: 8rem;
     padding-bottom: 8rem;
 }
 
+.staking_get__here__details .container {
+    border-bottom: solid 1px #331A3F;
+    padding-top: 1rem;
+    padding-bottom: 3rem;
+
+}
+
 @media only screen and (max-width: 1023px) {
-    .staking_dao__faq .container {
-        padding-top: 4rem;
-        padding-bottom: 4rem;
+    .staking_get__here__details .container {
+        padding-top: 1rem;
+        padding-bottom: 2rem;
     }
 }
 
 .staking_dao__faq__detail {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    padding-top: 5rem;
     padding-bottom: 4rem;
+    flex-direction: column;
 }
 
 @media only screen and (max-width: 767px) {
@@ -2206,10 +2267,8 @@ ul li {
 }
 
 .staking_dao__faq__detail h2 {
-    width: 50%;
-    text-align: left;
-    padding-left: 9rem;
-    padding-right: 2rem;
+    width: 100%;
+    text-align: center;
     font-size: 3rem;
     font-weight: 600;
     position: relative;
@@ -2242,8 +2301,7 @@ ul li {
 
 @media only screen and (max-width: 1023px) {
     .staking_dao__faq__detail h2 {
-        width: 45%;
-        padding-left: 4rem;
+        width: 100%;
         font-size: 1.75rem;
     }
 }
@@ -2251,7 +2309,6 @@ ul li {
 @media only screen and (max-width: 767px) {
     .staking_dao__faq__detail h2 {
         width: 100%;
-        padding-left: 3rem;
     }
 }
 
@@ -2263,6 +2320,19 @@ ul li {
     font-size: 2rem;
     font-weight: 400;
     position: relative;
+}
+
+.staking_dao__faq__detail .btn {
+   border: none;
+   background: inherit;
+   cursor: pointer;
+   color: white;
+   text-decoration: underline;
+   display: inline-block;
+}
+
+.staking_dao__faq__detail .btn:hover {
+   background: #ffffff10;
 }
 
 @media only screen and (max-width: 1023px) {
@@ -2288,7 +2358,7 @@ ul li {
     top: 25%;
     width: 7rem;
     height: 1px;
-    background: var(--gradient-hz);
+    /* background: var(--gradient-hz); */
 }
 
 
@@ -2307,9 +2377,8 @@ ul li {
 }
 
 .staking_dao__faq__detail p {
-    width: 45%;
-    text-align: left;
-    padding-left: 2rem;
+    width: 37%;
+    text-align: center;
 }
 
 @media only screen and (max-width: 1023px) {
@@ -2321,7 +2390,6 @@ ul li {
 @media only screen and (max-width: 767px) {
     .staking_dao__faq__detail p {
         width: 100%;
-        padding-left: 3rem;
     }
 }
 
