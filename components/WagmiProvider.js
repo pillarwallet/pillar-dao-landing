@@ -22,7 +22,7 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 const APP_INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [mainnet, polygon, gnosis, arbitrum, bsc, optimism, avalanche, celo, okc, moonbeam, fantom, aurora],
+  [polygon, mainnet, gnosis, arbitrum, bsc, optimism, avalanche, celo, okc, moonbeam, fantom, aurora],
   [infuraProvider({ apiKey: APP_INFURA_ID ?? '' }), publicProvider()]
 );
 
