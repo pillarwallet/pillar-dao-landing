@@ -55,7 +55,7 @@ const StakingDao = () => {
                 shape our decentralised future
               </h3>
               <Link
-                href="https://ethereum.org/en/staking/"
+                href="/#governor"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="staking__learn__more__text__discord"

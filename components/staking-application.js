@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useFormFields, useMailChimpForm } from 'use-mailchimp-form';
+import Link from 'next/link';
 import { ensureInitialized, getRemoteConfig, getValue, fetchAndActivate } from 'firebase/remote-config';
 import { app } from '../services/firebase';
 import WagmiProvider from '../components/WagmiProvider';
@@ -56,7 +57,8 @@ const StakingApplication = () => {
                 Polygon which better meets your needs and reduces overall fees. All ETH rewards will be distributed at
                 the end of the staking period in Wrapped ETH (WETH). <br />
                 <br /> Important for you to understand is that the Pillar staking program is only available for PLR
-                tokens on the Polygon network. If you possess PLR tokens on Ethereum, please follow the guide here.
+                tokens on the Polygon network. If you possess PLR tokens on Ethereum, please follow the guide{' '}
+                <Link href="/plr_ethereum_to_polygon#staking">here</Link>.
               </p>
             </div>
           </div>
@@ -100,7 +102,8 @@ const StakingApplication = () => {
             <div className="staking_application__detail">
               <p>
                 If you currently hold PLR tokens on the Ethereum network, there's no need to be concerned. You can
-                seamlessly swap them for PLR tokens on Polygon here.
+                seamlessly swap them for PLR tokens on Polygon <Link href="/plr_ethereum_to_polygon#staking">here</Link>
+                .
               </p>
             </div>
           </div>
