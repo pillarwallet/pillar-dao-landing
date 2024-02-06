@@ -19,7 +19,7 @@ const StakingAbout = () => {
                 transactional gas.
                 <br />
                 <br />
-                ❗️only send PLR tokens from L2 compatible wallets, Metamask, Pillar v1, Pillar v2 smart wallet.
+                ❗️only send PLR tokens from L2 compatible wallets, Metamask or Pillar V2 smart wallet.
               </p>
               <Link
                 href="https://forms.gle/i5miGsEt7xMf5Lby5"
