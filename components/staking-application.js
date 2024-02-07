@@ -55,7 +55,12 @@ const StakingApplication = () => {
               <p>
                 To enhance your staking experience with us, we have fine-tuned the PLR staking program to launch on
                 Polygon which better meets your needs and reduces overall fees. All ETH rewards will be distributed at
-                the end of the staking period in Wrapped ETH (WETH). <br />
+                the end of the staking period in Wrapped ETH (WETH).
+                <br />
+                <br />
+                Staking is only supported for key-based wallets (EOA) such as MetaMask. If you hold PLR tokens on a
+                smart contract wallet, please transfer them before staking.
+                <br />
                 <br /> Important for you to understand is that the Pillar staking program is only available for PLR
                 tokens on the Polygon network. If you possess PLR tokens on Ethereum, please follow the guide{' '}
                 <Link href="/plr_ethereum_to_polygon#staking">here</Link>.

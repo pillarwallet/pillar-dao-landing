@@ -50,7 +50,7 @@ const StakingAbout = () => {
                   rel="noopener noreferrer"
                   className="swap__button"
                 >
-                  Use Quick swap
+                  Use QuickSwap
                 </Link>
               </div>
             </div>
