@@ -24,7 +24,6 @@ const SignIn = dynamic(() => import('./plr-dao-buidler-sign-in'), {
 const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
   const [connectedProvider, setConnectedProvider] = useState(null);
   const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
-  const [onlyWCVisible, setOnlyWCVisible] = useState(true);
 
   const { disconnect: wagmiDisconnect } = useDisconnect();
   const { connector, isConnected } = useAccount();
@@ -64,12 +63,7 @@ const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
   return (
     <PlrStakingBuilderWrapper>
       {!connectedProvider && (
-        <SignIn
-          onlyWC={onlyWCVisible}
-          onWeb3ProviderSet={onWeb3ProviderSet}
-          onWeb3AuthInstanceSet={setWeb3AuthInstance}
-          onClickShowMore={() => setOnlyWCVisible(false)}
-        />
+        <SignIn onlyMM onWeb3ProviderSet={onWeb3ProviderSet} onWeb3AuthInstanceSet={setWeb3AuthInstance} />
       )}
       {connectedProvider && (
         <Etherspot
