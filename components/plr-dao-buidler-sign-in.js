@@ -209,7 +209,7 @@ const iconById = {
   coinbaseWallet: <img src={iconCoinbase} alt="coinbase" />,
 };
 
-const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyWC, onClickShowMore }) => {
+const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
   const [showSocialLogins, setShowSocialLogins] = useState(true);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [web3Auth, setWeb3Auth] = useState(null);
@@ -325,15 +325,9 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyWC, onClickShowM
   }, [showSocialLogins, showMoreOptions]);
 
   const visibleSignInOptions = useMemo(() => {
-    if (onlyWC) {
-      const wc = connectors.find((connector) => connector.id === 'walletConnect');
+    if (onlyMM) {
       const metaMask = connectors.find((connector) => connector.id === 'metaMask');
       return [
-        {
-          title: 'Connect Wallet',
-          icon: iconById[wc.id],
-          onClick: () => connect({ connector: wc }),
-        },
         {
           title: metaMask.name,
           icon: iconById[metaMask.id],
@@ -434,7 +428,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyWC, onClickShowM
     <Wrapper>
       <WrapperTitle>Sign in</WrapperTitle>
       <>
-        {!onlyWC && (
+        {!onlyMM && (
           <SwitchWrapper>
             <SwitchOption isActive={showSocialLogins} onClick={() => setShowSocialLogins(true)}>
               Social
@@ -460,16 +454,15 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyWC, onClickShowM
         </SignInOptionsWrapper>
         {!!errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
-        <WrapperTextClickable
-          onClick={() => {
-            if (!showMoreOptions) {
-              onClickShowMore && onClickShowMore();
-            }
-            setShowMoreOptions(!showMoreOptions);
-          }}
-        >
-          Show {showMoreOptions ? 'less' : 'more'} options
-        </WrapperTextClickable>
+        {!onlyMM && (
+          <WrapperTextClickable
+            onClick={() => {
+              setShowMoreOptions(!showMoreOptions);
+            }}
+          >
+            Show {showMoreOptions ? 'less' : 'more'} options
+          </WrapperTextClickable>
+        )}
       </>
     </Wrapper>
   );
