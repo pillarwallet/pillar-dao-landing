@@ -47,9 +47,12 @@ const StakingAbout = () => {
           <div className="swap__faq__detail__text">
             <p>
               Cross-chain assistance allows you to send and receive your tokens for minimal gas vs bridge contracts.
-              When you send PLR tokens from your wallet directly to the DAO, the DAO returns PLR on Polygon back to the
-              sending address along with 1 Matic for gas on Polygon. This process does require manual processing of the
-              return tokens and a short delay time
+              After the transaction verification, the DAO will transfer PLR on Polygon to the address provided in{' '}
+              <Link href="https://forms.gle/i5miGsEt7xMf5Lby5" to="#" target="_blank" rel="noopener noreferrer">
+                the request form
+              </Link>{' '}
+              along with 1 Matic for gas on Polygon. This process does require manual processing of sending tokens and a
+              short delay time.
             </p>
           </div>
         </div>

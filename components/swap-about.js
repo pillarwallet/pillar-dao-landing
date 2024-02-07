@@ -17,9 +17,6 @@ const StakingAbout = () => {
                 PillarDAO will be happy to assist you to cross-chain PLR from Ethereum to Polygon. It's about 65%
                 cheaper than via the official Polygon bridge, and the DAO will provide you a small amount of MATIC for
                 transactional gas.
-                <br />
-                <br />
-                ❗️only send PLR tokens from L2 compatible wallets, Metamask or Pillar V2 smart wallet.
               </p>
               <Link
                 href="https://forms.gle/i5miGsEt7xMf5Lby5"
@@ -45,8 +42,8 @@ const StakingAbout = () => {
                 <h4>*Please be advised that utilizing bridging services may result in additional gas costs.</h4>
               </div>
               <div className="swap__statement__rightside__detail" style={{ marginTop: 20 }}>
-                <h3>Option 3: Purchasing PLR on Polygon using Quick swap</h3>
-                <p>Purchasing PLR on Polygon using Quick swap where you can exchange any Polygon token against PLR</p>
+                <h3>Option 3: Purchasing PLR on Polygon using QuickSwap</h3>
+                <p>Purchasing PLR on Polygon using QuickSwap where you can exchange any Polygon token against PLR</p>
                 <Link
                   href="https://quickswap.exchange/#/swap/v3?currency0=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&currency1=0xa6b37fc85d870711c56fbcb8afe2f8db049ae774&swapIndex=0"
                   target="_blank"
