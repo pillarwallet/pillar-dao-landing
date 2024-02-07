@@ -84,6 +84,7 @@ const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
           onLogout={onLogout}
           onlyPolygonInPLRStaking
           simplePLRStakingDashboard
+          plrStakingTitle="Pillar Staking Program"
         />
       )}
     </PlrStakingBuilderWrapper>
