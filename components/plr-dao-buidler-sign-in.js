@@ -223,10 +223,10 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
       if (!!localStorage.getItem('Web3Auth-cachedAdapter')) setIsSigningIn(true);
 
       const web3AuthInstance = new Web3AuthNoModal({
-        clientId: WEB3AUTH_CLIENT_ID,
+        clientId: WEB3AUTH_CLIENT_ID ?? 'dd',
         chainConfig: {
           chainNamespace: CHAIN_NAMESPACES.EIP155,
-          chainId: APP_CHAIN_ID_HEX,
+          chainId: APP_CHAIN_ID_HEX ?? '137',
           rpcTarget: `https://polygon-mainnet.infura.io/v3/${APP_INFURA_ID}`,
         },
         storageKey: 'local',
