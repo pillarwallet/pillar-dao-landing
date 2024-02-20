@@ -2,10 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import stakeIcon from '../assets/images/stake-icon.png';
 import mintIcon from '../assets/images/mint-icon.png';
-import appIos from '../assets/images/app-ios.svg';
-import appAndroid from '../assets/images/app-android.svg';
-import ecoSystemLogo from '../assets/images/dao-ecosystem-logos.png';
 import communityIcon from '../assets/images/community-icon.png';
+import unionIcon from '../assets/images/union.svg';
 
 const StakingDao = () => {
   return (
@@ -24,8 +22,8 @@ const StakingDao = () => {
                 <img src={stakeIcon} alt="" />
                 <h3>Stake</h3>
                 <p>
-                  Stake PLR tokens for rewards paid by our Ethereum validator node in ETH. Each account can stake up to
-                  250,000 PLR tokens.
+                  Stake PLR tokens for rewards paid by our Ethereum validator node in WETH on Polygon. Each account can
+                  stake up to 250,000 PLR Tokens on Polygon
                 </p>
               </div>
               <div className="staking_dao__staking__cards__detail">
@@ -38,58 +36,51 @@ const StakingDao = () => {
               </div>
               <div className="staking_dao__staking__cards__detail">
                 <img src={communityIcon} alt="" />
-                <h3>Community</h3>
+                <h3>Claim</h3>
                 <p>
-                  PillarDAO is a community that builds decentralized tools for Web3 simplifation and governs the
-                  direction PillarDAO
+                  PLR stakers will be able to claim their rewards in the staking dApp 52 weeks (12 months) after the
+                  staking window closes
                 </p>
-              </div>
-            </div>
-
-            <div className="staking_dao__staking__app">
-              <h3>
-                Download <span>Pillar Wallet</span> To&nbsp;Manage Your <br />
-                PLR Staking Porfolio
-              </h3>
-              <div className="staking_dao__staking__app__download">
-                <Link
-                  href="https://apps.apple.com/app/apple-store/id1346582238?pt=118878535&ct=pillar.fi&mt=8"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={appIos}
-                    alt="Download Pillar from App Store Apple"
-                    title="Download Pillar from App Store Apple"
-                  />
-                </Link>
-                <Link
-                  href="https://play.google.com/store/apps/details?id=com.pillarproject.wallet&referrer=utm_source%3Dpillar.fi%26utm_medium%3Ddownload%26utm_campaign%3Dandroid"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={appAndroid}
-                    alt="Download Pillar from Google Play Store"
-                    title="Download Pillar from Google Play Store"
-                  />
-                </Link>
               </div>
             </div>
           </div>
         </div>
 
         <div className="staking_dao__foundation">
-          <div className="container">
+          <div className="container" style={{ borderColor: 'transparent' }}>
             <div className="staking_dao__foundation__headline">
+              <h4>Join PillarDAO!</h4>
               <h3>
-                Pillar Project Foundation, after receiving a successfully passed proposal by PillarDAO, has set up an
-                Ethereum Network validation node and funded it with the required 32 ETH. The node will receive{' '}
-                <Link href="https://ethereum.org/en/staking/" target="_blank" rel="noopener noreferrer">
-                  percentage rewards
-                </Link>{' '}
-                of the staked amount. This percentage is a fluctuating amount.
+                Become a PillarDAO member to steer the direction of the PillarDAO ecosystem and help make decisions that
+                shape our decentralised future
               </h3>
+              <Link
+                href="/#governor"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="staking__learn__more__text__discord"
+              >
+                Learn more
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="staking_get__here__details">
+          <div className="container">
+            <img className="staking_about__icon" src={unionIcon} alt="" />
+            <div className="staking_about__headline">
+              <h2>How Did We Get Here?</h2>
+            </div>
+            <div className="staking_application_cards__detail">
+              <div className="staking_application__detail">
+                <p>
+                  After PillarDAO successfully passed a governance proposal, an Ethereum Network validation node was
+                  established and funded with the required 32 ETH. The node will receive percentage rewards for staking
+                  the 32 ETH. This percentage is a fluctuating amount. All users who stake PLR tokens on the PillarDAO
+                  staking smart contract will share the node validator rewards proportionally in WETH on Polygon
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -98,37 +89,28 @@ const StakingDao = () => {
           <div className="container">
             <div className="staking_dao__faq__detail">
               <h2>Withdrawals & Staking Terms</h2>
-              <p>
-                The Ethereum Foundation has stated that withdrawals of stked ETH and rewards will not be available for
-                12 months after The Merge. With this in mind, all staked PLR will be locked until after this period has
-                completed. Then the personally set stake period will commence.
-                <br />
-                <br /> Once the personally set period has concluded, ETH rewards will be open for withdrawal and
-                un-staking PLR tokens can also be done.
-              </p>
             </div>
-            <div className="staking_dao__faq__detail">
-              <h1>When can I claim my ETH?</h1>
-              <p>
-                Withdraw functionality is expected to be included in the next network upgrade, named Shanghai. This
-                network upgrade is estimated for the first half of 2023, subject to change untill completed. After the
-                Shanghai update, stakers will then be able to withdraw their rewards from their validator balance if
-                they choose.
-              </p>
-            </div>
-          </div>
-        </div>
 
-        <div className="staking_dao__ecosystem">
-          <div className="container">
-            <div className="staking_dao__ecosystem__detail">
-              <h2>PillarDAO’s growing ecosystem</h2>
-              <h3>PillarDAO is BUIDLing!</h3>
+            <div className="staking_dao__faq__detail" style={{ paddingTop: 0 }}>
               <p>
-                All revenue from Pillar Project’s tools are directed to the PillarDAO treasury. The treasury was donated
-                to the PillarDAO by Pillar Foundation
+                The PLR staking dApp is run by a smart contract (deployed on Polygon) that locks all PLR tokens that are
+                staked for a minimum period of 52 weeks.
+                <br />
+                <br />
+                Claiming will become possible 52 weeks (12 months) after the staking window closes.
+                <br />
+                <br />
+                Stakers will be notified when the claiming period goes live. Users can follow PillarDAO’s social media
+                channels (
+                <Link href="https://twitter.com/pillar_dao" className="btn">
+                  Twitter
+                </Link>
+                ,{' '}
+                <Link href="https://chat.pillar.fi/" className="btn">
+                  Discord
+                </Link>
+                ).
               </p>
-              <img style={{ width: '100%' }} src={ecoSystemLogo} aria-setsize={'15px'} />
             </div>
           </div>
         </div>

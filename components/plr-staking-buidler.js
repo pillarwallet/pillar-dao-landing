@@ -63,7 +63,7 @@ const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
   return (
     <PlrStakingBuilderWrapper>
       {!connectedProvider && (
-        <SignIn onWeb3ProviderSet={onWeb3ProviderSet} onWeb3AuthInstanceSet={setWeb3AuthInstance} />
+        <SignIn onlyMM onWeb3ProviderSet={onWeb3ProviderSet} onWeb3AuthInstanceSet={setWeb3AuthInstance} />
       )}
       {connectedProvider && (
         <Etherspot
@@ -77,6 +77,8 @@ const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
           showMenuLogout
           onLogout={onLogout}
           onlyPolygonInPLRStaking
+          simplePLRStakingDashboard
+          plrStakingTitle="Pillar Staking Program"
         />
       )}
     </PlrStakingBuilderWrapper>
