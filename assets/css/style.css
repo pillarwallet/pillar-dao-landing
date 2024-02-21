@@ -1230,6 +1230,23 @@ ul li {
     color: #FFFFFF;
     opacity: 0.6;
 }
+.home__about__detail__text__discord__buttons{
+
+display: inline-block;
+background: #8000FF;
+box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.25);
+color: #FFFFFF;
+text-decoration: none;
+border: 0;
+padding: 0.5rem 1rem;
+font-weight: 600;
+font-size: 1rem; 
+border-radius: 50px; 
+transition: all 0.3s ease;
+margin-right: 15px;
+margin-bottom: 15px;
+    
+}
 
 .home_about__detail__text__discord {
     display: inline-block;

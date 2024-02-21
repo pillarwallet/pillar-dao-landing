@@ -22,14 +22,15 @@ const HomeDao = () => {
           <div className="home_dao__statement">
             <div className="home_dao__statement__detail">
               <h3>Mission</h3>
-              <p>PillarDAO’s mission is to utilize the funds in the PillarDAO treasury to fund:</p>
+              <p>The PillarDAO’s mission is to decentralize governance, explore and build worthy initiatives and fund Web3, multichain infrastructure and technology products. As advocates for the community, the PillarDAO is collectively run, member-owned and governs the Pillar Project Association. All profits from  DAO products (current & future) are routed directly into the DAO treasury. 
+PillarDAO is to utilize the funds in the PillarDAO treasury to fund:</p>
               <ul>
                 <li>Worthy initiatives supporting DAO products.</li>
                 <li>Marketing efforts for product distribution.</li>
                 <li>Initiatives that upskill DAO members.</li>
                 <li>Payment of contributors for their time and efforts.</li>
               </ul>
-              <p>Our DAO governance structures ensure transparency and efficiency which will lead to a future where individuals control technological development rather than faceless corporations.</p>
+              <p>Our DAO governance ensures a future where individuals collectively lead technological development rather than faceless corporations.</p>
             </div>
             <div className="home_dao__statement__detail">
               <h3>Vision</h3>
