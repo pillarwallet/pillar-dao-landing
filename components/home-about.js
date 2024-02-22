@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import socialDiscord from "../assets/images/social-discord.png";
 import Link from "next/link";
 const HomeAbout = () => {
   return (
@@ -14,8 +15,14 @@ The Association is open to cooperation with or joining other organizations that 
               </p>
               <p>PillarDAO operates under Swiss law, providing a unique benefit to its members. Unlike general partnerships which bear unlimited liability for individuals, the structure of the DAA limits the legal liability of its members, offering an additional layer of protection.</p>
               <p>The Association is open to cooperation with or joining other organizations that share the same or similar interests. It also provides services for the benefit of its members, member organizations, and third parties, effectively promoting the interests of the members. Anything that directly or indirectly supports the members' interests aligns with the Association's purpose.</p>
-              <Link href="https://discord.gg/t39xKhzSPb" target="_blank" rel="noopener noreferrer" className="home__about__detail__text__discord__buttons">Join PillarDAO Discord</Link>
-              <Link href="http://gov.pillar.fi/" target="_blank" rel="noopener noreferrer" className="home__about__detail__text__discord__buttons">Visit PillarDAO Forum</Link>
+              <div className="home__about__buttons">
+              <Link href="https://discord.gg/t39xKhzSPb" target="_blank" rel="noopener noreferrer" className="home__about__detail__text__discord__buttons">
+                  <img src={socialDiscord} alt=""/>
+                  Join PillarDAO Discord
+                </Link>
+
+               <Link href="http://gov.pillar.fi/" target="_blank" rel="noopener noreferrer" className="home__about__detail__text__forum__buttons">Visit PillarDAO Forum</Link>
+              </div>            
             </div>
           </div>
         </div>
