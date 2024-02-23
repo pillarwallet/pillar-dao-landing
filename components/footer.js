@@ -19,7 +19,7 @@ const Footer = () => {
             <div className="footer__social">
               <ul className="footer__social__icons">
                 <li>
-                  <Link href="https://chat.pillar.fi/" target="_blank" rel="noopener noreferrer">
+                  <Link href="https://discord.gg/t39xKhzSPb" target="_blank" rel="noopener noreferrer">
                     <img src={socialDiscord} alt="" />
                   </Link>
                 </li>
