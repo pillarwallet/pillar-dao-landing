@@ -68,7 +68,7 @@ const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
       {connectedProvider && (
         <Etherspot
           provider={connectedProvider}
-          chainId={1}
+          chainId={137}
           themeOverride={themeOverride}
           defaultTransactionBlocks={[{ type: defaultTransactionBlock, closeable: false }]}
           hideWalletToggle
@@ -77,7 +77,6 @@ const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
           showMenuLogout
           onLogout={onLogout}
           onlyPolygonInPLRStaking
-          simplePLRStakingDashboard
           plrStakingTitle="Pillar Staking Program"
         />
       )}
