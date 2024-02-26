@@ -106,7 +106,7 @@ const StakingDao = () => {
                   Twitter
                 </Link>
                 ,{' '}
-                <Link href="https://chat.pillar.fi/" className="btn">
+                <Link href="https://discord.gg/t39xKhzSPb" className="btn">
                   Discord
                 </Link>
                 ).
