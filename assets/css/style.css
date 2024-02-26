@@ -1089,7 +1089,6 @@ ul li {
     background: linear-gradient(180deg, rgba(16,0,25,1) 0%, rgba(2,0,3,1) 100%);
     position: relative;
 }
-
 .home_about .container {
     padding-top: 6rem;
     padding-bottom: 6rem;
@@ -1205,7 +1204,7 @@ ul li {
 .home_about__detail__text {
     width: 45%;
     text-align: left;
-    padding-left: 2rem;
+    padding-left: 0rem;
 }
 
 @media only screen and (max-width: 1023px) {
@@ -1217,7 +1216,7 @@ ul li {
 @media only screen and (max-width: 767px) {
     .home_about__detail__text {
         width: 100%;
-        padding-left: 3rem;
+        padding-left: 1rem;
     }
 }
 
@@ -1229,7 +1228,55 @@ ul li {
 .home_about__detail__text p a, .home_about__detail__text ul li a {
     color: #FFFFFF;
     opacity: 0.6;
+    
 }
+.home__about__buttons{
+
+    display: flex;
+}
+
+
+.home__about__detail__text__forum__buttons,
+.home__about__detail__text__discord__buttons {
+  display: flex;
+  background: #250137;
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  text-decoration: none;
+  border: 0;
+  padding: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem; 
+  border-radius: 50px; 
+  transition: all 0.3s ease;
+  margin-right: 5px;
+  margin-bottom: 15px;
+  width: 250px;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+
+.home__about__detail__text__discord__buttons {
+  background: #8000FF;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home__about__detail__text__discord__buttons img {
+  margin-right: 5px;
+}
+
+@media (max-width: 768px) {
+  .home__about__detail__text__forum__buttons,
+  .home__about__detail__text__discord__buttons,.home__about__buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
 
 .home_about__detail__text__discord {
     display: inline-block;
@@ -1245,6 +1292,7 @@ ul li {
     transition: opacity .5s ease;
     position: relative;
     transition: all .3s ease;
+    margin-right: 15px;
 }
 
 .staking__learn__more__text__discord {
