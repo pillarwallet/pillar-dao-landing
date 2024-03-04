@@ -67,7 +67,7 @@ export class EtherspotService {
   }
 
   async getPLRStakingData(contractAddress) {
-    const stakingContract = this.getContract(1, plrStakingAbi, contractAddress);
+    const stakingContract = this.getContract(137, plrStakingAbi, contractAddress);
 
     if (!stakingContract) return null;
 

@@ -74,7 +74,7 @@ const StakingHero = () => {
       <section className="staking_hero" id="home">
         <div className="container">
           <div className="staking_hero__headline">
-            <h1>Earn ETH rewards for staking PLR token</h1>
+            <h1>Earn WETH rewards for staking PLR token</h1>
           </div>
           {/* Current Stats */}
           <div className="staking_hero__stats">
