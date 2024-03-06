@@ -17,7 +17,7 @@ const StakingAbout = () => {
       const remoteConfig = getRemoteConfig(app);
       remoteConfig.settings.minimumFetchIntervalMillis = 3600000;
       remoteConfig.defaultConfig = {
-        plrStakingContract: '0x4fa3d9Cf11Dc94e5E0f3BCCa980aA8FB3a0d27f3',
+        plrStakingContract: '0x826a26e65266c5834977D4f552d31b9e29F668d4',
       };
 
       await ensureInitialized(remoteConfig);
