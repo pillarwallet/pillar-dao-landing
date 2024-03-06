@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@etherspot/react-transaction-buidler": "0.26.19",
+    "@etherspot/react-transaction-buidler": "0.26.20",
     "@next/font": "13.1.6",
     "@notionhq/client": "^2.2.8",
     "@web3auth/base": "^6.1.1",
