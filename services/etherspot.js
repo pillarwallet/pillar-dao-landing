@@ -77,7 +77,8 @@ export class EtherspotService {
       const stakedAccounts = await stakingContract.callGetStakedAccounts();
 
       const totalValuedPLR = Number(EtherUtils.formatEther(totalStaked))?.toFixed(0);
-      const percentage = Number(totalStaked.mul(100).div(maxStakeTotal)) / 100;
+      const maxStake = Number(EtherUtils.formatEther(maxStakeTotal))?.toFixed(0);
+      const percentage = ((totalValuedPLR * 100) / maxStake)?.toFixed(2);
       const stakers = stakedAccounts?.length || 0;
 
       return { totalValuedPLR, percentage, stakers };
