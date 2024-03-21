@@ -35,12 +35,14 @@ const StakingHero = () => {
       remoteConfig.settings.minimumFetchIntervalMillis = 3600000;
       remoteConfig.defaultConfig = {
         stakingStartTime: '1692806084',
+        stakingLockedStartTime: '1693666484',
       };
       await ensureInitialized(remoteConfig);
       await fetchAndActivate(remoteConfig)
         .then(() => {
-          const stakeStartDate = getValue(remoteConfig, 'stakingStartTime');
-          startTimer(stakeStartDate.asNumber());
+          // const stakeStartDate = getValue(remoteConfig, 'stakingStartTime');
+          const stakeLockedTime = getValue(remoteConfig, 'stakingLockedStartTime');
+          startTimer(stakeLockedTime.asNumber());
         })
         .catch((e) => {
           console.log('ensureInitialized Failed!', e);
@@ -99,7 +101,8 @@ const StakingHero = () => {
           </div>
 
           <div className="staking_hero__countdown">
-            <p>Time Left Until Staking Window&nbsp;Opens</p>
+            {/* <p>Time Left Until Staking Window&nbsp;Opens</p> */}
+            <p>Time Left Until Staking Window&nbsp;Closes</p>
             <div className="staking_hero__countdown__detail">
               <ul>
                 <li className="gradient_border">
