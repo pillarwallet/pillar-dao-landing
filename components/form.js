@@ -169,27 +169,17 @@ const PlrDaoForm = ({ defaultWalletAddress, defaultEmail, onSubmitForm }) => {
           <Input type="text" id="last" name="last" value={walletAddress} onChange={(event) => setWalletAddress(event.target.value)} />
         </div>
         <RadioButtonWrapper>
-          <RadioButton>
-            <input
-              type="radio"
-              name="Wallet"
-              value="Wallet"
-              checked={walletType === 'Wallet'}
-              onChange={(event) => setWalletType(event.target.value)}
-            />
-            Wallet
+        <RadioButton style={{ display: 'none' }}>
+          <input
+            type="radio"
+            name="Wallet"
+            value="Wallet"
+            checked={walletType === 'Wallet'}
+            onChange={(event) => setWalletType(event.target.value)}
+          />
+          Wallet
           </RadioButton>
-          <RadioButton>
-            <input
-              type="radio"
-              name="Smart Wallet"
-              value="Smart Wallet"
-              checked={walletType === 'Smart Wallet'}
-              onChange={(event) => setWalletType(event.target.value)}
-            />
-            Smart Wallet
-          </RadioButton>
-        </RadioButtonWrapper>
+          </RadioButtonWrapper>
         {hasFormError &&
           (<Error>
             {hasFormError}
