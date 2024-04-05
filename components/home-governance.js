@@ -24,7 +24,7 @@ const HomeGovernance = () => {
             <div className="home_governance__app__detail_wrapper">
               <div className="home_governance__app__detail">
                 <p className="home_governance__app__detail_paragraph">To join PillarDAO you are required to lock in 10,000 PLR tokens within the Polygon smart contract on the membership dApp provided below.</p>
-                <p className="home_governance__app__detail_paragraph" style={{ fontStyle: 'italic' }}>
+                <p className="home_governance__app__detail_paragraph">
                   By proceeding to stake PLR tokens for a PillarDAO member NFT, you consent to Article 11* providing your name, address, and email.
                   This information is gathered to protect the integrity of the DAO Voting process and to assure the compliance of our Swiss Association.
                 </p>
@@ -48,7 +48,7 @@ const HomeGovernance = () => {
             </div>
           </div>
           <p style={{ marginTop: '20px' }}>
-            *Article 11: Becoming a MemberEveryone who is eligible for a membership in accordance with Article 10 can make a request (request-Membership). Moreover, an applicant must provide his name, address, and email. The admission procedure is automated and shown in Annex 2a to these Articles of Association. The minimum duration of membership is fifty-two (52) weeks. Thereafter, membership shall be automatically renewed until terminated in accordance with Section IV below.
+            *Article 11: Becoming a Member. Everyone who is eligible for a membership in accordance with Article 10 can make a request (request-Membership). Moreover, an applicant must provide his name, address, and email. The admission procedure is automated and shown in Annex 2a to these Articles of Association. The minimum duration of membership is fifty-two (52) weeks. Thereafter, membership shall be automatically renewed until terminated in accordance with Section IV below.
           </p>
         </div>
       </section>
