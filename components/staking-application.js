@@ -1,3 +1,4 @@
+/* Staking for Pillar DAO. For staking PLR for a DAO nft, see home-governance.js, plr-dao-buidler.js */
 import React, { useEffect, useState } from 'react';
 import { useFormFields, useMailChimpForm } from 'use-mailchimp-form';
 import Link from 'next/link';
