@@ -61,8 +61,8 @@ const StakingApplication = () => {
                 Staking is only supported for key-based wallets (EOA) such as MetaMask. If you hold PLR tokens on a
                 smart contract wallet, please transfer them before staking.
                 <br />
-                <br /> Important for you to understand is that the Pillar staking program is only available for PLR
-                tokens on the Polygon network. If you possess PLR tokens on Ethereum, please follow the guide{' '}
+                <br /> Important: The Pillar staking program is only available for PLR
+                tokens on the Polygon network. If you possess PLR tokens on Ethereum, please follow the guide to move them{' '}
                 <Link href="/plr_ethereum_to_polygon#staking">here</Link>.
               </p>
             </div>
