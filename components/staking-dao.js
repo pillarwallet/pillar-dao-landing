@@ -1,4 +1,5 @@
 import React from 'react';
+import { daoLinks } from "config/dao-links";
 import Link from 'next/link';
 import stakeIcon from '../assets/images/stake-icon.png';
 import mintIcon from '../assets/images/mint-icon.png';

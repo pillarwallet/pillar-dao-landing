@@ -1,8 +1,8 @@
+import { daoLinks } from "config/dao-links";
 import React from "react";
 import Link from "next/link";
 import socialDiscord from "../assets/images/social-discord.png";
 import socialTwitter from "../assets/images/social-twitter.png";
-import { daoLinks } from "config/dao-links";
 
 const Footer = () => {
   return (
