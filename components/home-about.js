@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import socialDiscord from "../assets/images/social-discord.png";
 import Link from "next/link";
+import { daoLinks } from "config/dao-links";
 const HomeAbout = () => {
   return (
     <>
@@ -21,7 +22,7 @@ The Association is open to cooperation with or joining other organizations that 
                   Join PillarDAO Discord
                 </Link>
 
-               <Link href="https://guild.xyz/pillardao-official" target="_blank" rel="noopener noreferrer" className="home__about__detail__text__forum__buttons">Join Discord Guild</Link>
+               <Link href={daoLinks.DAO_SOCIAL_GUILDXYZ} target="_blank" rel="noopener noreferrer" className="home__about__detail__text__forum__buttons">Join Discord Guild</Link>
               </div>            
             </div>
           </div>
