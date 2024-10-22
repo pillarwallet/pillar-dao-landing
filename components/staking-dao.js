@@ -102,7 +102,7 @@ const StakingDao = () => {
                 <br />
                 Stakers will be notified when the claiming period goes live. Users can follow PillarDAO’s social media
                 channels (
-                <Link href="https://twitter.com/pillar_dao" className="btn">
+                <Link href={daoLinks.DAO_SOCIAL_TWITTER_X} className="btn">
                   Twitter
                 </Link>
                 ,{' '}

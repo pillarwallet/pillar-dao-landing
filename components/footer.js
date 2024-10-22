@@ -25,7 +25,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href="https://twitter.com/pillar_dao" target="_blank" rel="noopener noreferrer">
+                  <Link href={daoLinks.DAO_SOCIAL_TWITTER_X} target="_blank" rel="noopener noreferrer">
                     <img src={socialTwitter} alt="" />
                   </Link>
                 </li>
