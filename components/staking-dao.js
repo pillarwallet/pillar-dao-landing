@@ -106,7 +106,7 @@ const StakingDao = () => {
                   Twitter
                 </Link>
                 ,{' '}
-                <Link href="https://discord.gg/t39xKhzSPb" className="btn">
+                <Link href={daoLinks.DAO_SOCIAL_DISCORD} className="btn">
                   Discord
                 </Link>
                 ).

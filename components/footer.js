@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import socialDiscord from "../assets/images/social-discord.png";
 import socialTwitter from "../assets/images/social-twitter.png";
+import { daoLinks } from "config/dao-links";
 
 const Footer = () => {
   return (
@@ -19,7 +20,7 @@ const Footer = () => {
             <div className="footer__social">
               <ul className="footer__social__icons">
                 <li>
-                  <Link href="https://discord.gg/t39xKhzSPb" target="_blank" rel="noopener noreferrer">
+                  <Link href={daoLinks.DAO_SOCIAL_DISCORD} target="_blank" rel="noopener noreferrer">
                     <img src={socialDiscord} alt="" />
                   </Link>
                 </li>

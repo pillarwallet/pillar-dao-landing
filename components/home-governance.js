@@ -42,7 +42,7 @@ const HomeGovernance = () => {
                 <img className="dao_member_img" src={governanceNFT} alt="" />
                 <ul>
                   <li>The lock-in period is for 52 weeks after which you can optionally burn your membership NFT and unlock your PLR tokens, deactivating membership status.</li>
-                  <li>PillarDAO proposals are discussed in the <Link href="https://guild.xyz/pillardao-official" target="_blank" rel="noopener noreferrer">Members Only Discord Guild</Link> and once consensus is reached, voted on using <Link href="https://snapshot.org/#/pillar" target="_blank" rel="noopener noreferrer">SnapShot</Link>. The process for submitting a proposal is pinned on the <Link href="https://discord.gg/t39xKhzSPb" target="_blank" rel="noopener noreferrer">Discord channel</Link>.</li>
+                  <li>PillarDAO proposals are discussed in the <Link href="https://guild.xyz/pillardao-official" target="_blank" rel="noopener noreferrer">Members Only Discord Guild</Link> and once consensus is reached, voted on using <Link href="https://snapshot.org/#/pillar" target="_blank" rel="noopener noreferrer">SnapShot</Link>. The process for submitting a proposal is pinned on the <Link href={daoLinks.DAO_SOCIAL_DISCORD} target="_blank" rel="noopener noreferrer">Discord channel</Link>.</li>
                 </ul>
               </div>
             </div>
