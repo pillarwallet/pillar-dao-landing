@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { daoLinks } from "config/dao-links";
 import pillarDaoLogo from "../assets/images/pillar-dao-logo.png";
 
 const links = [
   { key: 1, href: "/staking#home", label: "PLR Staking", scroll: false },
   { key: 2, href: "/#governor", label: "Join PillarDAO", scroll: false },
-  { key: 3, href: "https://pillardao.substack.com", label: "Blog", scroll: false, target: '_blank' },
+  { key: 3, href: daoLinks.DAO_BLOG, label: "Blog", scroll: false, target: '_blank' },
   { key: 4, href: "/#governance", label: "Governance", scroll: false },
   { key: 5, href: "/#about", label: "About", scroll: false },
 ]
@@ -35,7 +36,7 @@ const Header = () => {
                 
             </ul>
             
-            <Link href="https://discord.gg/t39xKhzSPb" target="_blank" rel="noopener noreferrer" className="header__discord" onClick={() => setShowMobileMenu(!showMobileMenu)}>Join Discord</Link>
+            <Link href={"https://discord.gg/t39xKhzSPb"} target="_blank" rel="noopener noreferrer" className="header__discord" onClick={() => setShowMobileMenu(!showMobileMenu)}>Join Discord</Link>
           </nav>
 
           <div className= {showMobileMenu ? "header__mobile_menu header__mobile_menu--change" : "header__mobile_menu"} onClick={() => setShowMobileMenu(!showMobileMenu)}>
