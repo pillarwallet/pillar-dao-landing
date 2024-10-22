@@ -36,7 +36,7 @@ const Header = () => {
                 
             </ul>
             
-            <Link href={"https://discord.gg/t39xKhzSPb"} target="_blank" rel="noopener noreferrer" className="header__discord" onClick={() => setShowMobileMenu(!showMobileMenu)}>Join Discord</Link>
+            <Link href={daoLinks.DAO_SOCIAL_DISCORD} target="_blank" rel="noopener noreferrer" className="header__discord" onClick={() => setShowMobileMenu(!showMobileMenu)}>Join Discord</Link>
           </nav>
 
           <div className= {showMobileMenu ? "header__mobile_menu header__mobile_menu--change" : "header__mobile_menu"} onClick={() => setShowMobileMenu(!showMobileMenu)}>
