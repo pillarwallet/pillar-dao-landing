@@ -21,6 +21,8 @@ const WEB3AUTH_CLIENT_ID = process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID;
 const APP_CHAIN_ID_HEX = process.env.NEXT_PUBLIC_CHAIN_ID_HEX;
 const APP_INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
 
+//#region Styled
+
 const Wrapper = styled.div`
   width: 100%;
   max-width: 100%;
@@ -203,13 +205,15 @@ const EmailSubmitButton = styled.button`
   }
 `;
 
+//#endregion Styled
+
 const iconById = {
   metaMask: <img src={iconMetamask} alt="metamask" />,
   walletConnect: <img src={iconWalletConnect} alt="walletconnect" />,
   coinbaseWallet: <img src={iconCoinbase} alt="coinbase" />,
 };
 
-const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
+const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM }) => {
   const [showSocialLogins, setShowSocialLogins] = useState(true);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [web3Auth, setWeb3Auth] = useState(null);
@@ -325,15 +329,32 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
   }, [showSocialLogins, showMoreOptions]);
 
   const visibleSignInOptions = useMemo(() => {
-    if (onlyMM) {
+    
+    const options = [];
+
+    /* Set only one or few connectors with include useMemo options */
+    if (includeMM) {
       const metaMask = connectors.find((connector) => connector.id === 'metaMask');
-      return [
-        {
+      if (metaMask) {
+        options.push({
           title: metaMask.name,
           icon: iconById[metaMask.id],
           onClick: () => connect({ connector: metaMask }),
-        },
-      ];
+        });
+      }
+    }
+    if (includeWC) {
+      const walletConnect = connectors.find((connector) => connector.id === 'walletConnect');
+      if (walletConnect) {
+        options.push({
+          title: walletConnect.name,
+          icon: iconById[walletConnect.id],
+          onClick: () => connect({ connector: walletConnect }),
+        });
+      }
+    }
+    if (options.length > 0) {
+      return options;
     }
 
     const signInOptions = {
@@ -375,6 +396,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
 
     return selectedSignInOptions.slice(0, visibleNumber);
   }, [showSocialLogins, showMoreOptions, loginWithOpenLogin, connectors, connect]);
+
 
   if (isSigningIn) {
     return (
@@ -428,7 +450,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
     <Wrapper>
       <WrapperTitle>Sign in</WrapperTitle>
       <>
-        {!onlyMM && (
+        {!includeMM && !includeWC && (
           <SwitchWrapper>
             <SwitchOption isActive={showSocialLogins} onClick={() => setShowSocialLogins(true)}>
               Social
@@ -454,7 +476,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
         </SignInOptionsWrapper>
         {!!errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
-        {!onlyMM && (
+        {!includeMM && !includeWC && (
           <WrapperTextClickable
             onClick={() => {
               setShowMoreOptions(!showMoreOptions);

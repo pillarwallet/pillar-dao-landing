@@ -63,7 +63,7 @@ const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
   return (
     <PlrStakingBuilderWrapper>
       {!connectedProvider && (
-        <SignIn onlyMM onWeb3ProviderSet={onWeb3ProviderSet} onWeb3AuthInstanceSet={setWeb3AuthInstance} />
+        <SignIn includeMM onWeb3ProviderSet={onWeb3ProviderSet} onWeb3AuthInstanceSet={setWeb3AuthInstance} />
       )}
       {connectedProvider && (
         <Etherspot
