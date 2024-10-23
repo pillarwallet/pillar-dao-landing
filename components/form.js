@@ -53,8 +53,8 @@ const SubmitButton = styled.button`
 
 const RestartButton = styled.button`
   cursor: pointer;
-  margin: 1rem 0rem;
-  padding: 1rem;
+  margin: 0.5rem;
+  padding: 0.5rem 0.5rem;
   border-radius: 1rem;
   box-shadow: 0 2px 4px 0 rgba(95, 0, 1, 0.13);
   border: none;
@@ -78,7 +78,8 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+  margin-right: 10px;
 `;
 
 const Title = styled.h3`
