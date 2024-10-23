@@ -29,7 +29,6 @@ const Header = () => {
             <ul id="menu" onClick={() => setShowMobileMenu(false)}>
               {links.map((link) => (
                 <li key={link.key} className={router.pathname === link.href ? 'active' : ''}>
-                  {/* Handle external links with target="_blank" */}
                   {link.target ? (
                     <a href={link.href} target={link.target} rel="noopener noreferrer">
                       {link.label}

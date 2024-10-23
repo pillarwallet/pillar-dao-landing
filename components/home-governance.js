@@ -1,9 +1,7 @@
-import Link from "next/link";
-import { daoLinks } from "config/dao-links";
-import governanceBg from "../assets/images/home-governance-bg.png";
-import governanceNFT from "../assets/images/home-governance-nft.png";
-import PlrDaoStakingBuilder from "./plr-dao-buidler";
-import WagmiProvider from "../components/WagmiProvider";
+import { daoLinks } from 'config/dao-links';
+import governanceBg from '../assets/images/home-governance-bg.png';
+import governanceNFT from '../assets/images/home-governance-nft.png';
+import PlrDaoStakingBuilder from './plr-dao-buidler';
 
 const HomeGovernance = () => {
   return (
@@ -42,8 +40,25 @@ const HomeGovernance = () => {
                 <p className="home_governance__app__detail_paragraph">Once locked, you will receive a membership NFT confirming your status, which will be utilized for verification purposes.</p>
                 <img className="dao_member_img" src={governanceNFT} alt="" />
                 <ul>
-                  <li>The lock-in period is for 52 weeks after which you can optionally burn your membership NFT and unlock your PLR tokens, deactivating membership status.</li>
-                  <li>PillarDAO proposals are discussed in the <Link href={daoLinks.DAO_SOCIAL_GUILDXYZ} target="_blank" rel="noopener noreferrer">Members Only Discord Guild</Link> and once consensus is reached, voted on using <Link href="https://snapshot.org/#/pillar" target="_blank" rel="noopener noreferrer">SnapShot</Link>. The process for submitting a proposal is pinned on the <Link href={daoLinks.DAO_SOCIAL_DISCORD} target="_blank" rel="noopener noreferrer">Discord channel</Link>.</li>
+                  <li>
+                    The lock-in period is for 52 weeks after which you can optionally burn your membership NFT and
+                    unlock your PLR tokens, deactivating membership status.
+                  </li>
+                  <li>
+                    PillarDAO proposals are discussed in the{' '}
+                    <a href={daoLinks.DAO_SOCIAL_GUILDXYZ} target="_blank" rel="noopener noreferrer">
+                      Members Only Discord Guild
+                    </a>{' '}
+                    and once consensus is reached, voted on using{' '}
+                    <a href="https://snapshot.org/#/pillar" target="_blank" rel="noopener noreferrer">
+                      SnapShot
+                    </a>
+                    . The process for submitting a proposal is pinned on the{' '}
+                    <a href={daoLinks.DAO_SOCIAL_DISCORD} target="_blank" rel="noopener noreferrer">
+                      Discord channel
+                    </a>
+                    .
+                  </li>
                 </ul>
               </div>
             </div>

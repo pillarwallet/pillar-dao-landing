@@ -1,6 +1,5 @@
 import { daoLinks } from "config/dao-links";
 import React from "react";
-import Link from "next/link";
 import socialDiscord from "../assets/images/social-discord.png";
 import socialTwitter from "../assets/images/social-twitter.png";
 
@@ -13,21 +12,21 @@ const Footer = () => {
             <div className="footer__links">
               <ul>
                 <li>
-                  <Link href="https://www.pillardao.org/privacy-policy">Privacy Policy</Link>
+                  <a href="https://www.pillardao.org/privacy-policy">Privacy Policy</a>
                 </li>
               </ul>
             </div>
             <div className="footer__social">
               <ul className="footer__social__icons">
                 <li>
-                  <Link href={daoLinks.DAO_SOCIAL_DISCORD} target="_blank" rel="noopener noreferrer">
-                    <img src={socialDiscord} alt="" />
-                  </Link>
+                  <a href={daoLinks.DAO_SOCIAL_DISCORD} target="_blank" rel="noopener noreferrer">
+                    <img src={socialDiscord} alt="Discord" />
+                  </a>
                 </li>
                 <li>
-                  <Link href={daoLinks.DAO_SOCIAL_TWITTER_X} target="_blank" rel="noopener noreferrer">
-                    <img src={socialTwitter} alt="" />
-                  </Link>
+                  <a href={daoLinks.DAO_SOCIAL_TWITTER_X} target="_blank" rel="noopener noreferrer">
+                    <img src={socialTwitter} alt="Twitter" />
+                  </a>
                 </li>
               </ul>
             </div>
