@@ -22,7 +22,6 @@ const APP_CHAIN_ID_HEX = process.env.NEXT_PUBLIC_CHAIN_ID_HEX;
 const APP_INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
 
 //#region Styled
-
 const Wrapper = styled.div`
   width: 100%;
   max-width: 100%;
@@ -204,7 +203,6 @@ const EmailSubmitButton = styled.button`
     opacity: 0.7;
   }
 `;
-
 //#endregion Styled
 
 const iconById = {
@@ -213,7 +211,7 @@ const iconById = {
   coinbaseWallet: <img src={iconCoinbase} alt="coinbase" />,
 };
 
-const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM }) => {
+const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC }) => {
   const [showSocialLogins, setShowSocialLogins] = useState(true);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [web3Auth, setWeb3Auth] = useState(null);
