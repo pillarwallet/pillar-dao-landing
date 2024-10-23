@@ -15,7 +15,7 @@ import {
 } from 'wagmi/chains';
 import { metaMask, walletConnect, coinbaseWallet, safe } from 'wagmi/connectors';
 // import pillarDaoLogo from '../assets/images/pillar-dao-logo.png';
-import pillarDaoLogo from '@images/pillar-dao-logo.png';
+import pillarDaoIcon from '@images/pillar-dao-logo-purple-48px.png';
 
 const blockchains = [
   polygon,
@@ -44,18 +44,18 @@ export const wagmiConfig = createConfig({
       },
     }),
     walletConnect({
-      projectId: `15fcfb7323fcce5aa1b58afe4dc6d847` || process.env.WALLET_CONNECT_PROJECT_ID,
+      projectId: process.env.WALLET_CONNECT_PROJECT_ID || '15fcfb7323fcce5aa1b58afe4dc6d847',
       showQrModal: true,
-      isNewChainsStale: false,
       metadata: {
         name: 'Pillar DAO Governance Staking',
         description: 'Pillar DAO',
         url: 'https://pillardao.org/',
+        icons: [pillarDaoIcon],
       },
     }),
     coinbaseWallet({
       appName: 'Pillar DAO Governance Staking',
-      appLogoUrl: pillarDaoLogo || '',
+      appLogoUrl: pillarDaoIcon || '',
     }),
     safe(),
   ],
