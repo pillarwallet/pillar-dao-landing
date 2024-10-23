@@ -314,12 +314,12 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
       setShowEmailLogin(false);
       setIsSigningIn(false);
     },
-    [web3Auth, onWeb3ProviderSet]
+    [web3Auth, onWeb3ProviderSet],
   );
 
   const loginWithOpenLogin = useCallback(
     async (loginProvider, login_hint) => loginWithAdapter(WALLET_ADAPTERS.OPENLOGIN, loginProvider, login_hint),
-    [loginWithAdapter]
+    [loginWithAdapter],
   );
 
   useEffect(() => {
@@ -327,7 +327,6 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
   }, [showSocialLogins, showMoreOptions]);
 
   const visibleSignInOptions = useMemo(() => {
-    
     const options = [];
 
     /* Set only one or few connectors with include useMemo options */
@@ -394,7 +393,6 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
 
     return selectedSignInOptions.slice(0, visibleNumber);
   }, [showSocialLogins, showMoreOptions, loginWithOpenLogin, connectors, connect]);
-
 
   if (isSigningIn) {
     return (

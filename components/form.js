@@ -51,6 +51,40 @@ const SubmitButton = styled.button`
   }
 `;
 
+const RestartButton = styled.button`
+  cursor: pointer;
+  margin: 1rem 0rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px 0 rgba(95, 0, 1, 0.13);
+  border: none;
+  background: #890df8;
+  font-family: 'PTRootUIWebRegular', sans-serif;
+  text-align: center;
+  color: #fff;
+  font-size: 1rem;
+  width: 100%;
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const Title = styled.h3`
+  margin: 0;
+`;
+
 const Label = styled.div`
   margin: 0.5rem 0.5px;
 `;
@@ -70,7 +104,7 @@ const Error = styled.div`
 `;
 //#endregion Styled
 
-const PlrDaoForm = ({ defaultWalletAddress, defaultEmail, onSubmitForm }) => {
+const PlrDaoForm = ({ defaultWalletAddress, defaultEmail, onSubmitForm, onLogout }) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [address1, setAddress1] = useState();
@@ -131,7 +165,18 @@ const PlrDaoForm = ({ defaultWalletAddress, defaultEmail, onSubmitForm }) => {
 
   return (
     <FormContainer>
-      <h3>PLR DAO Membership</h3>
+      <HeaderWrapper>
+        <Title>PLR DAO Membership</Title>
+        <div>
+          <RestartButton 
+          title="Logout and Restart" 
+          disabled={isSubmitting}
+          onClick={onLogout}
+          >
+            ⟳
+          </RestartButton>
+        </div>
+      </HeaderWrapper>
       <div>
         <div>
           <Label>Name</Label>
