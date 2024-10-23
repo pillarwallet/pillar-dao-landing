@@ -22,7 +22,7 @@ The Association is open to cooperation with or joining other organizations that 
                   Join PillarDAO Discord
                 </Link>
 
-               <Link href={daoLinks.DAO_SOCIAL_GUILDXYZ} target="_blank" rel="noopener noreferrer" className="home__about__detail__text__forum__buttons">Join Discord Guild</Link>
+               <Link href={daoLinks.DAO_SOCIAL_GUILDXYZ} target="_blank" rel="noopener noreferrer" className="home__about__detail__text__forum__buttons">NFT sign-in at Guild.xyz</Link>
               </div>            
             </div>
           </div>
