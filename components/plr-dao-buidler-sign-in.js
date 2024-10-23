@@ -326,17 +326,18 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
     setErrorMessage(null);
   }, [showSocialLogins, showMoreOptions]);
 
-  const visibleSignInOptions = useMemo(() => {
+  /* Set only one or few connectors with include useMemo options */
+  const memoSignInOptions = useMemo(() => {
     const options = [];
-
-    /* Set only one or few connectors with include useMemo options */
     if (includeMM) {
       const metaMask = connectors.find((connector) => connector.type === 'metaMask');
       if (metaMask) {
         options.push({
           title: metaMask.name,
           icon: iconById[metaMask.type],
-          onClick: () => connect({ connector: metaMask }),
+          onClick: () => {
+            connect({ connector: metaMask });
+          },
         });
       }
     }
@@ -346,7 +347,9 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
         options.push({
           title: walletConnect.name,
           icon: iconById[walletConnect.type],
-          onClick: () => connect({ connector: walletConnect }),
+          onClick: () => {
+            connect({ connector: walletConnect });
+          },
         });
       }
     }
@@ -421,7 +424,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
     return (
       <Wrapper>
         <WrapperTitle>Sign in with Email</WrapperTitle>
-        <EmailInput placeholder="Enter you email" onChange={(e) => setEmail(e?.target?.value ?? '')} />
+        <EmailInput placeholder="Enter your email" onChange={(e) => setEmail(e?.target?.value ?? '')} />
         {!!errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <EmailSubmitButton
           onClick={() => loginWithOpenLogin('email_passwordless', email ?? undefined)}
@@ -457,10 +460,14 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
           </SwitchWrapper>
         )}
         <SignInOptionsWrapper>
-          {visibleSignInOptions.map((signInOption) => (
+          {memoSignInOptions.map((signInOption) => (
             <SignInOptionWrapper
               key={signInOption.title}
-              onClick={isSigningIn ? undefined : signInOption.onClick}
+              onClick={() => {
+                if (!isSigningIn) {
+                  signInOption.onClick();
+                }
+              }}
               half={showSocialLogins}
             >
               <SignInOption disabled={isSigningIn}>
