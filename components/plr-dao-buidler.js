@@ -112,6 +112,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
     {!connectedProvider && (
       <SignIn
         includeMM
+        includeWC
         onWeb3ProviderSet={onWeb3ProviderSet}
         onWeb3AuthInstanceSet={setWeb3AuthInstance}
       />
