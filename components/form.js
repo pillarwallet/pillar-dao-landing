@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-const EMAIL_REGX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const WALLET_ADDRESS_REGX = /^0x[a-fA-F0-9]{40}$/;
+
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const WALLET_ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
 
 //#region Styled
 const FormContainer = styled.div`
@@ -95,6 +96,10 @@ const Label = styled.div`
   margin: 0.5rem 0.5px;
 `;
 
+const FormField = styled.div`
+  margin-bottom: 1rem;
+`;
+
 const RadioButton = styled.label`
   margin: 0.5rem 0.5px;
 `;
@@ -110,15 +115,16 @@ const Error = styled.div`
 `;
 
 const FormError = styled.div`
-  margin: 0.5rem;
-  font-size: 0.75rem;
   color: red;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
 `;
 //#endregion Styled
 
 const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, onSubmitForm }) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
+  const [emailTouched, setEmailTouched] = useState(false);
   const [showEmailError, setShowEmailError] = useState(false);
   const [address1, setAddress1] = useState();
   const [address2, setAddress2] = useState();
@@ -132,11 +138,54 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
   const [hasFormError, setFormError] = useState();
 
   useEffect(() => {
-    setWalletAddress(defaultWalletAddress);
-    setEmail(defaultEmail);
+    if (defaultWalletAddress) setWalletAddress(defaultWalletAddress);
+    if (defaultEmail) {
+      setEmail(defaultEmail);
+      isEmailValid(defaultEmail);
+    }
   }, [defaultWalletAddress, defaultEmail]);
 
+  const isEmailValid = (emailValue) => {
+    const isValid = EMAIL_REGEX.test(emailValue);
+    return emailValue.length > 0 && isValid;
+  };
+
+  const isWalletAddressValid = (address) => WALLET_ADDRESS_REGEX.test(address);
+
+  const isFormNotValid = () => {
+    return (
+      isSubmitting ||
+      !name ||
+      !address1 ||
+      !city ||
+      !state ||
+      !country ||
+      !zipcode ||
+      !walletType ||
+      !isEmailValid(email) ||
+      !isWalletAddressValid(walletAddress)
+    );
+  };
+
+  const handleEmailChange = (event) => {
+    const newEmail = event.target.value;
+    setEmail(newEmail);
+    if (emailTouched) {
+      setShowEmailError(newEmail.length > 0 && !isEmailValid(newEmail));
+    }
+  };
+
+  const handleEmailBlur = () => {
+    setEmailTouched(true);
+
+    setShowEmailError(email.length > 0 && !isEmailValid(email));
+  };
+
   const handleSubmit = async () => {
+    if (isFormNotValid()) {
+      console.error('Form is not valid');
+      return;
+    }
     setIsSubmitting(true);
     const submitPayload = {
       name,
@@ -173,9 +222,6 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
     setIsSubmitting(false);
   };
 
-  const validateEmail = (email) => EMAIL_REGX.test(email);
-  const validateWalletAddress = (address) => WALLET_ADDRESS_REGX.test(address);
-
   return (
     <FormContainer>
       <HeaderWrapper>
@@ -187,78 +233,54 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
         </div>
       </HeaderWrapper>
       <div>
-        <div>
+        <FormField>
           <Label>Name</Label>
-          <Input type="text" id="first" name="first" value={name} onChange={(event) => setName(event.target.value)} />
-        </div>
-        <div>
+          <Input type="text" value={name} onChange={(event) => setName(event.target.value)} />
+        </FormField>
+
+        <FormField>
           <Label>Email</Label>
+          <Input type="email" value={email} onChange={handleEmailChange} onBlur={handleEmailBlur} />
           {showEmailError && <FormError>Please enter a valid email address</FormError>}
-          <Input
-            type="text"
-            id="last"
-            name="last"
-            value={email}
-            onChange={(event) => {
-              setEmail(event.target.value);
-              setShowEmailError(!validateEmail(email));
-            }}
-          />
-        </div>
-        <div>
+        </FormField>
+
+        <FormField>
           <Label>Address 1</Label>
-          <Input
-            type="text"
-            id="last"
-            name="last"
-            value={address1}
-            onChange={(event) => setAddress1(event.target.value)}
-          />
-        </div>
-        <div>
+          <Input type="text" value={address1} onChange={(event) => setAddress1(event.target.value)} />
+        </FormField>
+
+        <FormField>
           <Label>Address 2</Label>
-          <Input
-            type="text"
-            id="last"
-            name="last"
-            value={address2}
-            onChange={(event) => setAddress2(event.target.value)}
-          />
-        </div>
-        <div>
+          <Input type="text" value={address2} onChange={(event) => setAddress2(event.target.value)} />
+        </FormField>
+
+        <FormField>
           <Label>City</Label>
-          <Input type="text" id="last" name="last" value={city} onChange={(event) => setCity(event.target.value)} />
-        </div>
-        <div>
+          <Input type="text" value={city} onChange={(event) => setCity(event.target.value)} />
+        </FormField>
+
+        <FormField>
           <Label>State</Label>
-          <Input type="text" id="last" name="last" value={state} onChange={(event) => setState(event.target.value)} />
-        </div>
-        <div>
+          <Input type="text" value={state} onChange={(event) => setState(event.target.value)} />
+        </FormField>
+
+        <FormField>
           <Label>Country</Label>
-          <Input
-            type="text"
-            id="last"
-            name="last"
-            value={country}
-            onChange={(event) => setCountry(event.target.value)}
-          />
-        </div>
-        <div>
+          <Input type="text" value={country} onChange={(event) => setCountry(event.target.value)} />
+        </FormField>
+
+        <FormField>
           <Label>Zipcode</Label>
-          <Input
-            type="text"
-            id="last"
-            name="last"
-            value={zipcode}
-            onChange={(event) => setZipcode(event.target.value)}
-          />
-        </div>
+          <Input type="text" value={zipcode} onChange={(event) => setZipcode(event.target.value)} />
+        </FormField>
+
         {connector && (
-          <div>
+          <FormField>
             <Label>{connector?.name}</Label>
-          </div>
+          </FormField>
         )}
-        <div>
+
+        <FormField>
           <Label>Wallet Address</Label>
           <Input
             disabled={!!connector}
@@ -268,7 +290,8 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
             value={walletAddress}
             onChange={(event) => setWalletAddress(event.target.value)}
           />
-        </div>
+        </FormField>
+
         <RadioButtonWrapper>
           <RadioButton style={{ display: 'none' }}>
             <input
@@ -281,23 +304,10 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
             Wallet
           </RadioButton>
         </RadioButtonWrapper>
+
         {hasFormError && <Error>{hasFormError}</Error>}
-        <SubmitButton
-          disabled={
-            isSubmitting ||
-            !name ||
-            !address1 ||
-            !city ||
-            !state ||
-            !country ||
-            !zipcode ||
-            !walletType ||
-            !email ||
-            !validateEmail(email) ||
-            !validateWalletAddress(walletAddress)
-          }
-          onClick={handleSubmit}
-        >
+
+        <SubmitButton disabled={isFormNotValid()} onClick={handleSubmit}>
           Submit
         </SubmitButton>
       </div>
