@@ -26,6 +26,12 @@ const Input = styled.input`
   &:focus {
     outline: #78e8f6 solid 1px;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+  }
+  
 `;
 
 const SubmitButton = styled.button`
@@ -243,6 +249,7 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
         <div>
           <Label>Wallet Address</Label>
           <Input
+            disabled={!!connector}
             type="text"
             id="last"
             name="last"
