@@ -49,7 +49,7 @@ const HomeGovernance = () => {
             </div>
           </div>
           <p style={{ marginTop: '20px' }}>
-            *Article 11: Becoming a Member. Everyone who is eligible for a membership in accordance with Article 10 can make a request (request-Membership). Moreover, an applicant must provide his name, address, and email. The admission procedure is automated and shown in Annex 2a to these Articles of Association. The minimum duration of membership is fifty-two (52) weeks. Thereafter, membership shall be automatically renewed until terminated in accordance with Section IV below.
+            *Article 11: Becoming a Member. Everyone who is eligible for a membership in accordance with Article 10 can make a request (request-Membership). Moreover, an applicant must provide his name, address, and email. The admission procedure is automated and shown in Annex 2a to these Articles of Association. The minimum duration of membership is fifty-two (52) weeks. Thereafter, membership shall be automatically renewed until terminated in accordance with Section IV (of the DAO Articles of Association).
           </p>
         </div>
       </section>
