@@ -10,9 +10,9 @@ const HomeProducts = () => {
           <div className="home_products__detail">
             <h2><span>PillarDAO</span> Products</h2>
             <div className="home_products__detail__list">
-              <Link href="https://www.pillar.fi/?utm_source=pillar_website&utm_medium=page&utm_campaign=pillar_dao" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.pillar.fi/?utm_source=pillar_website&utm_medium=page&utm_campaign=pillar_dao" target="_blank" rel="noopener noreferrer">
                 <img src={logoPillar} alt="Pillar" title="Pillar" />
-              </Link>
+              </a>
             </div>
           </div>
         </div>
