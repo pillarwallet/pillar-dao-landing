@@ -331,21 +331,21 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
 
     /* Set only one or few connectors with include useMemo options */
     if (includeMM) {
-      const metaMask = connectors.find((connector) => connector.id === 'metaMask');
+      const metaMask = connectors.find((connector) => connector.type === 'metaMask');
       if (metaMask) {
         options.push({
           title: metaMask.name,
-          icon: iconById[metaMask.id],
+          icon: iconById[metaMask.type],
           onClick: () => connect({ connector: metaMask }),
         });
       }
     }
     if (includeWC) {
-      const walletConnect = connectors.find((connector) => connector.id === 'walletConnect');
+      const walletConnect = connectors.find((connector) => connector.type === 'walletConnect');
       if (walletConnect) {
         options.push({
           title: walletConnect.name,
-          icon: iconById[walletConnect.id],
+          icon: iconById[walletConnect.type],
           onClick: () => connect({ connector: walletConnect }),
         });
       }
