@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { daoLinks } from 'config/dao-links';
 import governanceBg from '../assets/images/home-governance-bg.png';
 import governanceNFT from '../assets/images/home-governance-nft.png';
@@ -59,17 +58,17 @@ const HomeGovernance = () => {
                   </li>
                   <li>
                     PillarDAO proposals are discussed in the{' '}
-                    <Link href={daoLinks.DAO_SOCIAL_GUILDXYZ} target="_blank" rel="noopener noreferrer">
+                    <a href={daoLinks.DAO_SOCIAL_GUILDXYZ} target="_blank" rel="noopener noreferrer">
                       Members Only Discord Guild
-                    </Link>{' '}
+                    </a>{' '}
                     and once consensus is reached, voted on using{' '}
-                    <Link href="https://snapshot.org/#/pillar" target="_blank" rel="noopener noreferrer">
+                    <a href="https://snapshot.org/#/pillar" target="_blank" rel="noopener noreferrer">
                       SnapShot
-                    </Link>
+                    </a>
                     . The process for submitting a proposal is pinned on the{' '}
-                    <Link href={daoLinks.DAO_SOCIAL_DISCORD} target="_blank" rel="noopener noreferrer">
+                    <a href={daoLinks.DAO_SOCIAL_DISCORD} target="_blank" rel="noopener noreferrer">
                       Discord channel
-                    </Link>
+                    </a>
                     .
                   </li>
                 </ul>
