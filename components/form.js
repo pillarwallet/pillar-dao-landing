@@ -31,7 +31,6 @@ const Input = styled.input`
     cursor: not-allowed;
     opacity: 0.8;
   }
-  
 `;
 
 const SubmitButton = styled.button`
@@ -109,11 +108,18 @@ const Error = styled.div`
   margin: 1rem 0rem 0.5rem 0rem;
   color: red;
 `;
+
+const FormError = styled.div`
+  margin: 0.5rem;
+  font-size: 0.75rem;
+  color: red;
+`;
 //#endregion Styled
 
 const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, onSubmitForm }) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
+  const [showEmailError, setShowEmailError] = useState(false);
   const [address1, setAddress1] = useState();
   const [address2, setAddress2] = useState();
   const [state, setState] = useState();
@@ -175,11 +181,7 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
       <HeaderWrapper>
         <Title>PLR DAO Membership</Title>
         <div>
-          <RestartButton 
-          title="Logout and Restart" 
-          disabled={isSubmitting}
-          onClick={onLogout}
-          >
+          <RestartButton title="Logout and Restart" disabled={isSubmitting} onClick={onLogout}>
             ⟳
           </RestartButton>
         </div>
@@ -191,7 +193,17 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
         </div>
         <div>
           <Label>Email</Label>
-          <Input type="text" id="last" name="last" value={email} onChange={(event) => setEmail(event.target.value)} />
+          {showEmailError && <FormError>Please enter a valid email address</FormError>}
+          <Input
+            type="text"
+            id="last"
+            name="last"
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+              setShowEmailError(!validateEmail(email));
+            }}
+          />
         </div>
         <div>
           <Label>Address 1</Label>
