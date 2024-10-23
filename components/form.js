@@ -104,7 +104,7 @@ const Error = styled.div`
 `;
 //#endregion Styled
 
-const PlrDaoForm = ({ defaultWalletAddress, defaultEmail, onSubmitForm, onLogout }) => {
+const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, onSubmitForm }) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [address1, setAddress1] = useState();
@@ -234,6 +234,11 @@ const PlrDaoForm = ({ defaultWalletAddress, defaultEmail, onSubmitForm, onLogout
             onChange={(event) => setZipcode(event.target.value)}
           />
         </div>
+        {connector && (
+          <div>
+            <Label>{connector?.name}</Label>
+          </div>
+        )}
         <div>
           <Label>Wallet Address</Label>
           <Input

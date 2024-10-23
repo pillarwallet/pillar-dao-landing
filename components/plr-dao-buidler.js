@@ -138,6 +138,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
       (<PlrDaoForm
         defaultWalletAddress={defaultFormData.walletAddress}
         defaultEmail={defaultFormData.email}
+        connector={connector}
         onSubmitForm={onSubmitForm}
         onLogout={onLogout}
       />)
