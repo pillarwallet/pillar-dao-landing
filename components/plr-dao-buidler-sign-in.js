@@ -273,11 +273,13 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
 
   const { connector, isConnected } = useAccount();
 
+  //get web3 provider from wagmi sign-in
   useEffect(() => {
     const update = async () => {
       if (!connector?.ready || !isConnected) return;
       const wagmiWeb3Provider = await connector.getProvider();
       onWeb3ProviderSet(wagmiWeb3Provider);
+      console.log(wagmiWeb3Provider);
     };
     update();
   }, [connector, isConnected, onWeb3ProviderSet]);
