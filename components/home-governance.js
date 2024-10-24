@@ -43,9 +43,7 @@ const HomeGovernance = () => {
                   process and to assure the compliance of our Swiss Association.
                 </p>
                 <div className="plr_dao_block">
-                  <WagmiProvider>
-                    <PlrDaoStakingBuilder defaultTransactionBlock={'PLR_DAO_STAKE'} shouldDisplayForm={true} />
-                  </WagmiProvider>
+                  <PlrDaoStakingBuilder defaultTransactionBlock={'PLR_DAO_STAKE'} shouldDisplayForm={true} />
                 </div>
               </div>
               <div className="home_governance__app__detail">

@@ -331,7 +331,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
 
     /* Set only one or few connectors with include useMemo options */
     if (includeMM) {
-      const metaMask = connectors.find((connector) => connector.name === 'MetaMask');
+      const metaMask = connectors.find((connector) => connector.id === 'metaMask');
       if (metaMask) {
         options.push({
           title: metaMask.name,
@@ -341,7 +341,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
       }
     }
     if (includeWC) {
-      const walletConnect = connectors.find((connector) => connector.name === 'WalletConnect');
+      const walletConnect = connectors.find((connector) => connector.id === 'walletConnect');
       if (walletConnect) {
         options.push({
           title: walletConnect.name,
@@ -393,6 +393,10 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
 
     return selectedSignInOptions.slice(0, visibleNumber);
   }, [showSocialLogins, showMoreOptions, loginWithOpenLogin, connectors, connect]);
+
+  useEffect(() => {
+    console.log('Available Connectors:', connectors);
+  }, [connectors]);
 
   if (isSigningIn) {
     return (

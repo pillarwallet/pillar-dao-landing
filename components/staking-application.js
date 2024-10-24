@@ -72,9 +72,7 @@ const StakingApplication = () => {
           {visiblePLRStaking ? (
             <div className="staking_application__form">
               <div className="staking_application__form__detail">
-                <WagmiProvider>
-                  <PlrStakingBuilder defaultTransactionBlock={'PLR_STAKING_V2'} shouldDisplayForm={false} />
-                </WagmiProvider>
+                <PlrStakingBuilder defaultTransactionBlock={'PLR_STAKING_V2'} shouldDisplayForm={false} />
               </div>
             </div>
           ) : (
