@@ -220,6 +220,9 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
   const [showEmailLogin, setShowEmailLogin] = useState(false);
   const [email, setEmail] = useState(null);
 
+  const { connect, connectors } = useConnect();
+  const { connector, isConnected } = useAccount();
+
   useEffect(() => {
     const initWeb3AuthCore = async () => {
       if (!!localStorage.getItem('Web3Auth-cachedAdapter')) setIsSigningIn(true);
@@ -271,7 +274,6 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
     /* eslint-disable-next-line */
   }, []);
 
-  const { connector, isConnected } = useAccount();
 
   useEffect(() => {
     const update = async () => {
@@ -281,8 +283,6 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
     };
     update();
   }, [connector, isConnected, onWeb3ProviderSet]);
-
-  const { connect, connectors } = useConnect();
 
   const loginWithAdapter = useCallback(
     async (adapter, loginProvider, login_hint) => {
@@ -331,7 +331,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
 
     /* Set only one or few connectors with include useMemo options */
     if (includeMM) {
-      const metaMask = connectors.find((connector) => connector.id === 'metaMask');
+      const metaMask = connectors.find((connector) => connector.name === 'MetaMask');
       if (metaMask) {
         options.push({
           title: metaMask.name,
@@ -341,7 +341,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
       }
     }
     if (includeWC) {
-      const walletConnect = connectors.find((connector) => connector.id === 'walletConnect');
+      const walletConnect = connectors.find((connector) => connector.name === 'WalletConnect');
       if (walletConnect) {
         options.push({
           title: walletConnect.name,
@@ -421,7 +421,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
     return (
       <Wrapper>
         <WrapperTitle>Sign in with Email</WrapperTitle>
-        <EmailInput placeholder="Enter you email" onChange={(e) => setEmail(e?.target?.value ?? '')} />
+        <EmailInput placeholder="Enter your email" onChange={(e) => setEmail(e?.target?.value ?? '')} />
         {!!errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <EmailSubmitButton
           onClick={() => loginWithOpenLogin('email_passwordless', email ?? undefined)}
@@ -460,7 +460,11 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
           {visibleSignInOptions.map((signInOption) => (
             <SignInOptionWrapper
               key={signInOption.title}
-              onClick={isSigningIn ? undefined : signInOption.onClick}
+              onClick={() => {
+                if (!isSigningIn) {
+                  signInOption.onClick();
+                }
+              }}
               half={showSocialLogins}
             >
               <SignInOption disabled={isSigningIn}>

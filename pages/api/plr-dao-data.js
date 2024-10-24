@@ -1,7 +1,7 @@
 const { Client } = require('@notionhq/client');
 
-const NOTION_SECRET_KEY = process.env.NEXT_NOTION_SECRET_KEY;
-const NOTION_DATABASE = process.env.NEXT_NOTION_DATABASE;
+const NOTION_SECRET_KEY = process.env.NEXT_PUBLIC_NOTION_SECRET_KEY;
+const NOTION_DATABASE = process.env.NEXT_PUBLIC_NOTION_DATABASE;
 
 const notion = new Client({ auth: NOTION_SECRET_KEY });
 

@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import Web3 from 'web3';
 import { useAccount, useDisconnect } from 'wagmi';
 
 import { themeOverride } from '../styles/buidlerTheme';
-import PlrDaoForm from "./form";
+import PlrDaoForm from './form';
 
 export const OPENLOGIN_STORE = 'openlogin_store';
 export const WAGMI_STORE = 'wagmi.store';
 
-const LoadingComponent = () => <p>Loading...</p>
+const LoadingComponent = () => <p>Loading...</p>;
 
 const Etherspot = dynamic(() => import('@etherspot/react-transaction-buidler').then((mod) => mod.Etherspot), {
   ssr: false,
@@ -32,7 +32,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
   });
 
   const { disconnect: wagmiDisconnect } = useDisconnect();
-  const { connector, isConnected } = useAccount();
+  const { connector, isConnected, address } = useAccount();
 
   const onWeb3ProviderSet = async (web3Provider) => {
     if (!web3Provider) {
@@ -42,7 +42,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
 
     const web3 = new Web3(web3Provider);
     setConnectedProvider(web3.currentProvider);
-  }
+  };
 
   const getNotionData = async (payload) => {
     try {
@@ -52,19 +52,21 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
-      })
+      });
       const data = await response.json();
+      //if user already submitted a form, hide form and move to transaction builder
       if (data?.isFormSubmitted) {
         setShouldDisplayPlrDaoForm(false);
+        //show Etherspot builder
       }
     } catch (error) {
-      //
+      console.error('Error fetching notion data:', error);
     }
-  }
+  };
 
   useEffect(() => {
     if (!connectedProvider) return;
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       const wagmiStoreString = localStorage.getItem(WAGMI_STORE);
       const wagmiLocalStorageData = wagmiStoreString && JSON.parse(wagmiStoreString);
 
@@ -76,18 +78,22 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
       const payload = {
         email: openLoginLocalStorageData?.email,
         walletAddress: wagmiLocalStorageData.state.data.account,
-      }
+      };
       setDefaultFormData({ ...defaultFormData, ...payload });
       getNotionData(payload);
     }
   }, [connectedProvider]);
 
   const onLogout = async () => {
+    setDefaultFormData({
+      email: '',
+      walletAddress: '',
+    });
     try {
       if (isConnected) wagmiDisconnect();
       if (connector) await connector.disconnect();
     } catch (e) {
-      //
+      console.error('Error disconnecting wallet:', e);
     }
 
     try {
@@ -96,55 +102,50 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
         web3AuthInstance.clearCache();
       }
     } catch (e) {
-      //
+      console.error('Error logging out of web3Auth:', e);
     }
     if (shouldDisplayForm) {
       setShouldDisplayPlrDaoForm(true);
     }
     setConnectedProvider(null);
-  }
+  };
 
   const onSubmitForm = () => {
     setShouldDisplayPlrDaoForm(false);
-  }
+  };
 
-  return <PlrDaoStakingBuilderWrapper>
-    {!connectedProvider && (
-      <SignIn
-        includeMM
-        includeWC
-        onWeb3ProviderSet={onWeb3ProviderSet}
-        onWeb3AuthInstanceSet={setWeb3AuthInstance}
-      />
-    )}
-    {connectedProvider && !shouldDisplayPlrDaoForm &&
-      (<Etherspot
-        provider={connectedProvider}
-        chainId={1}
-        themeOverride={themeOverride}
-        defaultTransactionBlocks={[
-          { type: defaultTransactionBlock },
-        ]}
-        hideWalletToggle
-        hideAddTransactionButton
-        hideCloseTransactionBlockButton
-        hideWalletSwitch
-        hideBuyButton
-        showMenuLogout
-        onLogout={onLogout}
-      />)
-    }
-    {connectedProvider && shouldDisplayForm && shouldDisplayPlrDaoForm &&
-      (<PlrDaoForm
-        defaultWalletAddress={defaultFormData.walletAddress}
-        defaultEmail={defaultFormData.email}
-        connector={connector}
-        onSubmitForm={onSubmitForm}
-        onLogout={onLogout}
-      />)
-    }
-  </PlrDaoStakingBuilderWrapper>
-}
+  return (
+    <PlrDaoStakingBuilderWrapper>
+      {!connectedProvider && !isConnected && (
+        <SignIn includeMM includeWC onWeb3ProviderSet={onWeb3ProviderSet} onWeb3AuthInstanceSet={setWeb3AuthInstance} />
+      )}
+      {(connectedProvider || isConnected) && shouldDisplayForm && shouldDisplayPlrDaoForm && (
+        <PlrDaoForm
+          defaultWalletAddress={defaultFormData.walletAddress}
+          defaultEmail={defaultFormData.email}
+          connector={connector}
+          onSubmitForm={onSubmitForm}
+          onLogout={onLogout}
+        />
+      )}
+      {(connectedProvider || isConnected) && !shouldDisplayPlrDaoForm && (
+        <Etherspot
+          provider={connectedProvider}
+          chainId={1}
+          themeOverride={themeOverride}
+          defaultTransactionBlocks={[{ type: defaultTransactionBlock }]}
+          hideWalletToggle
+          hideAddTransactionButton
+          hideCloseTransactionBlockButton
+          hideWalletSwitch
+          hideBuyButton
+          showMenuLogout
+          onLogout={onLogout}
+        />
+      )}
+    </PlrDaoStakingBuilderWrapper>
+  );
+};
 
 export default PlrDaoStakingBuilder;
 

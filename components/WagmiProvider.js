@@ -23,17 +23,19 @@ const APP_INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [polygon, mainnet, gnosis, arbitrum, bsc, optimism, avalanche, celo, okc, moonbeam, fantom, aurora],
-  [infuraProvider({ apiKey: APP_INFURA_ID ?? '' }), publicProvider()]
+  [infuraProvider({ apiKey: APP_INFURA_ID ?? '' }), publicProvider()],
 );
 
 const client = createConfig({
   autoConnect: true,
   connectors: [
-    new MetaMaskConnector({ chains }),
+    new MetaMaskConnector({
+      chains,
+    }),
     new CoinbaseWalletConnector({
       chains,
       options: {
-        appName: 'Etherspot Buidler',
+        appName: 'Pillar DAO',
       },
     }),
     new WalletConnectConnector({
