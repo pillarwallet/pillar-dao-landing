@@ -43,7 +43,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
   }, [wagmiClient, isConnected]);
 
   const getNotionData = async (payload) => {
-    if (process.env.NEXT_NOTION_DATABASE) {
+    if (process.env.NEXT_PUBLIC_NOTION_DATABASE) {
       try {
         const response = await fetch('/api/plr-dao-data', {
           method: 'POST',
