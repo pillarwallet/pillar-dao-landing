@@ -218,6 +218,7 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
       }
     } catch (error) {
       setFormError('Please try again.');
+      console.error('Form error', error);
     }
     setIsSubmitting(false);
   };
