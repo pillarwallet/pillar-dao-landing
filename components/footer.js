@@ -2,6 +2,15 @@ import { daoLinks } from "config/dao-links";
 import React from "react";
 import socialDiscord from "../assets/images/social-discord.png";
 import socialTwitter from "../assets/images/social-twitter.png";
+import packageJson from '../package.json';
+import styled from "styled-components";
+
+const Build = styled.div`
+  padding: 0.1rem;
+  font-size: 1rem;
+  font-family: 'PTRootUIWebRegular', sans-serif;
+  color: #fefefe;
+`;
 
 const Footer = () => {
   return (
@@ -14,6 +23,9 @@ const Footer = () => {
                 <li>
                   <a href="https://www.pillardao.org/privacy-policy">Privacy Policy</a>
                 </li>
+                <li>
+                <Build>{packageJson.version}</Build>
+              </li>
               </ul>
             </div>
             <div className="footer__social">
