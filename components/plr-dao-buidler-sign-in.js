@@ -338,6 +338,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
           title: metaMask.name,
           icon: iconById[metaMask.id],
           onClick: () => connect({ connector: metaMask }),
+          //only works on Chrome and Firefox, not Brave
         });
       }
     }
@@ -394,10 +395,6 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
 
     return selectedSignInOptions.slice(0, visibleNumber);
   }, [showSocialLogins, showMoreOptions, loginWithOpenLogin, connectors, connect]);
-
-  useEffect(() => {
-    console.log('Available Connectors:', connectors);
-  }, [connectors]);
 
   if (isSigningIn) {
     return (
