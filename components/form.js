@@ -178,7 +178,7 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
   const handleEmailBlur = () => {
     setEmailTouched(true);
 
-    setShowEmailError(email.length > 0 && !isEmailValid(email));
+    setShowEmailError(email?.length > 0 && !isEmailValid(email));
   };
 
   const handleSubmit = async () => {
