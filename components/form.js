@@ -138,7 +138,9 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
   const [hasFormError, setFormError] = useState();
 
   useEffect(() => {
-    if (defaultWalletAddress) setWalletAddress(defaultWalletAddress);
+    if (defaultWalletAddress) {
+      setWalletAddress(defaultWalletAddress);
+    }
     if (defaultEmail) {
       setEmail(defaultEmail);
       isEmailValid(defaultEmail);
@@ -284,7 +286,7 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
         <FormField>
           <Label>Wallet Address</Label>
           <Input
-            disabled={!!connector}
+            disabled={!!connector && walletAddress?.length}
             type="text"
             id="last"
             name="last"
