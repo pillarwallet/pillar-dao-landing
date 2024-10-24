@@ -1,5 +1,5 @@
 // components/WagmiProvider.js
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   gnosis,
   mainnet,
@@ -74,6 +74,7 @@ const WagmiProvider = ({ children }) => {
   useEffect(() => {
     // **Logging Connector Readiness**
     console.log('--- Wagmi Connectors Status ---');
+    console.log(client.connectors);
     client.connectors.forEach((connector) => {
       console.log(`Connector: ${connector.name}`);
       console.log(`ID: ${connector.id}`);
