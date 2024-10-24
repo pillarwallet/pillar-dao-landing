@@ -126,13 +126,13 @@ const SignInOptionWrapper = styled.div`
   ${({ half }) =>
     half &&
     `
-  min-width: 9.375rem;
+  min-width: 12rem;
   flex: 1;
-  margin: 0px 4px;
+  margin: 0px 6px;
   `}
 `;
 
-const SignInOptionIcon = styled.span`
+const SignInOptionIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
