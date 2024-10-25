@@ -6,6 +6,7 @@ import { useAccount, useDisconnect } from 'wagmi';
 
 import { themeOverride } from '../styles/buidlerTheme';
 import PlrDaoForm from './form';
+import DaoMemberNftTx from './daoMemberNftTx';
 
 export const OPENLOGIN_STORE = 'openlogin_store';
 export const WAGMI_STORE = 'wagmi.store';
@@ -76,6 +77,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
         const data = await response.json();
         setFromNotionData(data);
       } catch (error) {
+        //
       }
     }
   };
@@ -168,19 +170,20 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
         />
       )}
       {(connectedProvider || isConnected) && !shouldDisplayPlrDaoForm && (
-        <Etherspot
-          provider={connectedProvider}
-          chainId={1}
-          themeOverride={themeOverride}
-          defaultTransactionBlocks={[{ type: defaultTransactionBlock }]}
-          hideWalletToggle
-          hideAddTransactionButton
-          hideCloseTransactionBlockButton
-          hideWalletSwitch
-          hideBuyButton
-          showMenuLogout
-          onLogout={onLogout}
-        />
+        // <Etherspot
+        //   provider={connectedProvider}
+        //   chainId={1}
+        //   themeOverride={themeOverride}
+        //   defaultTransactionBlocks={[{ type: defaultTransactionBlock }]}
+        //   hideWalletToggle
+        //   hideAddTransactionButton
+        //   hideCloseTransactionBlockButton
+        //   hideWalletSwitch
+        //   hideBuyButton
+        //   showMenuLogout
+        //   onLogout={onLogout}
+        // />
+        <DaoMemberNftTx onLogout={onLogout}></DaoMemberNftTx>
       )}
     </PlrDaoStakingBuilderWrapper>
   );
