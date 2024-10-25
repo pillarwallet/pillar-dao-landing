@@ -23,14 +23,15 @@ const SignIn = dynamic(() => import('./plr-dao-buidler-sign-in'), {
 });
 
 const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
-  const [connectedProvider, setConnectedProvider] = useState(null);
-  const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
   const [shouldDisplayPlrDaoForm, setShouldDisplayPlrDaoForm] = useState(false);
   const [defaultFormData, setDefaultFormData] = useState({
     email: '',
     walletAddress: '',
   });
-
+  //web3
+  const [connectedProvider, setConnectedProvider] = useState(null);
+  const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
+  //wagmi
   const { disconnect: wagmiDisconnect } = useDisconnect();
   const { connector, isConnected, address } = useAccount();
 
@@ -83,6 +84,18 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
       }
     }
   };
+  
+  const setFromNotionData = (data) => {
+    // If user already submitted a form, hide form and move to transaction builder
+    console.log(data?.isFormSubmitted, 'form status');
+    if (data?.isFormSubmitted) {
+      setShouldDisplayPlrDaoForm(false);
+      // Show Etherspot builder
+    } else {
+      setShouldDisplayPlrDaoForm(true);
+    }
+  };
+  
 
   const getAccountDataFromStore = () => {
     if (typeof window === 'undefined') return { wagmiData: null, openLoginData: null };
@@ -92,19 +105,34 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
     const openLoginData = openLoginStoreString ? JSON.parse(openLoginStoreString) : null;
     return { wagmiData, openLoginData };
   };
+  useEffect(() => {
+    if (!connectedProvider && !isConnected) return;
+    if (typeof window === 'undefined') return;
+    const openLoginStoreString = localStorage.getItem(OPENLOGIN_STORE);
+    const openLoginLocalStorageData = openLoginStoreString && JSON.parse(openLoginStoreString);
+
+    const email = openLoginLocalStorageData?.email || defaultFormData.email;
+    const walletAddress = address;
+    console.log(email, walletAddress, 'test');
+    if (!email && !walletAddress) return;
+
+    const payload = {
+      email,
+      walletAddress,
+    };
+    setDefaultFormData((prevData) => ({ ...prevData, email, walletAddress }));
+    getNotionData(payload);
+  }, [connectedProvider, address]);
 
   const onLogout = async () => {
-    setDefaultFormData({
-      email: '',
-      walletAddress: '',
-    });
+    //wagmi
     try {
       if (isConnected) wagmiDisconnect();
       if (connector) await connector.disconnect();
     } catch (e) {
       console.error('Error disconnecting wallet:', e);
     }
-
+    //web3
     try {
       if (web3AuthInstance) {
         await web3AuthInstance.logout({ cleanup: true });
@@ -113,7 +141,11 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
     } catch (e) {
       console.error('Error logging out of web3Auth:', e);
     }
-
+    //cleanup
+    setDefaultFormData({
+      email: null,
+      walletAddress: null,
+    });
     if (shouldDisplayForm) {
       setShouldDisplayPlrDaoForm(true);
     }
