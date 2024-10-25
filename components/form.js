@@ -185,7 +185,6 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
 
   const handleSubmit = async () => {
     if (isFormNotValid()) {
-      console.error('Form is not valid');
       return;
     }
     setIsSubmitting(true);

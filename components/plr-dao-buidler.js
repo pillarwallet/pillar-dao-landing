@@ -51,7 +51,6 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
     const { wagmiData, openLoginData } = getAccountDataFromStore();
     //TODO: openLoginData (uses socials/email for wallet sign-in) may need to be updated before use
     if (!openLoginData?.email && !address) {
-      console.log('No address or email from sign-in, logged out');
       onLogout();
       return;
     }
@@ -84,7 +83,6 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
 
   const setFromNotionData = (data) => {
     // If user already submitted a form, hide form and move to transaction builder
-    console.log('Form already submitted?', data?.isFormSubmitted);
     if (data?.isFormSubmitted) {
       setShouldDisplayPlrDaoForm(false);
       // Show Etherspot builder
@@ -109,7 +107,6 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
 
     const email = openLoginLocalStorageData?.email || defaultFormData.email;
     const walletAddress = address;
-    console.log('Email', email, 'address', walletAddress);
     if (!email && !walletAddress) {
       onLogout();
       return;

@@ -181,7 +181,6 @@ const DaoMemberNftTx = ({ onLogout }) => {
   }, [depositError, approveError]);
 
   useEffect(() => {
-    console.log(connector);
     if (connector.type === 'walletConnect') {
       setIsUsingWalletConnect(true);
     }
