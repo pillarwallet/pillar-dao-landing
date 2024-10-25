@@ -20,7 +20,7 @@ const blockchains = [
   avalanche,
   celo,
 ];
-const INFURA_ID = process.env.NEXT_PUBLIC_INFURA_API_KEY;
+const INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
 
 export const wagmiConfig = createConfig({
   chains: [...blockchains],
