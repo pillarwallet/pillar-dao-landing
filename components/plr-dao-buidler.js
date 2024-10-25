@@ -23,14 +23,15 @@ const SignIn = dynamic(() => import('./plr-dao-buidler-sign-in'), {
 });
 
 const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
+  //web3
+  const [connectedProvider, setConnectedProvider] = useState(null);
+  const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
   const [shouldDisplayPlrDaoForm, setShouldDisplayPlrDaoForm] = useState(false);
   const [defaultFormData, setDefaultFormData] = useState({
     email: null,
     walletAddress: null,
   });
-  //web3
-  const [connectedProvider, setConnectedProvider] = useState(null);
-  const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
+
   //wagmi
   const { disconnect: wagmiDisconnect } = useDisconnect();
   const { connector, isConnected, address } = useAccount();
@@ -77,7 +78,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
     const openLoginStoreString = localStorage.getItem(OPENLOGIN_STORE);
     const openLoginLocalStorageData = openLoginStoreString && JSON.parse(openLoginStoreString);
 
-    const email = openLoginLocalStorageData?.email || defaultFormData.email;
+    const email = openLoginLocalStorageData?.email;
     const walletAddress = address;
     console.log('Email', email, 'address', walletAddress);
     if (!email && !walletAddress) {
