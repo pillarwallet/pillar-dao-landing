@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { IoLogOutOutline } from 'react-icons/io5';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const WALLET_ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
@@ -229,7 +230,7 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
         <Title>PLR DAO Membership</Title>
         <div>
           <RestartButton title="Logout and Restart" disabled={isSubmitting} onClick={onLogout}>
-            ⟳
+            <IoLogOutOutline />
           </RestartButton>
         </div>
       </HeaderWrapper>
