@@ -149,7 +149,7 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
 
   const isEmailValid = (emailValue) => {
     const isValid = EMAIL_REGEX.test(emailValue);
-    return emailValue.length > 0 && isValid;
+    return emailValue?.length && isValid;
   };
 
   const isWalletAddressValid = (address) => WALLET_ADDRESS_REGEX.test(address);
@@ -173,13 +173,12 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
     const newEmail = event.target.value;
     setEmail(newEmail);
     if (emailTouched) {
-      setShowEmailError(newEmail.length > 0 && !isEmailValid(newEmail));
+      setShowEmailError(newEmail?.length > 0 && !isEmailValid(newEmail));
     }
   };
 
   const handleEmailBlur = () => {
     setEmailTouched(true);
-
     setShowEmailError(email?.length > 0 && !isEmailValid(email));
   };
 
@@ -220,7 +219,6 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
       }
     } catch (error) {
       setFormError('Please try again.');
-      console.error('Form error', error);
     }
     setIsSubmitting(false);
   };
