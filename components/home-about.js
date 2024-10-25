@@ -1,4 +1,3 @@
-import React from "react";
 import socialDiscord from "../assets/images/social-discord.png";
 import { daoLinks } from "config/dao-links";
 

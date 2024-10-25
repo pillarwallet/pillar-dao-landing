@@ -1,5 +1,4 @@
 import { daoLinks } from "config/dao-links";
-import React from "react";
 import socialDiscord from "../assets/images/social-discord.png";
 import socialTwitter from "../assets/images/social-twitter.png";
 import packageJson from '../package.json';
