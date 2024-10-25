@@ -56,13 +56,13 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
       const data = await response.json();
       setFromNotionData(data);
     } catch (error) {
-      console.error('Error fetching notion data:', error);
+      //
     }
   };
-  
+
   const setFromNotionData = (data) => {
     // If user already submitted a form, hide form and move to transaction builder
-    console.log(data?.isFormSubmitted, 'form status');
+    console.log('Form already submitted?', data?.isFormSubmitted);
     if (data?.isFormSubmitted) {
       setShouldDisplayPlrDaoForm(false);
       // Show Etherspot builder
@@ -70,7 +70,6 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
       setShouldDisplayPlrDaoForm(true);
     }
   };
-  
 
   useEffect(() => {
     if (!connectedProvider && !isConnected) return;
@@ -80,16 +79,19 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
 
     const email = openLoginLocalStorageData?.email || defaultFormData.email;
     const walletAddress = address;
-    console.log(email, walletAddress, 'test');
-    if (!email && !walletAddress) return;
+    console.log('Email', email, 'address', walletAddress);
+    if (!email && !walletAddress) {
+      onLogout();
+      return;
+    }
 
     const payload = {
       email,
       walletAddress,
     };
-    setDefaultFormData((prevData) => ({ ...prevData, email, walletAddress }));
+    setDefaultFormData({ ...defaultFormData, ...payload });
     getNotionData(payload);
-  }, [connectedProvider, address]);
+  }, [connectedProvider]);
 
   const onLogout = async () => {
     //wagmi
@@ -97,7 +99,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
       if (isConnected) wagmiDisconnect();
       if (connector) await connector.disconnect();
     } catch (e) {
-      console.error('Error disconnecting wallet:', e);
+      //
     }
     //web3
     try {
@@ -106,7 +108,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
         web3AuthInstance.clearCache();
       }
     } catch (e) {
-      console.error('Error logging out of web3Auth:', e);
+      //
     }
     //cleanup
     setDefaultFormData({
