@@ -1,5 +1,5 @@
 /* Staking for Pillar DAO. For staking PLR for a DAO nft, see home-governance.js, plr-dao-buidler.js */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormFields, useMailChimpForm } from 'use-mailchimp-form';
 import Link from 'next/link';
 import { ensureInitialized, getRemoteConfig, getValue, fetchAndActivate } from 'firebase/remote-config';
@@ -71,7 +71,9 @@ const StakingApplication = () => {
           {visiblePLRStaking ? (
             <div className="staking_application__form">
               <div className="staking_application__form__detail">
-                <PlrStakingBuilder defaultTransactionBlock={'PLR_STAKING_V2'} shouldDisplayForm={false} />
+                <WagmiProvider>
+                  <PlrStakingBuilder defaultTransactionBlock={'PLR_STAKING_V2'} shouldDisplayForm={false} />
+                </WagmiProvider>
               </div>
             </div>
           ) : (

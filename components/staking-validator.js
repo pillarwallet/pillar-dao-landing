@@ -16,8 +16,9 @@ const StakingValidator = () => {
           <div className="staking_application__form">
             <div className="staking_application__form__detail">
               <h3>PLR staking will be open for 1&nbsp;month</h3>
-
-              <PlrDaoStakingBuilder defaultTransactionBlock={'PLR_STAKING_V2'} shouldDisplayForm={false} />
+              <WagmiProvider>
+                <PlrDaoStakingBuilder defaultTransactionBlock={'PLR_STAKING_V2'} shouldDisplayForm={false} />
+              </WagmiProvider>
             </div>
           </div>
         </div>

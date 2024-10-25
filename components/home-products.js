@@ -1,5 +1,3 @@
-import React from "react";
-import Link from "next/link";
 import logoPillar from "../assets/images/logo-pillar.png";
 
 const HomeProducts = () => {
