@@ -10,12 +10,24 @@
   },
   { "inputs": [], "name": "InsufficientBalance", "type": "error" },
   {
-    "inputs": [{ "internalType": "uint256", "name": "maximumStakeAmount", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "maximumStakeAmount",
+        "type": "uint256"
+      }
+    ],
     "name": "InvalidMaximumStake",
     "type": "error"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "minimumStakeAmount", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "minimumStakeAmount",
+        "type": "uint256"
+      }
+    ],
     "name": "InvalidMinimumStake",
     "type": "error"
   },
@@ -24,8 +36,16 @@
   {
     "inputs": [
       { "internalType": "uint256", "name": "totalMaxStake", "type": "uint256" },
-      { "internalType": "uint256", "name": "currentStakedAmount", "type": "uint256" },
-      { "internalType": "uint256", "name": "remainingStakeableAmount", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "currentStakedAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "remainingStakeableAmount",
+        "type": "uint256"
+      },
       { "internalType": "uint256", "name": "stakerAmount", "type": "uint256" }
     ],
     "name": "MaximumTotalStakeReached",
@@ -59,34 +79,67 @@
   { "inputs": [], "name": "StakingDurationTooShort", "type": "error" },
   { "inputs": [], "name": "StakingPeriodPassed", "type": "error" },
   {
-    "inputs": [{ "internalType": "address", "name": "_address", "type": "address" }],
+    "inputs": [
+      { "internalType": "address", "name": "_address", "type": "address" }
+    ],
     "name": "UserAlreadyClaimedRewards",
     "type": "error"
   },
   { "inputs": [], "name": "ZeroAddress", "type": "error" },
   {
     "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "enum PStaking.StakingState", "name": "newState", "type": "uint8" }],
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "enum PStaking.StakingState",
+        "name": "newState",
+        "type": "uint8"
+      }
+    ],
     "name": "ContractStateUpdated",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "uint256", "name": "newMaxStake", "type": "uint256" }],
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newMaxStake",
+        "type": "uint256"
+      }
+    ],
     "name": "MaxStakeAmountUpdated",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "uint256", "name": "newMinStake", "type": "uint256" }],
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newMinStake",
+        "type": "uint256"
+      }
+    ],
     "name": "MinStakeAmountUpdated",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" },
-      { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
     "name": "OwnershipTransferred",
     "type": "event"
@@ -94,8 +147,18 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "address", "name": "user", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "RewardAllocated",
     "type": "event"
@@ -103,23 +166,50 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "reward", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "reward",
+        "type": "uint256"
+      }
     ],
     "name": "RewardPaid",
     "type": "event"
   },
   {
     "anonymous": false,
-    "inputs": [{ "indexed": false, "internalType": "uint256", "name": "rewards", "type": "uint256" }],
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "rewards",
+        "type": "uint256"
+      }
+    ],
     "name": "RewardsDeposited",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "Staked",
     "type": "event"
@@ -127,21 +217,35 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
     ],
     "name": "Unstaked",
     "type": "event"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }],
+    "inputs": [
+      { "internalType": "uint256", "name": "_amount", "type": "uint256" }
+    ],
     "name": "depositRewards",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "_staker", "type": "address" }],
+    "inputs": [
+      { "internalType": "address", "name": "_staker", "type": "address" }
+    ],
     "name": "eligibleRewardAmount",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -150,28 +254,44 @@
   {
     "inputs": [],
     "name": "getContractState",
-    "outputs": [{ "internalType": "enum PStaking.StakingState", "name": "", "type": "uint8" }],
+    "outputs": [
+      {
+        "internalType": "enum PStaking.StakingState",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "inputs": [
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
     "name": "getRewardAmountForAccount",
-    "outputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+    "outputs": [
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "getStakedAccounts",
-    "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
+    "outputs": [
+      { "internalType": "address[]", "name": "", "type": "address[]" }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "inputs": [
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
     "name": "getStakedAmountForAccount",
-    "outputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+    "outputs": [
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -196,7 +316,13 @@
     "stateMutability": "view",
     "type": "function"
   },
-  { "inputs": [], "name": "overrideStakeLockup", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [],
+    "name": "overrideStakeLockup",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
   {
     "inputs": [],
     "name": "owner",
@@ -204,15 +330,29 @@
     "stateMutability": "view",
     "type": "function"
   },
-  { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
   {
     "inputs": [],
     "name": "rewardToken",
-    "outputs": [{ "internalType": "contract IERC20", "name": "", "type": "address" }],
+    "outputs": [
+      { "internalType": "contract IERC20", "name": "", "type": "address" }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
-  { "inputs": [], "name": "setStateInitialized", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [],
+    "name": "setStateInitialized",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
   {
     "inputs": [],
     "name": "setStateReadyForUnstake",
@@ -220,10 +360,24 @@
     "stateMutability": "nonpayable",
     "type": "function"
   },
-  { "inputs": [], "name": "setStateStakeable", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
-  { "inputs": [], "name": "setStateStaked", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
-    "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }],
+    "inputs": [],
+    "name": "setStateStakeable",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "setStateStaked",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_amount", "type": "uint256" }
+    ],
     "name": "stake",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -232,7 +386,13 @@
   {
     "inputs": [],
     "name": "stakedToken",
-    "outputs": [{ "internalType": "contract PillarStakedToken", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "contract PillarStakedToken",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -258,7 +418,9 @@
   {
     "inputs": [],
     "name": "stakingToken",
-    "outputs": [{ "internalType": "contract IERC20", "name": "", "type": "address" }],
+    "outputs": [
+      { "internalType": "contract IERC20", "name": "", "type": "address" }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -270,22 +432,34 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
+    "inputs": [
+      { "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
     "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
-  { "inputs": [], "name": "unstake", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
-    "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }],
+    "inputs": [],
+    "name": "unstake",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_amount", "type": "uint256" }
+    ],
     "name": "updateMaxStakeLimit",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }],
+    "inputs": [
+      { "internalType": "uint256", "name": "_amount", "type": "uint256" }
+    ],
     "name": "updateMinStakeLimit",
     "outputs": [],
     "stateMutability": "nonpayable",
