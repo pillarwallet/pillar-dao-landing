@@ -1,4 +1,3 @@
-import React from 'react';
 import PlrDaoStakingBuilder from './plr-dao-buidler';
 
 const StakingValidator = () => {
