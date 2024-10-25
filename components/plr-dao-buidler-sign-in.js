@@ -446,7 +446,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
 
   return (
     <Wrapper>
-      <WrapperTitle>Sign in</WrapperTitle>
+      <WrapperTitle>Sign in with Chrome or Firefox</WrapperTitle>
       <>
         {!includeMM && !includeWC && (
           <SwitchWrapper>
