@@ -20,7 +20,6 @@ const Wrapper = styled.div`
   border-radius: 24px;
   background: rgba(43, 1, 64, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  font-family: 'PTRootUIWebRegular', sans-serif;
   color: #fff;
   text-align: center;
   justify-content: center;
@@ -47,7 +46,9 @@ const TransactionButton = styled.button`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-family: 'PTRootUIWebMedium', sans-serif;
+  font-family: 'Euclid Circular B', sans-serif;
+  font-weight: 500;
+  font-style: normal;
   color: #fff;
   font-size: 1rem;
   padding: 1.75rem 2.125rem;
@@ -95,16 +96,31 @@ const RestartButton = styled.button`
 
 //#endregion Styled
 
-const polygonChainId = 137;
-const daoContractAddress = '0xc380f15Db7be87441d0723F19fBb440AEaa734aB';
-const tokenAddress = '0xa6b37fC85d870711C56FbcB8afe2f8dB049AE774';
-const tokenAmount = ethers.utils.parseUnits('10000', 18);
+/* 
+Mainnet (verify)
+Polygon token: 0xa6b37fC85d870711C56FbcB8afe2f8dB049AE774
+dao contract: 0xc380f15Db7be87441d0723F19fBb440AEaa734aB
+
+Polygon Amoy test contracts:
+(test nft: 0x0901f5aBd34A9080Dded6dad72188aAbee8a976F)
+test tokens: 0x3cb29AAC77693A0784380Fb664Ec443Ce1079882
+test dao contract: 0xf1a8685519D456f47a9F3505035F4Bad5d9a9ce0
+required test stake amount: 10 * 10**18 = 10000000000000000000
+required test stake time: 0.1 min
+*/
+
+const polygonChainId = 80002; //80002 amoy testnet, 137 polygon mainnet
+const daoContractAddress = '0xf1a8685519d456f47a9f3505035f4bad5d9a9ce0';
+const tokenAddress = '0x3cb29aac77693a0784380fb664ec443ce1079882';
+const tokenAmount = ethers.utils.parseUnits('10', 18);
 
 const DaoMemberNftTx = ({ onLogout }) => {
   const [isUsingPolygon, setIsUsingPolygon] = useState(true);
   const [isUsingWalletConnect, setIsUsingWalletConnect] = useState(false);
+  const [showApproveMessage, setShowApproveMessage] = useState(false);
   const { address, chainId, connector, isConnected } = useAccount();
   const { switchChain, isLoading: isSwitching, error: switchError } = useSwitchChain();
+  const [buttonText, setButtonText] = useState('Send Transaction');
 
   const handleApproveTxError = (error) => {
     console.log('Approve error', error);
@@ -121,6 +137,7 @@ const DaoMemberNftTx = ({ onLogout }) => {
     isPending: isApproveTxPending,
     isError: isApproveTxError,
     error: approveError,
+    status: approveStatus,
   } = useWriteContract();
 
   const handleWriteApprove = () => {
@@ -131,8 +148,8 @@ const DaoMemberNftTx = ({ onLogout }) => {
         functionName: 'approve',
         args: [daoContractAddress, tokenAmount],
         onSuccess: () => {
-          console.log('Approval successful, initiating deposit');
-          handleWriteDeposit();
+          console.log('Approval successful');
+          setShowApproveMessage(true);
         },
         onError: handleApproveTxError,
       });
@@ -148,6 +165,7 @@ const DaoMemberNftTx = ({ onLogout }) => {
     isPending: isDepositTxPending,
     isError: isDepositTxError,
     error: depositError,
+    status: depositStatus,
   } = useWriteContract();
 
   const handleWriteDeposit = () => {
@@ -175,6 +193,12 @@ const DaoMemberNftTx = ({ onLogout }) => {
     }
   };
 
+  const isTxButtonDisabled = () => {
+    return (
+      isApproveTxPending || isDepositTxPending || (!isUsingPolygon && (!isDepositTxPending || !isApproveTxPending))
+    );
+  };
+
   useEffect(() => {
     console.error('Approve error', approveError?.message ?? '');
     console.error('Deposit error', depositError?.message ?? '');
@@ -190,17 +214,31 @@ const DaoMemberNftTx = ({ onLogout }) => {
     setIsUsingPolygon(isConnected && chainId === polygonChainId);
   }, [chainId, isConnected]);
 
-  const isTxButtonDisabled = () => {
-    return (
-      isApproveTxPending || isDepositTxPending || (!isUsingPolygon && (!isDepositTxPending || !isApproveTxPending))
-    );
-  };
+  useEffect(() => {
+    function setTxButtonText() {
+      if (isDepositTxPending || isApproveTxPending) {
+        setButtonText('Sending');
+      }
+      if (isApproveTxSuccess && !isDepositTxPending) {
+        setButtonText('Deposit');
+      }
+      if (!isApproveTxSuccess) {
+        setButtonText('Approve PLR');
+      } else {
+        setButtonText('Send Transaction');
+      }
+    }
+    setTxButtonText();
+  }, [approveStatus, depositStatus]);
+
+  let confetti = new Confetti('demo');
 
   return (
     <Wrapper>
       <WrapperTitle>Send Transaction on Polygon</WrapperTitle>
       <ButtonWrapper>
         <TransactionButton
+          id="switchToPolygonNetwork"
           disabled={isUsingPolygon || isSwitching || isUsingWalletConnect}
           onClick={() => switchChain({ chainId: polygonChainId })}
         >
@@ -209,18 +247,33 @@ const DaoMemberNftTx = ({ onLogout }) => {
               <FaCheck />
             </Checkmark>
           )}
-          <div>Use Polygon</div>
+          Use Polygon
         </TransactionButton>
         <TransactionButton
+          id="sendTransaction"
           style={{ display: 'flex', justifyContent: 'center' }}
           onClick={handleTransaction}
           disabled={isTxButtonDisabled()}
         >
-          {isDepositTxPending || isApproveTxPending ? 'Sending...' : 'Send Transaction'}
+          {isDepositTxSuccess && (
+            <Checkmark>
+              <FaCheck />
+            </Checkmark>
+          )}
+          {buttonText}
         </TransactionButton>
-
-        {(isDepositTxSuccess || isApproveTxSuccess) && (
-          <div>Transaction sent! Hash: {depositData?.hash ?? approveData?.hash}</div>
+        {showApproveMessage && (
+          <>
+            <div>Approval Transaction sent!</div>
+            <a href={`https://polygonscan.com/tx/${approveData?.hash}`}>View On PolygonScan</a>
+          </>
+        )}
+        {isDepositTxSuccess && (
+          <>
+            <div id="confetti"></div>
+            <div>Transaction sent!</div>
+            <a href={`https://polygonscan.com/tx/${depositData?.hash}`}>View On PolygonScan</a>
+          </>
         )}
         {(isDepositTxError || isApproveTxError) && <div>Something went wrong</div>}
       </ButtonWrapper>
