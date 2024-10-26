@@ -1,25 +1,9 @@
 import { http, createConfig } from 'wagmi';
-import {
-  mainnet,
-  polygon,
-  arbitrum,
-  bsc,
-  optimism,
-  avalanche,
-  celo,
-} from 'wagmi/chains';
+import { mainnet, polygon, polygonAmoy, arbitrum, bsc, optimism, avalanche, celo } from 'wagmi/chains';
 import { metaMask, walletConnect, coinbaseWallet, safe } from 'wagmi/connectors';
 import pillarDaoIcon from '@images/pillar-dao-logo-purple-48px.png';
 
-const blockchains = [
-  polygon,
-  mainnet,
-  arbitrum,
-  bsc,
-  optimism,
-  avalanche,
-  celo,
-];
+const blockchains = [polygon, polygonAmoy, mainnet, arbitrum, bsc, optimism, avalanche, celo];
 const INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
 
 export const wagmiConfig = createConfig({
@@ -56,5 +40,7 @@ export const wagmiConfig = createConfig({
     [optimism.id]: http(`https://optimism-mainnet.infura.io/v3/${INFURA_ID}`),
     [avalanche.id]: http(`https://avalanche-mainnet.infura.io/v3/${INFURA_ID}`),
     [celo.id]: http(`https://celo-mainnet.infura.io/v3/${INFURA_ID}`),
+    [polygonAmoy.id]: http(`https://polygon-amoy.infura.io/v3/${INFURA_ID}`),
   },
 });
+
