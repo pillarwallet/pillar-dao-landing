@@ -113,11 +113,15 @@ const polygonChainId = 80002; //80002 amoy testnet, 137 polygon mainnet
 const daoContractAddress = '0xf1a8685519d456f47a9f3505035f4bad5d9a9ce0';
 const tokenAddress = '0x3cb29aac77693a0784380fb664ec443ce1079882';
 const tokenAmount = ethers.utils.parseUnits('10', 18);
+const explorer = `https://polygonscan.com/tx/`
 
 const DaoMemberNftTx = ({ onLogout }) => {
   const [isUsingPolygon, setIsUsingPolygon] = useState(true);
   const [isUsingWalletConnect, setIsUsingWalletConnect] = useState(false);
-  const [showApproveMessage, setShowApproveMessage] = useState(false);
+  const [isButtonEnabled, setButtonEnabled] = useState(true);
+  const [errorText, setErrorText] = useState('');
+  const [approveTxData, setApproveTxData] = useState('');
+  const [depositTxData, setDepositTxData] = useState('');
   const { address, chainId, connector, isConnected } = useAccount();
   const { switchChain, isLoading: isSwitching, error: switchError } = useSwitchChain();
   const [buttonText, setButtonText] = useState('Send Transaction');
@@ -132,35 +136,37 @@ const DaoMemberNftTx = ({ onLogout }) => {
 
   const {
     writeContract: writeApprove,
-    data: approveData,
     isSuccess: isApproveTxSuccess,
     isPending: isApproveTxPending,
     isError: isApproveTxError,
     error: approveError,
     status: approveStatus,
-  } = useWriteContract();
+  } = useWriteContract({
+    //onError = ()=>{console.log('there was an error')}
+  });
 
   const handleWriteApprove = () => {
-    try {
-      writeApprove({
-        abi: pillarTokenABI,
-        address: tokenAddress,
+    writeApprove(
+      {
         functionName: 'approve',
         args: [daoContractAddress, tokenAmount],
-        onSuccess: () => {
-          console.log('Approval successful');
-          setShowApproveMessage(true);
+        abi: pillarTokenABI,
+        address: tokenAddress,
+      },
+      {
+        onSuccess: (data) => {
+          console.log('Approval successful:', data);
+          setApproveTxData(data);
         },
-        onError: handleApproveTxError,
-      });
-    } catch (error) {
-      console.error('Error in writeApprove:', error);
-    }
+        onError: (error) => {
+          console.error('Approval failed:', error);
+        },
+      },
+    );
   };
 
   const {
     writeContract: writeDeposit,
-    data: depositData,
     isSuccess: isDepositTxSuccess,
     isPending: isDepositTxPending,
     isError: isDepositTxError,
@@ -169,18 +175,26 @@ const DaoMemberNftTx = ({ onLogout }) => {
   } = useWriteContract();
 
   const handleWriteDeposit = () => {
-    try {
-      writeDeposit({
+    writeDeposit(
+      {
         address: daoContractAddress,
         abi: pillarDaoNftABI,
         functionName: 'deposit',
         args: [tokenAmount],
         onSuccess: () => {},
         onError: handleDepositTxError,
-      });
-    } catch (error) {
-      console.error('Error in writeDeposit:', error);
-    }
+      },
+      {
+        onSuccess: (data) => {
+          console.log('Deposit successful:', data);
+          setDepositTxData(data);
+          setShowDepositMessage(true);
+        },
+        onError: (error) => {
+          console.error('Deposit failed:', error);
+        },
+      },
+    );
   };
 
   const handleTransaction = () => {
@@ -193,15 +207,9 @@ const DaoMemberNftTx = ({ onLogout }) => {
     }
   };
 
-  const isTxButtonDisabled = () => {
-    return (
-      isApproveTxPending || isDepositTxPending || (!isUsingPolygon && (!isDepositTxPending || !isApproveTxPending))
-    );
-  };
-
   useEffect(() => {
     console.error('Approve error', approveError?.message ?? '');
-    console.error('Deposit error', depositError?.message ?? '');
+    console.error('Deposit error', depositError?.shortMessage ?? '');
   }, [depositError, approveError]);
 
   useEffect(() => {
@@ -215,23 +223,42 @@ const DaoMemberNftTx = ({ onLogout }) => {
   }, [chainId, isConnected]);
 
   useEffect(() => {
-    function setTxButtonText() {
-      if (isDepositTxPending || isApproveTxPending) {
-        setButtonText('Sending');
-      }
-      if (isApproveTxSuccess && !isDepositTxPending) {
-        setButtonText('Deposit');
-      }
-      if (!isApproveTxSuccess) {
-        setButtonText('Approve PLR');
+    function changeButton() {
+      console.log('approveStatus', approveStatus);
+      console.log('depositStatus', depositStatus);
+      if (!isUsingPolygon) {
+        setButtonEnabled(false);
       } else {
-        setButtonText('Send Transaction');
+        if (approveStatus === 'idle' || approveStatus === 'error') {
+          setButtonText('Approve PLR');
+          setButtonEnabled(true);
+        }
+        if (approveError?.shortMessage) {
+          setErrorText(approveError.shortMessage);
+        }
+        if (approveStatus === 'pending') {
+          setButtonText('Approval Pending');
+          setButtonEnabled(false);
+        }
+        if (approveStatus === 'success') {
+          setButtonText('Deposit');
+          setButtonEnabled(true);
+        }
+        if (depositStatus === 'pending') {
+          setButtonText('Deposit Pending');
+          setButtonEnabled(false);
+        }
+        if (depositError?.shortMessage) {
+          setErrorText(depositError.shortMessage);
+        }
+        if (depositStatus === 'success') {
+          setButtonText('Deposit Sent');
+          setButtonEnabled(false);
+        }
       }
     }
-    setTxButtonText();
+    changeButton();
   }, [approveStatus, depositStatus]);
-
-  let confetti = new Confetti('demo');
 
   return (
     <Wrapper>
@@ -253,7 +280,7 @@ const DaoMemberNftTx = ({ onLogout }) => {
           id="sendTransaction"
           style={{ display: 'flex', justifyContent: 'center' }}
           onClick={handleTransaction}
-          disabled={isTxButtonDisabled()}
+          disabled={!isButtonEnabled}
         >
           {isDepositTxSuccess && (
             <Checkmark>
@@ -262,20 +289,24 @@ const DaoMemberNftTx = ({ onLogout }) => {
           )}
           {buttonText}
         </TransactionButton>
-        {showApproveMessage && (
+        {approveTxData.length > 1 && (
           <>
             <div>Approval Transaction sent!</div>
-            <a href={`https://polygonscan.com/tx/${approveData?.hash}`}>View On PolygonScan</a>
+            <a href={`${explorer}${approveTxData}`}>View On PolygonScan</a>
           </>
         )}
-        {isDepositTxSuccess && (
+        {depositTxData.length > 1 && (
           <>
-            <div id="confetti"></div>
             <div>Transaction sent!</div>
-            <a href={`https://polygonscan.com/tx/${depositData?.hash}`}>View On PolygonScan</a>
+            <a href={`${explorer}${depositTxData}`}>View On PolygonScan</a>
           </>
         )}
-        {(isDepositTxError || isApproveTxError) && <div>Something went wrong</div>}
+        {(isDepositTxError || isApproveTxError) && (
+          <div id="errorMessage">
+            <div>Something went wrong:</div>
+            <div>{errorText}</div>
+          </div>
+        )}
       </ButtonWrapper>
       <RestartButton title="Logout and Restart" disabled={isApproveTxPending || isDepositTxPending} onClick={onLogout}>
         <IoLogOutOutline />
@@ -283,5 +314,4 @@ const DaoMemberNftTx = ({ onLogout }) => {
     </Wrapper>
   );
 };
-
 export default DaoMemberNftTx;
