@@ -43,4 +43,3 @@ export const wagmiConfig = createConfig({
     [polygonAmoy.id]: http(`https://polygon-amoy.infura.io/v3/${INFURA_ID}`),
   },
 });
-

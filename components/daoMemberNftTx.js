@@ -1,4 +1,4 @@
-import { useWriteContract, useAccount, useSwitchChain } from 'wagmi';
+import { useWriteContract, useReadContract, useAccount, useSwitchChain } from 'wagmi';
 import { ethers } from 'ethers';
 import pillarDaoNftABI from '../data/abis/pillarDaoNft.json';
 import pillarTokenABI from '../data/abis/pillarToken.json';
@@ -112,8 +112,8 @@ required test stake time: 0.1 min
 const polygonChainId = 80002; //80002 amoy testnet, 137 polygon mainnet
 const daoContractAddress = '0xf1a8685519d456f47a9f3505035f4bad5d9a9ce0';
 const tokenAddress = '0x3cb29aac77693a0784380fb664ec443ce1079882';
-const tokenAmount = ethers.utils.parseUnits('10', 18);
-const explorer = `https://polygonscan.com/tx/`
+const stakeTokenAmount = ethers.utils.parseUnits('10', 18);
+const explorer = `https://polygonscan.com/tx/`;
 
 const DaoMemberNftTx = ({ onLogout }) => {
   const [isUsingPolygon, setIsUsingPolygon] = useState(true);
@@ -134,6 +134,28 @@ const DaoMemberNftTx = ({ onLogout }) => {
     console.log('Deposit error', error);
   };
 
+  console.log(address);
+
+  const { data: membershipIdData, error } = useReadContract({
+    pillarDaoNftABI,
+    address: daoContractAddress,
+    args: [address],
+    functionName: 'membershipId',
+    chainId: polygonChainId,
+    query: {
+      refetchOnWindowFocus: true,
+      refetchInterval: 5000,
+    },
+  });
+  const membershipId = membershipIdData;
+  const isAlreadyMember = Number(membershipId) > 0 ? true : false;
+
+  useEffect(() => {
+    console.log(error);
+    console.log(membershipId, 'member?', address);
+    console.log('isAlreadyMember', isAlreadyMember);
+  });
+
   const {
     writeContract: writeApprove,
     isSuccess: isApproveTxSuccess,
@@ -149,7 +171,7 @@ const DaoMemberNftTx = ({ onLogout }) => {
     writeApprove(
       {
         functionName: 'approve',
-        args: [daoContractAddress, tokenAmount],
+        args: [daoContractAddress, stakeTokenAmount],
         abi: pillarTokenABI,
         address: tokenAddress,
       },
@@ -180,7 +202,7 @@ const DaoMemberNftTx = ({ onLogout }) => {
         address: daoContractAddress,
         abi: pillarDaoNftABI,
         functionName: 'deposit',
-        args: [tokenAmount],
+        args: [stakeTokenAmount],
         onSuccess: () => {},
         onError: handleDepositTxError,
       },
@@ -207,10 +229,10 @@ const DaoMemberNftTx = ({ onLogout }) => {
     }
   };
 
-  useEffect(() => {
-    console.error('Approve error', approveError?.message ?? '');
-    console.error('Deposit error', depositError?.shortMessage ?? '');
-  }, [depositError, approveError]);
+  // useEffect(() => {
+  //   console.error('Approve error', approveError?.message ?? '');
+  //   console.error('Deposit error', depositError?.shortMessage ?? '');
+  // }, [depositError, approveError]);
 
   useEffect(() => {
     if (connector.type === 'walletConnect') {
@@ -292,13 +314,13 @@ const DaoMemberNftTx = ({ onLogout }) => {
         {approveTxData.length > 1 && (
           <>
             <div>Approval Transaction sent!</div>
-            <a href={`${explorer}${approveTxData}`}>View On PolygonScan</a>
+            <a href={`${explorer}${approveTxData}`}>View On Explorer</a>
           </>
         )}
         {depositTxData.length > 1 && (
           <>
             <div>Transaction sent!</div>
-            <a href={`${explorer}${depositTxData}`}>View On PolygonScan</a>
+            <a href={`${explorer}${depositTxData}`}>View On Explorer</a>
           </>
         )}
         {(isDepositTxError || isApproveTxError) && (
