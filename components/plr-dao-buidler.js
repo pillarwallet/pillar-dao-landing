@@ -6,12 +6,16 @@ import { useAccount, useDisconnect } from 'wagmi';
 
 import { themeOverride } from '../styles/buidlerTheme';
 import PlrDaoForm from './form';
-import DaoMemberNftTx from './daoMemberNftTx';
 
 export const OPENLOGIN_STORE = 'openlogin_store';
 export const WAGMI_STORE = 'wagmi.store';
 
 const LoadingComponent = () => <p>Loading...</p>;
+
+const DaoMemberNftTx = dynamic(() => import('./daoMemberNftTx'), {
+  ssr: false,
+  loading: () => <LoadingComponent />,
+});
 
 const Etherspot = dynamic(() => import('@etherspot/react-transaction-buidler').then((mod) => mod.Etherspot), {
   ssr: false,
@@ -23,8 +27,10 @@ const SignIn = dynamic(() => import('./plr-dao-buidler-sign-in'), {
   loading: () => <LoadingComponent />,
 });
 
-const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
+const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm: shouldDisplaySignUpForm }) => {
   const [shouldDisplayPlrDaoForm, setShouldDisplayPlrDaoForm] = useState(false);
+  const [shouldDisplayTxBuilder, setShouldDisplayTxBuilder] = useState(false);
+
   const [defaultFormData, setDefaultFormData] = useState({
     email: null,
     walletAddress: null,
@@ -34,7 +40,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
   const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
   //wagmi
   const { disconnect: wagmiDisconnect } = useDisconnect();
-  const { connector, isConnected, address } = useAccount();
+  const { connector, isConnected, address,  } = useAccount();
 
   const onWeb3ProviderSet = async (web3Provider) => {
     if (!web3Provider) {
@@ -59,9 +65,12 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
       walletAddress: address,
     };
     setDefaultFormData({ ...defaultFormData, ...payload });
-    setShouldDisplayPlrDaoForm(true);
+    if (shouldDisplaySignUpForm) {
+      setShouldDisplayPlrDaoForm(true);
+    }
     getNotionData(payload);
   }, [connectedProvider, address, isConnected]);
+
   //sign up form display
   const getNotionData = async (payload) => {
     if (process.env.NEXT_PUBLIC_NOTION_DATABASE) {
@@ -85,9 +94,11 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
     // If user already submitted a form, hide form and move to transaction builder
     if (data?.isFormSubmitted) {
       setShouldDisplayPlrDaoForm(false);
-      // Show Etherspot builder
+      setShouldDisplayTxBuilder(true);
     } else {
-      setShouldDisplayPlrDaoForm(true);
+      if (shouldDisplaySignUpForm) {
+        setShouldDisplayPlrDaoForm(true);
+      }
     }
   };
 
@@ -142,14 +153,15 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
       email: null,
       walletAddress: null,
     });
-    if (shouldDisplayForm) {
-      setShouldDisplayPlrDaoForm(true);
+    if (shouldDisplaySignUpForm) {
+      setShouldDisplayPlrDaoForm(false);
     }
     setConnectedProvider(null);
   };
 
-  const onSubmitForm = () => {
+  const onSubmitFormSuccess = () => {
     setShouldDisplayPlrDaoForm(false);
+    shouldDisplayTxBuilder(true);
   };
 
   return (
@@ -157,29 +169,16 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) =>
       {!connectedProvider && !isConnected && (
         <SignIn includeMM includeWC onWeb3ProviderSet={onWeb3ProviderSet} onWeb3AuthInstanceSet={setWeb3AuthInstance} />
       )}
-      {(connectedProvider || isConnected) && shouldDisplayForm && shouldDisplayPlrDaoForm && (
+      {isConnected && shouldDisplaySignUpForm && shouldDisplayPlrDaoForm && (
         <PlrDaoForm
           defaultWalletAddress={defaultFormData.walletAddress}
           defaultEmail={defaultFormData.email}
           connector={connector}
-          onSubmitForm={onSubmitForm}
+          onSubmitForm={onSubmitFormSuccess}
           onLogout={onLogout}
         />
       )}
-      {(connectedProvider || isConnected) && !shouldDisplayPlrDaoForm && (
-        // <Etherspot
-        //   provider={connectedProvider}
-        //   chainId={1}
-        //   themeOverride={themeOverride}
-        //   defaultTransactionBlocks={[{ type: defaultTransactionBlock }]}
-        //   hideWalletToggle
-        //   hideAddTransactionButton
-        //   hideCloseTransactionBlockButton
-        //   hideWalletSwitch
-        //   hideBuyButton
-        //   showMenuLogout
-        //   onLogout={onLogout}
-        // />
+      {isConnected && !shouldDisplayPlrDaoForm && shouldDisplayTxBuilder && (
         <DaoMemberNftTx onLogout={onLogout}></DaoMemberNftTx>
       )}
     </PlrDaoStakingBuilderWrapper>
