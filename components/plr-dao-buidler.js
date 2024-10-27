@@ -30,7 +30,6 @@ const SignIn = dynamic(() => import('./plr-dao-buidler-sign-in'), {
 const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm: shouldDisplaySignUpForm }) => {
   const [shouldDisplayPlrDaoForm, setShouldDisplayPlrDaoForm] = useState(false);
   const [shouldDisplayTxBuilder, setShouldDisplayTxBuilder] = useState(false);
-
   const [defaultFormData, setDefaultFormData] = useState({
     email: null,
     walletAddress: null,
@@ -40,7 +39,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm: shou
   const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
   //wagmi
   const { disconnect: wagmiDisconnect } = useDisconnect();
-  const { connector, isConnected, address,  } = useAccount();
+  const { connector, isConnected, address } = useAccount();
 
   const onWeb3ProviderSet = async (web3Provider) => {
     if (!web3Provider) {
@@ -158,7 +157,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm: shou
 
   const onSubmitFormSuccess = () => {
     setShouldDisplayPlrDaoForm(false);
-    shouldDisplayTxBuilder(true);
+    setShouldDisplayTxBuilder(true);
   };
 
   return (
