@@ -65,9 +65,6 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm: shou
       walletAddress: address,
     };
     setDefaultFormData({ ...defaultFormData, ...payload });
-    if (shouldDisplaySignUpForm) {
-      setShouldDisplayPlrDaoForm(true);
-    }
     getNotionData(payload);
   }, [connectedProvider, address, isConnected]);
 
