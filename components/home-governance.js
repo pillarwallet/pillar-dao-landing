@@ -33,7 +33,7 @@ const HomeGovernance = () => {
             <div className="home_governance__app__detail_wrapper">
               <div className="home_governance__app__detail">
                 <p className="home_governance__app__detail_paragraph">
-                  To join PillarDAO you are required to lock in 10,000 PLR tokens within the Polygon smart contract on
+                  To join PillarDAO you are required to lock in 10,000 PLR tokens for one year within the Polygon smart contract on
                   the membership dApp provided below.
                 </p>
                 <p className="home_governance__app__detail_paragraph">
