@@ -2,7 +2,7 @@ import { useWriteContract, useReadContract, useAccount, useSwitchChain } from 'w
 import { ethers } from 'ethers';
 import pillarDaoNftABI from '../data/abis/pillarDaoNftStake.json';
 import pillarTokenABI from '../data/abis/pillarToken.json';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { FaCheck } from 'react-icons/fa';
@@ -56,7 +56,11 @@ const DaoMemberNftTx = ({ onLogout }) => {
   });
   const membershipTime = Number(membershipTimeData);
 
-  const shouldShowUnstakeButton = Date.now() / 1000 > membershipTime + 180;
+  const shouldShowUnstakeButton = useMemo(() => {
+    if (!membershipTime || membershipTime === 0) return false;
+    const currentTimeInSeconds = Date.now() / 1000;
+    return currentTimeInSeconds > membershipTime + 180;
+  }, [membershipTime]);
 
   //if user is already member, show member panel and unstake button
   const { data: membershipIdData } = useReadContract({
