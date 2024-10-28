@@ -1,6 +1,6 @@
 import { http, createConfig } from 'wagmi';
 import { mainnet, polygon, polygonAmoy, arbitrum, bsc, optimism, avalanche, celo } from 'wagmi/chains';
-import { metaMask, walletConnect, coinbaseWallet, safe } from 'wagmi/connectors';
+import { metaMask, walletConnect, coinbaseWallet, injected } from 'wagmi/connectors';
 import pillarDaoIcon from '@images/pillar-dao-logo-purple-48px.png';
 
 const blockchains = [polygon, polygonAmoy, mainnet, arbitrum, bsc, optimism, avalanche, celo];
@@ -30,7 +30,7 @@ export const wagmiConfig = createConfig({
       appName: 'Pillar DAO Governance Staking',
       appLogoUrl: pillarDaoIcon || '',
     }),
-    safe(),
+    injected(),
   ],
   transports: {
     [mainnet.id]: http(`https://mainnet.infura.io/v3/${INFURA_ID}`),

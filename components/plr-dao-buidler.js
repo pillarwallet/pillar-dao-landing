@@ -163,7 +163,12 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm: shou
   return (
     <PlrDaoStakingBuilderWrapper>
       {!connectedProvider && !isConnected && (
-        <SignIn includeMM includeWC onWeb3ProviderSet={onWeb3ProviderSet} onWeb3AuthInstanceSet={setWeb3AuthInstance} />
+        <SignIn
+          includeMM
+          includeWC
+          onWeb3ProviderSet={onWeb3ProviderSet}
+          onWeb3AuthInstanceSet={setWeb3AuthInstance}
+        />
       )}
       {isConnected && shouldDisplaySignUpForm && shouldDisplayPlrDaoForm && (
         <PlrDaoForm

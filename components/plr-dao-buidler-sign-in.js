@@ -211,7 +211,7 @@ const iconById = {
   coinbaseWallet: <img src={iconCoinbase} alt="coinbase" />,
 };
 
-const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC }) => {
+const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC, includeInj }) => {
   const [showSocialLogins, setShowSocialLogins] = useState(true);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [web3Auth, setWeb3Auth] = useState(null);
@@ -354,6 +354,18 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
         });
       }
     }
+    if (includeInj) {
+      const injectedWallet = connectors.find((connector) => connector.type === 'injected');
+      if (injectedWallet) {
+        options.push({
+          title: 'Other Browser Wallet',
+          icon: iconById[injectedWallet.type],
+          onClick: () => {
+            connect({ connector: injectedWallet });
+          },
+        });
+      }
+    }
     if (options.length > 0) {
       return options;
     }
@@ -450,7 +462,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
     <Wrapper>
       <WrapperTitle>Sign in</WrapperTitle>
       <>
-        {!includeMM && !includeWC && (
+        {!includeMM && !includeWC && !includeInj && (
           <SwitchWrapper>
             <SwitchOption isActive={showSocialLogins} onClick={() => setShowSocialLogins(true)}>
               Social
@@ -480,7 +492,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC
         </SignInOptionsWrapper>
         {!!errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
-        {!includeMM && !includeWC && (
+        {!includeMM && !includeWC && !includeInj && (
           <WrapperTextClickable
             onClick={() => {
               setShowMoreOptions(!showMoreOptions);

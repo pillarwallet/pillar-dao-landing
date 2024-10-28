@@ -1,6 +1,7 @@
-import { useReadContract, useAccount } from 'wagmi';
+import { useReadContract, useAccount, useEnsName } from 'wagmi';
 import pillarDaoNftABI from '../data/abis/pillarDaoNftStake.json';
 import styled from 'styled-components';
+import { useMemo } from 'react';
 
 //#region Styled
 
@@ -87,6 +88,7 @@ const TransactionButton = styled.button`
 
 const MemberInfo = ({ chainId, contract }) => {
   const { address: walletAddress } = useAccount();
+  const { data: ensName } = useEnsName({ walletAddress });
 
   const { data: membershipTimeData } = useReadContract({
     abi: pillarDaoNftABI,
@@ -126,11 +128,17 @@ const MemberInfo = ({ chainId, contract }) => {
 
   const memberId = Number(membershipIdData);
 
+  formatAddress = useMemo(() => {
+    if (!address) return null;
+    return `${address.slice(0, 6)}…${address.slice(38, 42)}`;
+  }, [address]);
+
   return (
     <Wrapper>
       <WrapperTitle>Welcome, Pillar DAO member</WrapperTitle>
-      <div id="memberSince">
-        <Address>{walletAddress}</Address>
+      <div id="memberPanel">
+        {ensName && <Info>{ensName}</Info>}
+        <Address>{formatAddress}</Address>
         <Info>Member since: {membershipDateUTC?.toString()}</Info>
         <Info>NFT: {memberId}</Info>
         <Info>Locked-in: {amountStaked} PLR</Info>
