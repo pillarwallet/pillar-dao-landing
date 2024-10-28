@@ -25,7 +25,7 @@ test nft: 0x0901f5aBd34A9080Dded6dad72188aAbee8a976F
 const polygonChainId = 137; //80002 amoy testnet, 137 polygon mainnet
 const daoContractAddress = '0xc380f15Db7be87441d0723F19fBb440AEaa734aB';
 const tokenAddress = '0xa6b37fC85d870711C56FbcB8afe2f8dB049AE774';
-const stakeTokenAmount = ethers.utils.parseUnits('10', 18);
+const stakeTokenAmount = ethers.utils.parseUnits('10000', 18);
 const explorer = `https://polygonscan.com/tx/`;
 
 const DaoMemberNftTx = ({ onLogout }) => {
