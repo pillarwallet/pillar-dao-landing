@@ -209,6 +209,16 @@ const DaoMemberNftTx = ({ onLogout }) => {
     <Wrapper>
       <WrapperTitle>Send Transaction on Polygon</WrapperTitle>
       <ButtonWrapper>
+        {isAlreadyMember && (
+          <>
+            <MemberInfo chainId={polygonChainId} contract={daoContractAddress}></MemberInfo>
+          </>
+        )}
+        {isAlreadyMember && shouldShowUnstakeButton && (
+          <>
+            <UnstakeButton chainId={polygonChainId} contract={daoContractAddress} explorer={explorer}></UnstakeButton>
+          </>
+        )}
         <TransactionButton
           id="switchToPolygonNetwork"
           disabled={isUsingPolygon || isSwitching || isUsingWalletConnect}
@@ -253,16 +263,6 @@ const DaoMemberNftTx = ({ onLogout }) => {
               <div>{errorText}</div>
             </div>
           </TxInfo>
-        )}
-        {isAlreadyMember && (
-          <>
-            <MemberInfo chainId={polygonChainId} contract={daoContractAddress}></MemberInfo>
-          </>
-        )}
-        {isAlreadyMember && shouldShowUnstakeButton && (
-          <>
-            <UnstakeButton chainId={polygonChainId} contract={daoContractAddress} explorer={explorer}></UnstakeButton>
-          </>
         )}
       </ButtonWrapper>
       <RestartButton title="Logout and Restart" disabled={isApproveTxPending || isDepositTxPending} onClick={onLogout}>
