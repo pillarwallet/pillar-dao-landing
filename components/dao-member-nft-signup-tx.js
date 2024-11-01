@@ -32,7 +32,7 @@ const daoContractAddress = process.env.NEXT_PUBLIC_DAO_CONTRACT || '0xc380f15Db7
 const tokenAddress = process.env.NEXT_PUBLIC_TOKEN || '0xa6b37fC85d870711C56FbcB8afe2f8dB049AE774';
 const stakeToken = process.env.NEXT_PUBLIC_STAKE_AMOUNT || '10000';
 const stakeTokenAmount = ethers.utils.parseUnits(stakeToken, 18);
-const explorer = process.env.NEXT_CHAIN_EXPLORER || `https://polygonscan.com/tx/`;
+const explorer = process.env.NEXT_PUBLIC_CHAIN_EXPLORER || `https://polygonscan.com/tx/`;
 
 const DaoMemberNftTx = ({ onLogout }) => {
   const [isUsingPolygon, setIsUsingPolygon] = useState(true);
