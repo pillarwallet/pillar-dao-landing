@@ -6,7 +6,7 @@ import { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { FaCheck } from 'react-icons/fa';
-import UnstakeButton from './unstakeButton';
+import UnstakeButton from './unstake-button';
 import MemberInfo from './memberInfo';
 
 /* 

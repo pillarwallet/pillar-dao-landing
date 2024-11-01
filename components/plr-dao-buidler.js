@@ -12,7 +12,7 @@ export const WAGMI_STORE = 'wagmi.store';
 
 const LoadingComponent = () => <p>Loading...</p>;
 
-const DaoMemberNftTx = dynamic(() => import('./daoMemberNftTx'), {
+const DaoMemberNftTx = dynamic(() => import('./dao-member-nft-signup-tx'), {
   ssr: false,
   loading: () => <LoadingComponent />,
 });

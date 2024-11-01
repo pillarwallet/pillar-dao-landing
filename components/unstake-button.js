@@ -83,9 +83,9 @@ const TxInfo = styled.div`
 //#endregion Styled
 
 const UnstakeButton = ({ chainId, contract, explorer }) => {
-  let evmChainId = chainId;
-  let contractAddress = contract;
-  let chainExplorer = explorer;
+  const evmChainId = chainId;
+  const contractAddress = contract;
+  const chainExplorer = explorer;
 
   const [isUsingPolygon, setIsUsingPolygon] = useState(true);
   const [isUsingWalletConnect, setIsUsingWalletConnect] = useState(false);
@@ -103,7 +103,7 @@ const UnstakeButton = ({ chainId, contract, explorer }) => {
 
   useEffect(() => {
     setIsUsingPolygon(walletChainId === evmChainId);
-  }, [accountStatus, walletChainId]);
+  }, [accountStatus, walletChainId, evmChainId]);
 
   const {
     writeContract: writeUnstake,
@@ -131,7 +131,7 @@ const UnstakeButton = ({ chainId, contract, explorer }) => {
         },
         onError: (error) => {
           console.error('Unstake failed:', error);
-          errorText = setErrorText(error.shortMessage);
+          setErrorText(error.shortMessage);
         },
       },
     );
