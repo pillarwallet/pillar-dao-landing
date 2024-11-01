@@ -65,8 +65,12 @@ const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
     }
     try {
       if (web3AuthInstance) {
-        await web3AuthInstance.logout({ cleanup: true });
-        web3AuthInstance.clearCache();
+        try {
+          await web3AuthInstance.logout({ cleanup: true });
+          web3AuthInstance.clearCache();
+        } catch (error) {
+          console.error('onLogout web3');
+        }
       }
     } catch (e) {
       console.error('onLogout', e);

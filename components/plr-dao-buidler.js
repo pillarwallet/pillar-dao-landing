@@ -140,11 +140,15 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm: shou
     //web3
     try {
       if (web3AuthInstance) {
-        await web3AuthInstance.logout({ cleanup: true });
-        web3AuthInstance.clearCache();
+        try {
+          await web3AuthInstance.logout({ cleanup: true });
+          web3AuthInstance.clearCache();
+        } catch (error) {
+          console.error('onLogout web3');
+        }
       }
     } catch (e) {
-      //
+      console.error('onLogout');
     }
     //cleanup
     setDefaultFormData({
@@ -165,12 +169,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm: shou
   return (
     <PlrDaoStakingBuilderWrapper>
       {!connectedProvider && !isConnected && (
-        <SignIn
-          includeMM
-          includeWC
-          onWeb3ProviderSet={onWeb3ProviderSet}
-          onWeb3AuthInstanceSet={setWeb3AuthInstance}
-        />
+        <SignIn includeMM includeWC onWeb3ProviderSet={onWeb3ProviderSet} onWeb3AuthInstanceSet={setWeb3AuthInstance} />
       )}
       {isConnected && shouldDisplaySignUpForm && shouldDisplayPlrDaoForm && (
         <PlrDaoForm
