@@ -25,6 +25,7 @@ const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
   const { disconnect: wagmiDisconnect } = useDisconnect();
   const { connector: wagmiConnector, isConnected, address } = useAccount();
   const [wagmiProvider, setWagmiProvider] = useState(null);
+  const [web3, setWeb3] = useState(null);
   const [connectedWeb3Provider, setConnectedWeb3Provider] = useState(null);
   const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
   const [showEtherspotPanel, setShowEtherspotPanel] = useState(false);
@@ -51,7 +52,8 @@ const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
       return;
     }
     const web3 = new Web3(web3Provider);
-    setConnectedWeb3Provider(web3.currentProvider);
+    setWeb3(web3);
+    setConnectedWeb3Provider(web3?.currentProvider);
   };
 
   const onLogout = async () => {

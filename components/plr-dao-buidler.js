@@ -36,6 +36,7 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm: shou
   });
   //web3
   const [connectedProvider, setConnectedProvider] = useState(null);
+  const [web3, setWeb3] = useState(null);
   const [web3AuthInstance, setWeb3AuthInstance] = useState(null);
   //wagmi
   const { disconnect: wagmiDisconnect } = useDisconnect();
@@ -47,7 +48,8 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm: shou
       return;
     }
     const web3 = new Web3(web3Provider);
-    setConnectedProvider(web3.currentProvider);
+    setWeb3(web3);
+    setConnectedProvider(web3?.currentProvider);
   };
 
   useEffect(() => {
