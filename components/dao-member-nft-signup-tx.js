@@ -23,13 +23,16 @@ required test stake amount: 10*10**18 = 10000000000000000000 (10 tokens)
 required test stake time: 0.1 min (6 seconds)
 test nft: 0x0901f5aBd34A9080Dded6dad72188aAbee8a976F
 explorer: `https://www.oklink.com/amoy/tx/`
+
+//80002 amoy testnet, 137 polygon mainnet
 */
 
-const polygonChainId = 137; //80002 amoy testnet, 137 polygon mainnet
-const daoContractAddress = '0xc380f15Db7be87441d0723F19fBb440AEaa734aB';
-const tokenAddress = '0xa6b37fC85d870711C56FbcB8afe2f8dB049AE774';
-const stakeTokenAmount = ethers.utils.parseUnits('10000', 18);
-const explorer = `https://polygonscan.com/tx/`;
+const polygonChainId = Number(process.env.NEXT_PUBLIC_POLYGON_CHAIN_ID || 137);
+const daoContractAddress = process.env.NEXT_PUBLIC_DAO_CONTRACT || '0xc380f15Db7be87441d0723F19fBb440AEaa734aB';
+const tokenAddress = process.env.NEXT_PUBLIC_TOKEN || '0xa6b37fC85d870711C56FbcB8afe2f8dB049AE774';
+const stakeToken = process.env.NEXT_PUBLIC_STAKE_AMOUNT || '10000';
+const stakeTokenAmount = ethers.utils.parseUnits(stakeToken, 18);
+const explorer = process.env.NEXT_CHAIN_EXPLORER || `https://polygonscan.com/tx/`;
 
 const DaoMemberNftTx = ({ onLogout }) => {
   const [isUsingPolygon, setIsUsingPolygon] = useState(true);
