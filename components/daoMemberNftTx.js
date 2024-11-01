@@ -13,6 +13,8 @@ import MemberInfo from './memberInfo';
 ---Mainnet (verify)---
 Polygon PLR token: 0xa6b37fC85d870711C56FbcB8afe2f8dB049AE774
 Dao contract: 0xc380f15Db7be87441d0723F19fBb440AEaa734aB
+Required stake amount (as of Nov 1 2024): 10000 PLR
+explorer: `https://polygonscan.com/tx/`
 
 ---Polygon Amoy test contracts---
 test dao contract: 0xf1a8685519D456f47a9F3505035F4Bad5d9a9ce0
@@ -20,13 +22,14 @@ test tokens (airdrop): 0x3cb29AAC77693A0784380Fb664Ec443Ce1079882
 required test stake amount: 10*10**18 = 10000000000000000000 (10 tokens)
 required test stake time: 0.1 min (6 seconds)
 test nft: 0x0901f5aBd34A9080Dded6dad72188aAbee8a976F
+explorer: `https://www.oklink.com/amoy/tx/`
 */
 
-const polygonChainId = 137; //80002 amoy testnet, 137 polygon mainnet
-const daoContractAddress = '0xc380f15Db7be87441d0723F19fBb440AEaa734aB';
-const tokenAddress = '0xa6b37fC85d870711C56FbcB8afe2f8dB049AE774';
-const stakeTokenAmount = ethers.utils.parseUnits('10000', 18);
-const explorer = `https://polygonscan.com/tx/`;
+const polygonChainId = 80002; //80002 amoy testnet, 137 polygon mainnet
+const daoContractAddress = '0xf1a8685519D456f47a9F3505035F4Bad5d9a9ce0';
+const tokenAddress = '0x3cb29AAC77693A0784380Fb664Ec443Ce1079882';
+const stakeTokenAmount = ethers.utils.parseUnits('10', 18);
+const explorer = `https://www.oklink.com/amoy/tx/`;
 
 const DaoMemberNftTx = ({ onLogout }) => {
   const [isUsingPolygon, setIsUsingPolygon] = useState(true);
