@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getRemoteConfig, ensureInitialized, getValue, fetchAndActivate } from 'firebase/remote-config';
 import { app } from '../services/firebase';
 
@@ -10,6 +10,7 @@ const StakingHero = () => {
   const [currentAPY, setCurrentAPY] = useState('0');
 
   let interval = useRef();
+  let showCountdown = false; //set visibility of countdown
 
   const startTimer = (startDate) => {
     interval = setInterval(() => {
@@ -20,7 +21,6 @@ const StakingHero = () => {
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       if (distance < 0) {
         clearInterval(interval.current);
-        document.getElementsByClassName('staking_hero__countdown')[0].style.display = 'none';
       } else {
         setTimerDays(days);
         setTimerHours(hours);
@@ -100,25 +100,27 @@ const StakingHero = () => {
             </p>
           </div>
 
-          <div className="staking_hero__countdown">
-            {/* <p>Time Left Until Staking Window&nbsp;Opens</p> */}
-            <p>Time Left Until Staking Window&nbsp;Closes</p>
-            <div className="staking_hero__countdown__detail">
-              <ul>
-                <li className="gradient_border">
-                  <h2>{timerDays}</h2>
-                </li>
-                <h2>:</h2>
-                <li className="gradient_border">
-                  <h2>{timerHours}</h2>
-                </li>
-                <h2>:</h2>
-                <li className="gradient_border">
-                  <h2>{timerMinutes}</h2>
-                </li>
-              </ul>
+          {showCountdown && (
+            <div className="staking_hero__countdown">
+              {/* <p>Time Left Until Staking Window&nbsp;Opens</p> */}
+              <p>Time Left Until Staking Window&nbsp;Closes</p>
+              <div className="staking_hero__countdown__detail">
+                <ul>
+                  <li className="gradient_border">
+                    <h2>{timerDays}</h2>
+                  </li>
+                  <h2>:</h2>
+                  <li className="gradient_border">
+                    <h2>{timerHours}</h2>
+                  </li>
+                  <h2>:</h2>
+                  <li className="gradient_border">
+                    <h2>{timerMinutes}</h2>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
     </>

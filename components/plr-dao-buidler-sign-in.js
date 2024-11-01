@@ -21,6 +21,7 @@ const WEB3AUTH_CLIENT_ID = process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID;
 const APP_CHAIN_ID_HEX = process.env.NEXT_PUBLIC_CHAIN_ID_HEX;
 const APP_INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
 
+//#region Styled
 const Wrapper = styled.div`
   width: 100%;
   max-width: 100%;
@@ -125,13 +126,13 @@ const SignInOptionWrapper = styled.div`
   ${({ half }) =>
     half &&
     `
-  min-width: 9.375rem;
+  min-width: 12rem;
   flex: 1;
-  margin: 0px 4px;
+  margin: 0px 6px;
   `}
 `;
 
-const SignInOptionIcon = styled.span`
+const SignInOptionIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -202,6 +203,7 @@ const EmailSubmitButton = styled.button`
     opacity: 0.7;
   }
 `;
+//#endregion Styled
 
 const iconById = {
   metaMask: <img src={iconMetamask} alt="metamask" />,
@@ -209,7 +211,7 @@ const iconById = {
   coinbaseWallet: <img src={iconCoinbase} alt="coinbase" />,
 };
 
-const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
+const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, includeMM, includeWC, includeInj }) => {
   const [showSocialLogins, setShowSocialLogins] = useState(true);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [web3Auth, setWeb3Auth] = useState(null);
@@ -271,6 +273,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
 
   const { connector, isConnected } = useAccount();
 
+  //get web3 provider from wagmi sign-in
   useEffect(() => {
     const update = async () => {
       if (!connector?.ready || !isConnected) return;
@@ -312,28 +315,59 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
       setShowEmailLogin(false);
       setIsSigningIn(false);
     },
-    [web3Auth, onWeb3ProviderSet]
+    [web3Auth, onWeb3ProviderSet],
   );
 
   const loginWithOpenLogin = useCallback(
     async (loginProvider, login_hint) => loginWithAdapter(WALLET_ADAPTERS.OPENLOGIN, loginProvider, login_hint),
-    [loginWithAdapter]
+    [loginWithAdapter],
   );
 
   useEffect(() => {
     setErrorMessage(null);
   }, [showSocialLogins, showMoreOptions]);
 
-  const visibleSignInOptions = useMemo(() => {
-    if (onlyMM) {
-      const metaMask = connectors.find((connector) => connector.id === 'metaMask');
-      return [
-        {
+  /* Set only one or few connectors with include useMemo options */
+  const memoSignInOptions = useMemo(() => {
+    const options = [];
+    if (includeMM) {
+      const metaMask = connectors.find((connector) => connector.type === 'metaMask');
+      if (metaMask) {
+        options.push({
           title: metaMask.name,
-          icon: iconById[metaMask.id],
-          onClick: () => connect({ connector: metaMask }),
-        },
-      ];
+          icon: iconById[metaMask.type],
+          onClick: () => {
+            connect({ connector: metaMask });
+          },
+        });
+      }
+    }
+    if (includeWC) {
+      const walletConnect = connectors.find((connector) => connector.type === 'walletConnect');
+      if (walletConnect) {
+        options.push({
+          title: walletConnect.name,
+          icon: iconById[walletConnect.type],
+          onClick: () => {
+            connect({ connector: walletConnect });
+          },
+        });
+      }
+    }
+    if (includeInj) {
+      const injectedWallet = connectors.find((connector) => connector.type === 'injected');
+      if (injectedWallet) {
+        options.push({
+          title: 'Other Browser Wallet',
+          icon: iconById[injectedWallet.type],
+          onClick: () => {
+            connect({ connector: injectedWallet });
+          },
+        });
+      }
+    }
+    if (options.length > 0) {
+      return options;
     }
 
     const signInOptions = {
@@ -403,7 +437,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
     return (
       <Wrapper>
         <WrapperTitle>Sign in with Email</WrapperTitle>
-        <EmailInput placeholder="Enter you email" onChange={(e) => setEmail(e?.target?.value ?? '')} />
+        <EmailInput placeholder="Enter your email" onChange={(e) => setEmail(e?.target?.value ?? '')} />
         {!!errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <EmailSubmitButton
           onClick={() => loginWithOpenLogin('email_passwordless', email ?? undefined)}
@@ -428,7 +462,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
     <Wrapper>
       <WrapperTitle>Sign in</WrapperTitle>
       <>
-        {!onlyMM && (
+        {!includeMM && !includeWC && !includeInj && (
           <SwitchWrapper>
             <SwitchOption isActive={showSocialLogins} onClick={() => setShowSocialLogins(true)}>
               Social
@@ -439,10 +473,14 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
           </SwitchWrapper>
         )}
         <SignInOptionsWrapper>
-          {visibleSignInOptions.map((signInOption) => (
+          {memoSignInOptions.map((signInOption) => (
             <SignInOptionWrapper
               key={signInOption.title}
-              onClick={isSigningIn ? undefined : signInOption.onClick}
+              onClick={() => {
+                if (!isSigningIn) {
+                  signInOption.onClick();
+                }
+              }}
               half={showSocialLogins}
             >
               <SignInOption disabled={isSigningIn}>
@@ -454,7 +492,7 @@ const SignIn = ({ onWeb3ProviderSet, onWeb3AuthInstanceSet, onlyMM }) => {
         </SignInOptionsWrapper>
         {!!errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
-        {!onlyMM && (
+        {!includeMM && !includeWC && !includeInj && (
           <WrapperTextClickable
             onClick={() => {
               setShowMoreOptions(!showMoreOptions);

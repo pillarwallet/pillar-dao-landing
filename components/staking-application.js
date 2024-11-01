@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+/* Staking for Pillar DAO. For staking PLR for a DAO nft, see home-governance.js, plr-dao-buidler.js */
+import { useEffect, useState } from 'react';
 import { useFormFields, useMailChimpForm } from 'use-mailchimp-form';
 import Link from 'next/link';
 import { ensureInitialized, getRemoteConfig, getValue, fetchAndActivate } from 'firebase/remote-config';
 import { app } from '../services/firebase';
-import WagmiProvider from '../components/WagmiProvider';
 import PlrStakingBuilder from './plr-staking-buidler';
 
 const StakingApplication = () => {
@@ -61,8 +61,8 @@ const StakingApplication = () => {
                 Staking is only supported for key-based wallets (EOA) such as MetaMask. If you hold PLR tokens on a
                 smart contract wallet, please transfer them before staking.
                 <br />
-                <br /> Important for you to understand is that the Pillar staking program is only available for PLR
-                tokens on the Polygon network. If you possess PLR tokens on Ethereum, please follow the guide{' '}
+                <br /> Important: The Pillar staking program is only available for PLR tokens on the Polygon network. If
+                you possess PLR tokens on Ethereum, please follow the guide to move them{' '}
                 <Link href="/plr_ethereum_to_polygon#staking">here</Link>.
               </p>
             </div>
@@ -71,9 +71,7 @@ const StakingApplication = () => {
           {visiblePLRStaking ? (
             <div className="staking_application__form">
               <div className="staking_application__form__detail">
-                <WagmiProvider>
-                  <PlrStakingBuilder defaultTransactionBlock={'PLR_STAKING_V2'} shouldDisplayForm={false} />
-                </WagmiProvider>
+                <PlrStakingBuilder defaultTransactionBlock={'PLR_STAKING_V2'} shouldDisplayForm={false} />
               </div>
             </div>
           ) : (
@@ -94,7 +92,7 @@ const StakingApplication = () => {
                     value={fields.EMAIL}
                     onChange={handleFieldChange}
                   />
-                  <button>Sign up</button>
+                  <button type="submit">Sign up</button>
                 </form>
                 {loading && 'Submitting'}
                 {error && message}

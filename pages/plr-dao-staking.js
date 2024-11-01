@@ -1,4 +1,4 @@
-import React from "react";
+//not used
 import Layout from "@components/layout";
 import Header from "@components/header";
 import StakingHero from "@components/staking-hero";
