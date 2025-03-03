@@ -1,10 +1,10 @@
-/* Staking for Pillar DAO. For staking PLR for a DAO nft, see home-governance.js, plr-dao-buidler.js */
+/* Staking for Pillar DAO. For staking PLR for DAO nft membership, see home-governance.js, plr-dao-buidler.js */
 import { useEffect, useState } from 'react';
 import { useFormFields, useMailChimpForm } from 'use-mailchimp-form';
 import Link from 'next/link';
 import { ensureInitialized, getRemoteConfig, getValue, fetchAndActivate } from 'firebase/remote-config';
 import { app } from '../services/firebase';
-import PlrStakingBuilder from './plr-staking-buidler';
+import PlrStakingBuilder from './staking-plr-buidler';
 
 const StakingApplication = () => {
   const mailchimpURL =

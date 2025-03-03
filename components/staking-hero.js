@@ -10,7 +10,7 @@ const StakingHero = () => {
   const [currentAPY, setCurrentAPY] = useState('0');
 
   let interval = useRef();
-  let showCountdown = false; //set visibility of countdown
+  const showCountdown = false; //set visibility of countdown
 
   const startTimer = (startDate) => {
     interval = setInterval(() => {

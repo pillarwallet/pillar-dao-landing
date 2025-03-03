@@ -1,3 +1,4 @@
+//display info about staking contract
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 
