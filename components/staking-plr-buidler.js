@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import Web3 from 'web3';
 import { useAccount, useDisconnect } from 'wagmi';
 
-import EtherspotBoundary from './etherspot-boundary';
 import { themeOverride } from '../styles/buidlerTheme';
 
 export const OPENLOGIN_STORE = 'openlogin_store';
