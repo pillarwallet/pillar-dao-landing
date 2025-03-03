@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import Web3 from 'web3';
 import { useAccount, useDisconnect } from 'wagmi';
 
+import EtherspotBoundary from './etherspot-boundary';
 import { themeOverride } from '../styles/buidlerTheme';
 
 export const OPENLOGIN_STORE = 'openlogin_store';
@@ -116,7 +117,7 @@ const PlrStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm }) => {
             onlyPolygonInPLRStaking
             plrStakingTitle="Pillar Staking Program"
           />
-          <div>Compatible browsers: Chrome, Firefox</div>
+          <div class="p-3">Compatible browsers: Chrome, Firefox</div>
         </>
       )}
     </PlrStakingBuilderWrapper>
