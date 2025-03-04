@@ -5,6 +5,8 @@ import pillarDaoIcon from '@images/pillar-dao-logo-purple-48px.png';
 
 const blockchains = [polygon, polygonAmoy, mainnet, arbitrum, bsc, optimism, avalanche, celo];
 const INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
+const WALLET_CONNECT_PROJECT_ID =
+  process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '15fcfb7323fcce5aa1b58afe4dc6d847';
 
 export const wagmiConfig = createConfig({
   chains: [...blockchains],
@@ -17,7 +19,7 @@ export const wagmiConfig = createConfig({
       },
     }),
     walletConnect({
-      projectId: process.env.WALLET_CONNECT_PROJECT_ID || '15fcfb7323fcce5aa1b58afe4dc6d847',
+      projectId: WALLET_CONNECT_PROJECT_ID,
       showQrModal: true,
       metadata: {
         name: 'Pillar DAO Governance Staking',
