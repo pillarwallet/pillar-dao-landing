@@ -1,4 +1,4 @@
-import React from 'react';
+import { daoLinks } from "config/dao-links";
 import Link from 'next/link';
 import stakeIcon from '../assets/images/stake-icon.png';
 import mintIcon from '../assets/images/mint-icon.png';
@@ -54,14 +54,14 @@ const StakingDao = () => {
                 Become a PillarDAO member to steer the direction of the PillarDAO ecosystem and help make decisions that
                 shape our decentralised future
               </h3>
-              <Link
+              <a
                 href="/#governor"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="staking__learn__more__text__discord"
               >
                 Learn more
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -102,13 +102,13 @@ const StakingDao = () => {
                 <br />
                 Stakers will be notified when the claiming period goes live. Users can follow PillarDAO’s social media
                 channels (
-                <Link href="https://twitter.com/pillar_dao" className="btn">
+                <a href={daoLinks.DAO_SOCIAL_TWITTER_X} className="btn">
                   Twitter
-                </Link>
+                </a>
                 ,{' '}
-                <Link href="https://discord.gg/t39xKhzSPb" className="btn">
+                <a href={daoLinks.DAO_SOCIAL_DISCORD} className="btn">
                   Discord
-                </Link>
+                </a>
                 ).
               </p>
             </div>

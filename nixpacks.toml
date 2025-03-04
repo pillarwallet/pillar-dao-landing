@@ -1,0 +1,12 @@
+[build]
+language = "nodejs"
+
+[build.packages]
+pnpm = "latest"
+
+[build.commands]
+install = "pnpm install --frozen-lockfile"
+build = "pnpm build"
+
+[start]
+command = "pnpm start"

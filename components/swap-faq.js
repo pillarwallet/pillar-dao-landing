@@ -1,6 +1,3 @@
-import React from 'react';
-import Link from 'next/link';
-
 const StakingAbout = () => {
   return (
     <>
@@ -48,9 +45,9 @@ const StakingAbout = () => {
             <p>
               Cross-chain assistance allows you to send and receive your tokens for minimal gas vs bridge contracts.
               After the transaction verification, the DAO will transfer PLR on Polygon to the address provided in{' '}
-              <Link href="https://forms.gle/i5miGsEt7xMf5Lby5" to="#" target="_blank" rel="noopener noreferrer">
+              <a href="https://forms.gle/i5miGsEt7xMf5Lby5" to="#" target="_blank" rel="noopener noreferrer">
                 the request form
-              </Link>{' '}
+              </a>{' '}
               along with 1 Matic for gas on Polygon. This process does require manual processing of sending tokens and a
               short delay time.
             </p>
@@ -67,9 +64,9 @@ const StakingAbout = () => {
               0xa6b37fc85d870711c56fbcb8afe2f8db049ae774 “Click More” upper right corner, select “Add token to Metamask
               (web3)”. If you have followed the above steps and don’t see the tokens on the Polygon scan even after 24
               hours, please contract the DAO at{' '}
-              <Link href="mailto:dpo@pillardao.org" to="#" target="_blank" rel="noopener noreferrer">
+              <a href="mailto:dpo@pillardao.org" to="#" target="_blank" rel="noopener noreferrer">
                 dpo@pillardao.org
-              </Link>
+              </a>
               . You will also have a transaction ID# from when you sent PLR and this will serve as Receipt for where
               your tokens were received. It's important to always verify your address is correct when sending tokens.
             </p>

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+//display info about staking contract
+import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 
 import pillarIcon from '../assets/images/pillar-icon.png';
