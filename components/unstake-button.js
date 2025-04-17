@@ -1,8 +1,8 @@
-import { useWriteContract, useReadContract, useAccount, useSwitchChain } from 'wagmi';
-import pillarDaoNftABI from '../data/abis/pillarDaoNftStake.json';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { FaCheck } from 'react-icons/fa';
+import styled from 'styled-components';
+import { useAccount, useWriteContract } from 'wagmi';
+import pillarDaoNftABI from '../data/abis/pillarDaoNftStake.json';
 
 //#region Styled
 
@@ -160,7 +160,7 @@ const UnstakeButton = ({ chainId, contract, explorer }) => {
 
   return (
     <Wrapper>
-      <WrapperTitle>Unstake</WrapperTitle>
+      {/* <WrapperTitle>Unstake</WrapperTitle> */}
       <ButtonWrapper>
         <TransactionButton id="unstakeTransaction" onClick={handleUnstakeTransaction} disabled={!isButtonEnabled}>
           {isUnstakeTxSuccess && (

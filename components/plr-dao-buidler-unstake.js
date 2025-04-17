@@ -1,13 +1,20 @@
+import { ethers } from 'ethers';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAccount, useDisconnect } from 'wagmi';
 import Web3 from 'web3';
-
-import PlrDaoForm from './form';
+import UnstakeButton from './unstake-button';
 
 export const OPENLOGIN_STORE = 'openlogin_store';
 export const WAGMI_STORE = 'wagmi.store';
+
+const polygonChainId = Number(process.env.NEXT_PUBLIC_POLYGON_CHAIN_ID || 137);
+const daoContractAddress = process.env.NEXT_PUBLIC_DAO_CONTRACT || '0xc380f15Db7be87441d0723F19fBb440AEaa734aB';
+const tokenAddress = process.env.NEXT_PUBLIC_TOKEN || '0xa6b37fC85d870711C56FbcB8afe2f8dB049AE774';
+const stakeToken = process.env.NEXT_PUBLIC_STAKE_AMOUNT || '10000';
+const stakeTokenAmount = ethers.utils.parseUnits(stakeToken, 18);
+const explorer = process.env.NEXT_PUBLIC_CHAIN_EXPLORER || `https://polygonscan.com/tx/`;
 
 const LoadingComponent = () => <p>Loading...</p>;
 
@@ -26,7 +33,7 @@ const SignIn = dynamic(() => import('./plr-dao-buidler-sign-in'), {
   loading: () => <LoadingComponent />,
 });
 
-const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm: shouldDisplaySignUpForm }) => {
+const PlrDaoStakingBuilderUnstake = ({ defaultTransactionBlock, shouldDisplayForm: shouldDisplaySignUpForm }) => {
   const [shouldDisplayPlrDaoForm, setShouldDisplayPlrDaoForm] = useState(false);
   const [shouldDisplayTxBuilder, setShouldDisplayTxBuilder] = useState(false);
   const [defaultFormData, setDefaultFormData] = useState({
@@ -170,23 +177,14 @@ const PlrDaoStakingBuilder = ({ defaultTransactionBlock, shouldDisplayForm: shou
       {!connectedProvider && !isConnected && (
         <SignIn includeMM includeWC onWeb3ProviderSet={onWeb3ProviderSet} onWeb3AuthInstanceSet={setWeb3AuthInstance} />
       )}
-      {isConnected && shouldDisplaySignUpForm && shouldDisplayPlrDaoForm && (
-        <PlrDaoForm
-          defaultWalletAddress={defaultFormData.walletAddress}
-          defaultEmail={defaultFormData.email}
-          connector={connector}
-          onSubmitForm={onSubmitFormSuccess}
-          onLogout={onLogout}
-        />
-      )}
-      {isConnected && !shouldDisplayPlrDaoForm && shouldDisplayTxBuilder && (
-        <DaoMemberNftTx onLogout={onLogout}></DaoMemberNftTx>
+      {isConnected && (
+        <UnstakeButton chainId={polygonChainId} contract={daoContractAddress} explorer={explorer}></UnstakeButton>
       )}
     </PlrDaoStakingBuilderWrapper>
   );
 };
 
-export default PlrDaoStakingBuilder;
+export default PlrDaoStakingBuilderUnstake;
 
 const PlrDaoStakingBuilderWrapper = styled.div`
   display: flex;
