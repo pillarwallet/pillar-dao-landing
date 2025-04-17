@@ -1,9 +1,17 @@
-import { daoLinks } from "config/dao-links";
-import Link from 'next/link';
-import stakeIcon from '../assets/images/stake-icon.png';
-import mintIcon from '../assets/images/mint-icon.png';
+import { daoLinks } from 'config/dao-links';
+import { ethers } from 'ethers';
 import communityIcon from '../assets/images/community-icon.png';
+import mintIcon from '../assets/images/mint-icon.png';
+import stakeIcon from '../assets/images/stake-icon.png';
 import unionIcon from '../assets/images/union.svg';
+import PlrDaoStakingBuilderUnstake from './plr-dao-buidler-unstake';
+
+const polygonChainId = Number(process.env.NEXT_PUBLIC_POLYGON_CHAIN_ID || 137);
+const daoContractAddress = process.env.NEXT_PUBLIC_DAO_CONTRACT || '0xc380f15Db7be87441d0723F19fBb440AEaa734aB';
+const tokenAddress = process.env.NEXT_PUBLIC_TOKEN || '0xa6b37fC85d870711C56FbcB8afe2f8dB049AE774';
+const stakeToken = process.env.NEXT_PUBLIC_STAKE_AMOUNT || '10000';
+const stakeTokenAmount = ethers.utils.parseUnits(stakeToken, 18);
+const explorer = process.env.NEXT_PUBLIC_CHAIN_EXPLORER || `https://polygonscan.com/tx/`;
 
 const StakingDao = () => {
   return (
@@ -12,12 +20,13 @@ const StakingDao = () => {
         <div className="staking_dao__staking">
           <div className="container">
             <div className="staking_dao__staking__headline">
-              <h2>
-                How <span style={{ fontWeight: 'bold' }}>PillarDAO Staking</span>&nbsp;Works
-              </h2>
+              <h2>Unstake</h2>
             </div>
 
-            <div className="staking_dao__staking__cards">
+            <PlrDaoStakingBuilderUnstake />
+            {/* <DaoMemberNftTx /> */}
+
+            <div style={{ display: 'none' }} className="staking_dao__staking__cards">
               <div className="staking_dao__staking__cards__detail">
                 <img src={stakeIcon} alt="" />
                 <h3>Stake</h3>
