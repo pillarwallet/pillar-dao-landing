@@ -9,42 +9,6 @@ const StakingDao = () => {
   return (
     <>
       <section className="staking_dao" id="about">
-        <div className="staking_dao__staking">
-          <div className="container">
-            <div className="staking_dao__staking__headline">
-              <h2>
-                How <span style={{ fontWeight: 'bold' }}>PillarDAO Staking</span>&nbsp;Works
-              </h2>
-            </div>
-
-            <div className="staking_dao__staking__cards">
-              <div className="staking_dao__staking__cards__detail">
-                <img src={stakeIcon} alt="" />
-                <h3>Stake</h3>
-                <p>
-                  Stake PLR tokens for rewards paid by our Ethereum validator node in WETH on Polygon. Each account can
-                  stake up to 250,000 PLR Tokens on Polygon
-                </p>
-              </div>
-              <div className="staking_dao__staking__cards__detail">
-                <img src={mintIcon} alt="" />
-                <h3>Mint</h3>
-                <p>
-                  When staking PLR you mint staked tokens (stkPLR) which are issued 1:1 to your initial stake amount and
-                  are held in your wallet.
-                </p>
-              </div>
-              <div className="staking_dao__staking__cards__detail">
-                <img src={communityIcon} alt="" />
-                <h3>Claim</h3>
-                <p>
-                  PLR stakers will be able to claim their rewards in the staking dApp 52 weeks (12 months) after the
-                  staking window closes
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div className="staking_dao__foundation">
           <div className="container" style={{ borderColor: 'transparent' }}>

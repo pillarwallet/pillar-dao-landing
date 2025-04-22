@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { getRemoteConfig, ensureInitialized, getValue, fetchAndActivate } from 'firebase/remote-config';
 import { app } from '../services/firebase';
+import PlrDaoStakingBuilder from './plr-dao-buidler';
 
 const StakingHero = () => {
   const [timerDays, setTimerDays] = useState('00');
@@ -76,51 +77,12 @@ const StakingHero = () => {
       <section className="staking_hero" id="home">
         <div className="container">
           <div className="staking_hero__headline">
-            <h1>Earn WETH rewards for staking PLR token</h1>
+            <h1>Unstake your PLR tokens</h1>
           </div>
-          {/* Current Stats */}
-          <div className="staking_hero__stats">
-            <div className="staking_hero__stats__detail">
-              <p>Total ETH Staked</p>
-              <h4 className="gradient_border">{totalETHStacked}</h4>
-            </div>
-            <div className="staking_hero__stats__detail">
-              <p>Current APY</p>
-              <h4 className="gradient_border">{currentAPY}</h4>
-            </div>
-            <p className="staking_hero__stats__status">Live°</p>
+          <div className="staking_hero__dapp">
+            <PlrDaoStakingBuilder defaultTransactionBlock={'PLR_DAO_STAKE'} shouldDisplayForm={true} />
+            <p>Supported browsers: Chrome, Firefox <br />Supported wallet: MetaMask</p>
           </div>
-          <div className="staking_hero__footnote">
-            <p>
-              No Reward Fees Apply! <span className="gradient_border">?</span>
-            </p>
-            <p className="staking_hero__footnote__tooltip gradient_border">
-              Most staking programs charge a 'Reward Fee' which is charged as a % of your earned rewards. It is often
-              10% of your rewards. PillarDAO charges no fees.
-            </p>
-          </div>
-
-          {showCountdown && (
-            <div className="staking_hero__countdown">
-              {/* <p>Time Left Until Staking Window&nbsp;Opens</p> */}
-              <p>Time Left Until Staking Window&nbsp;Closes</p>
-              <div className="staking_hero__countdown__detail">
-                <ul>
-                  <li className="gradient_border">
-                    <h2>{timerDays}</h2>
-                  </li>
-                  <h2>:</h2>
-                  <li className="gradient_border">
-                    <h2>{timerHours}</h2>
-                  </li>
-                  <h2>:</h2>
-                  <li className="gradient_border">
-                    <h2>{timerMinutes}</h2>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          )}
         </div>
       </section>
     </>

@@ -45,26 +45,13 @@ const StakingApplication = () => {
         <div className="container">
           <div className="staking_application__headline">
             <h2>
-              All Staked Funds Will Be Locked for 52&nbsp;Weeks.{' '}
-              <span>(12 months) Claim and unstake will be available at the end of this &nbsp;period</span>
+              This concludes the first PillarDAO staking pool. <br/> <span>We would like to thank everybody for participating. PLR and WETH rewards are returned on the Polygon chain. If you require assistance </span> moving PLR tokens and rewards from Polygon to Ethereum please <Link href="/unstaking"> follow&nbsp;the guide</Link> <span>.</span>
             </h2>
           </div>
 
           <div className="staking_application_cards__detail">
             <div className="staking_application__detail">
-              <p>
-                To enhance your staking experience with us, we have fine-tuned the PLR staking program to launch on
-                Polygon which better meets your needs and reduces overall fees. All ETH rewards will be distributed at
-                the end of the staking period in Wrapped ETH (WETH).
-                <br />
-                <br />
-                Staking is only supported for key-based wallets (EOA) such as MetaMask. If you hold PLR tokens on a
-                smart contract wallet, please transfer them before staking.
-                <br />
-                <br /> Important: The Pillar staking program is only available for PLR tokens on the Polygon network. If
-                you possess PLR tokens on Ethereum, please follow the guide to move them{' '}
-                <Link href="/plr_ethereum_to_polygon#staking">here</Link>.
-              </p>
+              <p>Continue to <a href="https://x.com/pillar_dao" target="_blank">follow us</a> to get notified when details are available for the second round of staking.</p>
             </div>
           </div>
 
@@ -77,8 +64,8 @@ const StakingApplication = () => {
           ) : (
             <div className="staking_application__form">
               <div className="staking_application__form__detail">
-                <h3>Sign up to receive updates on the PLR staking campaign</h3>
-                {/* <p>Sign up to receive updates on the PLR staking campaign</p> */}
+                <h3>Sign up to receive updates</h3>
+                <p>on future PillarDAO community programs</p>
                 <form
                   onSubmit={(event) => {
                     event.preventDefault();
@@ -101,15 +88,6 @@ const StakingApplication = () => {
             </div>
           )}
 
-          <div className="staking_application_cards__detail">
-            <div className="staking_application__detail">
-              <p>
-                If you currently hold PLR tokens on the Ethereum network, there's no need to be concerned. You can
-                seamlessly swap them for PLR tokens on Polygon <Link href="/plr_ethereum_to_polygon#staking">here</Link>
-                .
-              </p>
-            </div>
-          </div>
         </div>
       </section>
     </>

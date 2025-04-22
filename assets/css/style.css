@@ -1378,6 +1378,14 @@ ul li {
     }
 }
 
+.staking_hero__dapp {
+    margin-top: 2rem;
+}
+
+.staking_hero__dapp p {
+    margin-top: 2rem;
+}
+
 .staking_hero__stats {
     display: flex;
     gap: 2rem;
@@ -1848,7 +1856,7 @@ ul li {
     content: '';
     position: relative;
     height: 1px;
-    width: calc(20% - 2rem);
+    width: calc(15% - 2rem);
 }
 
 .staking_application__headline::before {
@@ -1874,7 +1882,7 @@ ul li {
 
 .staking_application__headline h2 {
     font-size: 2rem;
-    width: 45%;
+    width: 70%;
 }
 
 .staking_application__headline h2 span {
@@ -1929,6 +1937,7 @@ ul li {
 
 .staking_application__form__detail h3 {
     font-size: 2rem;
+    margin-bottom: 0.5rem;
 }
 
 @media only screen and (max-width: 1023px) {
