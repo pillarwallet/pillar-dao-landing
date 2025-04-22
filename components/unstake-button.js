@@ -88,7 +88,6 @@ const UnstakeButton = ({ chainId, contract, explorer }) => {
   const evmChainId = chainId;
   const contractAddress = contract;
   const chainExplorer = explorer;
-  console.log('UnstakeButton', chainId, contract, explorer);
 
   const [isUsingPolygon, setIsUsingPolygon] = useState(true);
   const [isUsingWalletConnect, setIsUsingWalletConnect] = useState(false);
@@ -137,7 +136,6 @@ const UnstakeButton = ({ chainId, contract, explorer }) => {
       token: '0x99b4071d2509f3bfb4c1f9cbe174da1f3dc43480',
     })
       .then((balance) => {
-        console.log('Balance:', balance);
         return balance.value.toString();
       })
       .catch((error) => {
@@ -145,8 +143,6 @@ const UnstakeButton = ({ chainId, contract, explorer }) => {
         setErrorText(error.shortMessage);
         return '0';
       });
-
-    console.log('Returned value:', returnedValue);
 
     if (returnedValue === '0') {
       alert('You have no tokens to unstake');
@@ -193,7 +189,6 @@ const UnstakeButton = ({ chainId, contract, explorer }) => {
       },
       {
         onSuccess: (data) => {
-          console.log('Approve successful:', data);
           setButtonText('Approval transaction sent - sending unstaking transaction...');
 
           writeUnstake(
@@ -206,7 +201,6 @@ const UnstakeButton = ({ chainId, contract, explorer }) => {
             },
             {
               onSuccess: (data) => {
-                console.log('Unstake successful:', data);
                 setUnstakeTxData(data);
                 setButtonText('Unstake transaction sent...');
               },
