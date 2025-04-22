@@ -1,8 +1,10 @@
+import { getBalance } from '@wagmi/core';
 import { useEffect, useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import styled from 'styled-components';
 import { useAccount, useWriteContract } from 'wagmi';
-import pillarDaoNftABI from '../data/abis/pillarDaoNftStake.json';
+import { wagmiConfig } from 'wagmi-config';
+import pillarStaking from '../data/abis/plrStaking.json';
 
 //#region Styled
 
@@ -115,23 +117,105 @@ const UnstakeButton = ({ chainId, contract, explorer }) => {
     status: unstakeStatus,
   } = useWriteContract();
 
-  const handleUnstakeTransaction = () => {
-    writeUnstake(
+  const {
+    writeContract: writeApproval,
+    isSuccess: isApprovalTxSuccess,
+    isPending: isapprovalTxPending,
+    isError: isapprovalTxError,
+
+    error: approvalError,
+    status: approvalStatus,
+  } = useWriteContract();
+
+  const handleUnstakeTransaction = async () => {
+    // First we need to get the balance of the tokens that the account
+    // holds for stkPLR
+    setButtonText('Getting balance...');
+    const returnedValue = await getBalance(wagmiConfig, {
+      address: walletAddress,
+      token: '0x99b4071d2509f3bfb4c1f9cbe174da1f3dc43480',
+    })
+      .then((balance) => {
+        return balance.value.toString();
+      })
+      .catch((error) => {
+        console.error('Error getting balance:', error);
+        setErrorText(error.shortMessage);
+        return '0';
+      });
+
+    if (returnedValue === '0') {
+      alert('You have no tokens to unstake');
+      setButtonText('Unstake');
+      return;
+    }
+
+    setButtonText('Approving...');
+
+    // Then we need to approve the contract to spend the tokens
+    // Then we can call the stake function
+    writeApproval(
       {
-        functionName: 'withdraw',
-        abi: pillarDaoNftABI,
-        address: contractAddress,
-        args: [],
+        functionName: 'approve',
+        abi: [
+          {
+            inputs: [
+              {
+                internalType: 'address',
+                name: 'spender',
+                type: 'address',
+              },
+              {
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
+              },
+            ],
+            name: 'approve',
+            outputs: [
+              {
+                internalType: 'bool',
+                name: '',
+                type: 'bool',
+              },
+            ],
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+        ],
+        address: '0x99b4071d2509f3bfb4c1f9cbe174da1f3dc43480',
+        args: [contractAddress, returnedValue],
         account: walletAddress,
       },
       {
         onSuccess: (data) => {
-          console.log('Unstake successful:', data);
-          setUnstakeTxData(data);
+          setButtonText('Approval transaction sent - sending unstaking transaction...');
+
+          writeUnstake(
+            {
+              functionName: 'unstake',
+              abi: pillarStaking,
+              address: contractAddress,
+              args: [],
+              account: walletAddress,
+            },
+            {
+              onSuccess: (data) => {
+                setUnstakeTxData(data);
+                setButtonText('Unstake transaction sent...');
+              },
+              onError: (error) => {
+                console.error('Unstake failed:', error);
+                alert('Error unstaking - ' + error.shortMessage);
+                setButtonText('Unstake');
+              },
+            },
+          );
         },
         onError: (error) => {
-          console.error('Unstake failed:', error);
-          setErrorText(error.shortMessage);
+          console.error('Approve failed:', error);
+          alert('Error approving - ' + error.shortMessage);
+          setButtonText('Unstake');
         },
       },
     );
@@ -180,7 +264,7 @@ const UnstakeButton = ({ chainId, contract, explorer }) => {
         )}
         {isUnstakeTxError && (
           <TxInfo id="errorMessage">
-            <div>Something went wrong.</div>
+            <div>Something went wrong. Please try again.</div>
             <div>{errorText}</div>
           </TxInfo>
         )}
