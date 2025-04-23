@@ -41,8 +41,7 @@ const StakingAbout = () => {
           <img className="staking_about__icon" src={pillarIcon} alt="" />
           <div className="staking_about__headline">
             <h2>
-              All users who’ve staked PLR during the staking window will share the rewards proportionally, according to
-              their staked percentage of the PLR pool.
+            All users who’ve staked PLR during the staking window will share the rewards (WETH) proportionally, according to their staked percentage of the PLR pool. The rewards in WETH will be airdropped to your Polygon wallets you originally staked with.
             </h2>
           </div>
 
