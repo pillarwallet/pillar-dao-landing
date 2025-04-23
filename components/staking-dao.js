@@ -1,59 +1,10 @@
 import { daoLinks } from 'config/dao-links';
-import { ethers } from 'ethers';
-import communityIcon from '../assets/images/community-icon.png';
-import mintIcon from '../assets/images/mint-icon.png';
-import stakeIcon from '../assets/images/stake-icon.png';
 import unionIcon from '../assets/images/union.svg';
-import PlrDaoStakingBuilderUnstake from './plr-dao-buidler-unstake';
-
-const polygonChainId = Number(process.env.NEXT_PUBLIC_POLYGON_CHAIN_ID || 137);
-const daoContractAddress = process.env.NEXT_PUBLIC_DAO_CONTRACT || '0xc380f15Db7be87441d0723F19fBb440AEaa734aB';
-const tokenAddress = process.env.NEXT_PUBLIC_TOKEN || '0xa6b37fC85d870711C56FbcB8afe2f8dB049AE774';
-const stakeToken = process.env.NEXT_PUBLIC_STAKE_AMOUNT || '10000';
-const stakeTokenAmount = ethers.utils.parseUnits(stakeToken, 18);
-const explorer = process.env.NEXT_PUBLIC_CHAIN_EXPLORER || `https://polygonscan.com/tx/`;
 
 const StakingDao = () => {
   return (
     <>
       <section className="staking_dao" id="about">
-        <div className="staking_dao__staking">
-          <div className="container">
-            <div className="staking_dao__staking__headline">
-              <h2>Unstake</h2>
-            </div>
-
-            <PlrDaoStakingBuilderUnstake />
-            {/* <DaoMemberNftTx /> */}
-
-            <div style={{ display: 'none' }} className="staking_dao__staking__cards">
-              <div className="staking_dao__staking__cards__detail">
-                <img src={stakeIcon} alt="" />
-                <h3>Stake</h3>
-                <p>
-                  Stake PLR tokens for rewards paid by our Ethereum validator node in WETH on Polygon. Each account can
-                  stake up to 250,000 PLR Tokens on Polygon
-                </p>
-              </div>
-              <div className="staking_dao__staking__cards__detail">
-                <img src={mintIcon} alt="" />
-                <h3>Mint</h3>
-                <p>
-                  When staking PLR you mint staked tokens (stkPLR) which are issued 1:1 to your initial stake amount and
-                  are held in your wallet.
-                </p>
-              </div>
-              <div className="staking_dao__staking__cards__detail">
-                <img src={communityIcon} alt="" />
-                <h3>Claim</h3>
-                <p>
-                  PLR stakers will be able to claim their rewards in the staking dApp 52 weeks (12 months) after the
-                  staking window closes
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div className="staking_dao__foundation">
           <div className="container" style={{ borderColor: 'transparent' }}>
