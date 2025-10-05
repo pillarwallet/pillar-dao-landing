@@ -47,14 +47,14 @@ __tests__/
 The test suite covers the following components and functionality:
 
 ### 1. Wallet Connect (`auth/wallet-connect.test.js`)
-- Wallet connection options (MetaMask, WalletConnect, Privy, Injected)
+- Wallet connection options (MetaMask, WalletConnect, ConnectKit, Injected)
 - Provider handling
 - Loading states
 - Multiple wallet support
 
 ### 2. Governance NFT Flow (`dao/governance-nft-flow.test.js`)
 - Wagmi authentication flow
-- Privy authentication flow
+- ConnectKit integration
 - Form display logic
 - Notion data fetching
 - Logout functionality
@@ -92,7 +92,7 @@ The test suite covers the following components and functionality:
 The following dependencies are mocked in `jest.setup.js`:
 
 - `wagmi` hooks (useAccount, useConnect, useDisconnect, useReadContract, useWriteContract, useSwitchChain)
-- `@privy-io/react-auth` hooks (usePrivy, useWallets)
+- `connectkit` components and hooks
 - `next/router`
 - `next/dynamic`
 - `window.matchMedia`
@@ -102,14 +102,14 @@ The following dependencies are mocked in `jest.setup.js`:
 Test environment variables are set in `jest.setup.js`:
 
 ```javascript
-NEXT_PUBLIC_PRIVY_APP_ID
-NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID
-NEXT_PUBLIC_INFURA_ID
-NEXT_PUBLIC_POLYGON_CHAIN_ID
-NEXT_PUBLIC_DAO_CONTRACT
-NEXT_PUBLIC_TOKEN
-NEXT_PUBLIC_STAKE_AMOUNT
-NEXT_PUBLIC_CHAIN_EXPLORER
+VITE_WALLET_CONNECT_PROJECT_ID
+VITE_INFURA_ID
+VITE_USE_TESTNET
+VITE_POLYGON_CHAIN_ID
+VITE_DAO_CONTRACT
+VITE_TOKEN
+VITE_STAKE_AMOUNT
+VITE_CHAIN_EXPLORER
 ```
 
 ## Writing New Tests

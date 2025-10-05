@@ -1,28 +1,18 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import { useAccount, useDisconnect } from 'wagmi'
-import { usePrivy, useWallets } from '@privy-io/react-auth'
 import GovernanceNftFlow from '@components/dao/governance-nft-flow'
 
-// Mock dependencies
-jest.mock('wagmi')
-jest.mock('@privy-io/react-auth')
-jest.mock('next/dynamic', () => ({
+jest.mock('@components/dao/nft-transaction', () => ({
   __esModule: true,
-  default: (fn) => {
-    const Component = fn.ssr === false ? () => <div>Mocked Dynamic Component</div> : fn
-    return Component
-  },
+  default: () => <div>Mocked DAO Transaction</div>,
 }))
 
-describe('GovernanceNftFlow Component', () => {
+describe('GovernanceNftFlow', () => {
   const mockDisconnect = jest.fn()
-  const mockPrivyLogout = jest.fn()
-  const mockGetEthereumProvider = jest.fn()
 
   beforeEach(() => {
     jest.clearAllMocks()
 
-    // Default mock implementations
     useAccount.mockReturnValue({
       address: undefined,
       isConnected: false,
@@ -33,210 +23,91 @@ describe('GovernanceNftFlow Component', () => {
       disconnect: mockDisconnect,
     })
 
-    usePrivy.mockReturnValue({
-      authenticated: false,
-      logout: mockPrivyLogout,
-      user: null,
-    })
-
-    useWallets.mockReturnValue({
-      wallets: [],
-    })
-
-    // Mock fetch for Notion API
     global.fetch = jest.fn(() =>
       Promise.resolve({
+        ok: true,
         json: () => Promise.resolve({ isFormSubmitted: false }),
       })
     )
   })
 
   afterEach(() => {
-    global.fetch.mockClear()
+    delete global.fetch
   })
 
-  describe('Rendering - Not Authenticated', () => {
-    it('should render sign-in component when user is not connected', () => {
-      render(<GovernanceNftFlow shouldDisplayForm={true} />)
-      expect(screen.getByText('Mocked Dynamic Component')).toBeInTheDocument()
-    })
+  const renderFlow = (props = {}) => render(<GovernanceNftFlow shouldDisplayForm={true} {...props} />)
 
-    it('should not render form or transaction builder when not authenticated', () => {
-      render(<GovernanceNftFlow shouldDisplayForm={true} />)
-      expect(screen.queryByText('Submit')).not.toBeInTheDocument()
-    })
+  it('renders ConnectKit button when user is not authenticated', () => {
+    renderFlow()
+
+    expect(screen.getByRole('heading', { name: 'Connect Wallet' })).toBeInTheDocument()
+    expect(screen.getByTestId('connectkit-button')).toBeInTheDocument()
+    expect(screen.queryByText('Mocked DAO Transaction')).not.toBeInTheDocument()
   })
 
-  describe('Rendering - Wagmi Authentication', () => {
-    beforeEach(() => {
-      useAccount.mockReturnValue({
-        address: '0x1234567890123456789012345678901234567890',
-        isConnected: true,
-        connector: {
-          disconnect: jest.fn(),
-        },
-      })
+  it('hides ConnectKit button when wagmi reports a connection', async () => {
+    const connector = { disconnect: jest.fn() }
+    useAccount.mockReturnValue({
+      address: '0x1234567890123456789012345678901234567890',
+      isConnected: true,
+      connector,
     })
 
-    it('should not render sign-in when connected via wagmi', () => {
-      render(<GovernanceNftFlow shouldDisplayForm={false} />)
-      // Should not show sign in component when connected
-      expect(screen.queryByText('Sign in')).not.toBeInTheDocument()
-    })
+    renderFlow({ shouldDisplayForm: false })
 
-    it('should fetch notion data when connected', async () => {
-      render(<GovernanceNftFlow shouldDisplayForm={true} />)
-
-      await waitFor(() => {
-        expect(global.fetch).toHaveBeenCalled()
-      })
+    await waitFor(() => {
+      expect(global.fetch).toHaveBeenCalled()
+      expect(screen.queryByTestId('connectkit-button')).not.toBeInTheDocument()
     })
   })
 
-  describe('Rendering - Privy Authentication', () => {
-    beforeEach(() => {
-      const mockWallet = {
-        address: '0x1234567890123456789012345678901234567890',
-        getEthereumProvider: mockGetEthereumProvider,
-      }
-
-      mockGetEthereumProvider.mockResolvedValue({
-        provider: 'test-provider',
-      })
-
-      usePrivy.mockReturnValue({
-        authenticated: true,
-        logout: mockPrivyLogout,
-        user: {
-          email: {
-            address: 'test@example.com',
-          },
-        },
-      })
-
-      useWallets.mockReturnValue({
-        wallets: [mockWallet],
-      })
+  it('fetches Notion data with wallet address when connected', async () => {
+    const address = '0x1234567890123456789012345678901234567890'
+    useAccount.mockReturnValue({
+      address,
+      isConnected: true,
+      connector: { disconnect: jest.fn() },
     })
 
-    it('should not render sign-in when authenticated via Privy', () => {
-      render(<GovernanceNftFlow shouldDisplayForm={false} />)
-      expect(screen.queryByText('Sign in')).not.toBeInTheDocument()
-    })
+    renderFlow()
 
-    it('should fetch notion data when authenticated with Privy', async () => {
-      render(<GovernanceNftFlow shouldDisplayForm={true} />)
-
-      await waitFor(() => {
-        expect(global.fetch).toHaveBeenCalled()
-      })
-    })
-  })
-
-  describe('Form Display Logic', () => {
-    beforeEach(() => {
-      useAccount.mockReturnValue({
-        address: '0x1234567890123456789012345678901234567890',
-        isConnected: true,
-        connector: {
-          disconnect: jest.fn(),
-        },
-      })
-    })
-
-    it('should not display form when shouldDisplayForm is false', async () => {
-      global.fetch = jest.fn(() =>
-        Promise.resolve({
-          json: () => Promise.resolve({ isFormSubmitted: false }),
+    await waitFor(() => {
+      expect(global.fetch).toHaveBeenCalledWith(
+        '/api/plr-dao-data',
+        expect.objectContaining({
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: expect.stringContaining(address),
         })
       )
-
-      render(<GovernanceNftFlow shouldDisplayForm={false} />)
-
-      await waitFor(() => {
-        expect(screen.queryByText('form')).not.toBeInTheDocument()
-      })
-    })
-
-    it('should fetch data with correct payload including wallet address', async () => {
-      const testAddress = '0x1234567890123456789012345678901234567890'
-      useAccount.mockReturnValue({
-        address: testAddress,
-        isConnected: true,
-        connector: {
-          disconnect: jest.fn(),
-        },
-      })
-
-      render(<GovernanceNftFlow shouldDisplayForm={true} />)
-
-      await waitFor(() => {
-        expect(global.fetch).toHaveBeenCalledWith(
-          '/api/plr-dao-data',
-          expect.objectContaining({
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: expect.stringContaining(testAddress),
-          })
-        )
-      })
     })
   })
 
-  describe('Logout Functionality', () => {
-    it('should call wagmi disconnect on logout when connected via wagmi', async () => {
-      useAccount.mockReturnValue({
-        address: '0x1234567890123456789012345678901234567890',
-        isConnected: true,
-        connector: {
-          disconnect: jest.fn(),
-        },
+  it('displays transaction builder when form already submitted', async () => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({ isFormSubmitted: true }),
       })
+    )
 
-      const { rerender } = render(<GovernanceNftFlow shouldDisplayForm={true} />)
-
-      // Simulate logout (this would be triggered by the logout button in the actual component)
-      // We can't directly test it without rendering the full component tree
-      expect(mockDisconnect).toBeDefined()
+    useAccount.mockReturnValue({
+      address: '0x1234567890123456789012345678901234567890',
+      isConnected: true,
+      connector: { disconnect: jest.fn() },
     })
 
-    it('should call Privy logout on logout when authenticated via Privy', () => {
-      usePrivy.mockReturnValue({
-        authenticated: true,
-        logout: mockPrivyLogout,
-        user: {
-          email: {
-            address: 'test@example.com',
-          },
-        },
-      })
+    renderFlow({ shouldDisplayForm: true })
 
-      useWallets.mockReturnValue({
-        wallets: [
-          {
-            address: '0x1234567890123456789012345678901234567890',
-            getEthereumProvider: mockGetEthereumProvider,
-          },
-        ],
-      })
-
-      render(<GovernanceNftFlow shouldDisplayForm={true} />)
-
-      expect(mockPrivyLogout).toBeDefined()
+    await waitFor(() => {
+      expect(screen.getByText('Mocked DAO Transaction')).toBeInTheDocument()
     })
   })
 
-  describe('LocalStorage Constants', () => {
-    it('should export OPENLOGIN_STORE constant', () => {
-      const module = require('@components/dao/governance-nft-flow')
-      expect(module.OPENLOGIN_STORE).toBe('openlogin_store')
-    })
 
-    it('should export WAGMI_STORE constant', () => {
-      const module = require('@components/dao/governance-nft-flow')
-      expect(module.WAGMI_STORE).toBe('wagmi.store')
-    })
+  it('exports OpenLogin and Wagmi store constants', () => {
+    const module = require('@components/dao/governance-nft-flow')
+    expect(module.OPENLOGIN_STORE).toBe('openlogin_store')
+    expect(module.WAGMI_STORE).toBe('wagmi.store')
   })
 })

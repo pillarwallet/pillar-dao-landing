@@ -1,187 +1,148 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { useConnect, useAccount } from 'wagmi'
-import { usePrivy } from '@privy-io/react-auth'
 import WalletConnect from '@components/auth/wallet-connect'
+import { useAccount } from 'wagmi'
+import { ConnectKitButton } from 'connectkit'
 
-// Mock the wagmi and privy hooks
-jest.mock('wagmi')
-jest.mock('@privy-io/react-auth')
-
-describe('WalletConnect Component', () => {
-  const mockOnWeb3ProviderSet = jest.fn()
-  const mockConnect = jest.fn()
-  const mockPrivyLogin = jest.fn()
-  const mockGetProvider = jest.fn()
+describe('WalletConnect', () => {
+  let accountState
+  let onWeb3ProviderSet
+  let onConnectionSuccess
 
   beforeEach(() => {
     jest.clearAllMocks()
 
-    // Default mock implementations
-    useConnect.mockReturnValue({
-      connect: mockConnect,
-      connectors: [
-        { type: 'metaMask', name: 'MetaMask', ready: true },
-        { type: 'walletConnect', name: 'WalletConnect', ready: true },
-        { type: 'injected', name: 'Injected', ready: true },
-      ],
-    })
-
-    useAccount.mockReturnValue({
-      connector: {
-        ready: false,
-        getProvider: mockGetProvider,
-      },
+    accountState = {
+      address: null,
+      connector: null,
       isConnected: false,
-    })
+    }
 
-    usePrivy.mockReturnValue({
-      login: mockPrivyLogin,
+    onWeb3ProviderSet = jest.fn()
+    onConnectionSuccess = jest.fn()
+
+    useAccount.mockImplementation(() => accountState)
+  })
+
+  const renderComponent = (props = {}) =>
+    render(
+      <WalletConnect
+        onWeb3ProviderSet={onWeb3ProviderSet}
+        onConnectionSuccess={onConnectionSuccess}
+        {...props}
+      />
+    )
+
+  const connectWith = ({
+    address = '0x1234',
+    connectorName = 'MetaMask',
+    provider = { id: 'provider' },
+    getProviderImpl,
+    isConnected = true,
+  } = {}) => {
+    const connector = {
+      name: connectorName,
       ready: true,
-      authenticated: false,
+      getProvider: getProviderImpl || jest.fn().mockResolvedValue(provider),
+    }
+
+    accountState.address = address
+    accountState.connector = connector
+    accountState.isConnected = isConnected
+
+    return { connector, provider }
+  }
+
+  it('renders heading and ConnectKit button', () => {
+    renderComponent()
+
+    expect(screen.getByRole('heading', { name: 'Connect Wallet' })).toBeInTheDocument()
+    expect(screen.getByTestId('connectkit-button')).toBeInTheDocument()
+    expect(ConnectKitButton).toHaveBeenCalled()
+  })
+
+  it('does not call callbacks when wagmi reports disconnected', async () => {
+    renderComponent()
+
+    await waitFor(() => {
+      expect(onWeb3ProviderSet).not.toHaveBeenCalled()
+      expect(onConnectionSuccess).not.toHaveBeenCalled()
     })
   })
 
-  describe('Rendering', () => {
-    it('should render sign in title', () => {
-      render(<WalletConnect onWeb3ProviderSet={mockOnWeb3ProviderSet} includeMM />)
-      expect(screen.getByText('Sign in')).toBeInTheDocument()
-    })
+  it('calls callbacks when connector provides a provider', async () => {
+    const { connector, provider } = connectWith()
 
-    it('should render MetaMask option when includeMM is true', () => {
-      render(<WalletConnect onWeb3ProviderSet={mockOnWeb3ProviderSet} includeMM />)
-      expect(screen.getByText('MetaMask')).toBeInTheDocument()
-    })
+    renderComponent()
 
-    it('should render WalletConnect option when includeWC is true', () => {
-      render(<WalletConnect onWeb3ProviderSet={mockOnWeb3ProviderSet} includeWC />)
-      expect(screen.getByText('WalletConnect')).toBeInTheDocument()
-    })
-
-    it('should render Privy option when includePrivy is true', () => {
-      render(<WalletConnect onWeb3ProviderSet={mockOnWeb3ProviderSet} includePrivy />)
-      expect(screen.getByText('Privy')).toBeInTheDocument()
-    })
-
-    it('should render Other Browser Wallet option when includeInj is true', () => {
-      render(<WalletConnect onWeb3ProviderSet={mockOnWeb3ProviderSet} includeInj />)
-      expect(screen.getByText('Other Browser Wallet')).toBeInTheDocument()
-    })
-
-    it('should not render options when none are specified', () => {
-      render(<WalletConnect onWeb3ProviderSet={mockOnWeb3ProviderSet} />)
-      expect(screen.queryByText('MetaMask')).not.toBeInTheDocument()
-      expect(screen.queryByText('WalletConnect')).not.toBeInTheDocument()
-      expect(screen.queryByText('Privy')).not.toBeInTheDocument()
-    })
-  })
-
-  describe('Wallet Connection', () => {
-    it('should call connect with MetaMask connector when MetaMask is clicked', async () => {
-      const user = userEvent.setup()
-      render(<WalletConnect onWeb3ProviderSet={mockOnWeb3ProviderSet} includeMM />)
-
-      const metaMaskButton = screen.getByText('MetaMask').closest('div')
-      await user.click(metaMaskButton)
-
-      expect(mockConnect).toHaveBeenCalledWith({
-        connector: expect.objectContaining({ type: 'metaMask' }),
-      })
-    })
-
-    it('should call connect with WalletConnect connector when WalletConnect is clicked', async () => {
-      const user = userEvent.setup()
-      render(<WalletConnect onWeb3ProviderSet={mockOnWeb3ProviderSet} includeWC />)
-
-      const walletConnectButton = screen.getByText('WalletConnect').closest('div')
-      await user.click(walletConnectButton)
-
-      expect(mockConnect).toHaveBeenCalledWith({
-        connector: expect.objectContaining({ type: 'walletConnect' }),
-      })
-    })
-
-    it('should call Privy login when Privy option is clicked', async () => {
-      const user = userEvent.setup()
-      render(<WalletConnect onWeb3ProviderSet={mockOnWeb3ProviderSet} includePrivy />)
-
-      const privyButton = screen.getByText('Privy').closest('div')
-      await user.click(privyButton)
-
-      expect(mockPrivyLogin).toHaveBeenCalled()
-    })
-  })
-
-  describe('Provider Handling', () => {
-    it('should call onWeb3ProviderSet when wagmi connector is ready and connected', async () => {
-      const mockProvider = { provider: 'test-provider' }
-      mockGetProvider.mockResolvedValue(mockProvider)
-
-      useAccount.mockReturnValue({
-        connector: {
-          ready: true,
-          getProvider: mockGetProvider,
-        },
-        isConnected: true,
-      })
-
-      render(<WalletConnect onWeb3ProviderSet={mockOnWeb3ProviderSet} includeMM />)
-
-      await waitFor(() => {
-        expect(mockOnWeb3ProviderSet).toHaveBeenCalledWith(mockProvider)
-      })
-    })
-
-    it('should not call onWeb3ProviderSet when connector is not ready', () => {
-      useAccount.mockReturnValue({
-        connector: {
-          ready: false,
-          getProvider: mockGetProvider,
-        },
-        isConnected: true,
-      })
-
-      render(<WalletConnect onWeb3ProviderSet={mockOnWeb3ProviderSet} includeMM />)
-
-      expect(mockOnWeb3ProviderSet).not.toHaveBeenCalled()
-    })
-  })
-
-  describe('Loading State', () => {
-    it('should show signing in state when Privy is authenticating', () => {
-      usePrivy.mockReturnValue({
-        login: mockPrivyLogin,
-        ready: true,
-        authenticated: false,
-      })
-
-      render(<WalletConnect onWeb3ProviderSet={mockOnWeb3ProviderSet} includePrivy />)
-
-      // Trigger signing in state
-      const privyButton = screen.getByText('Privy').closest('div')
-      userEvent.click(privyButton)
-
-      // The component should show loading state
-      waitFor(() => {
-        expect(screen.getByText('Signing in')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(connector.getProvider).toHaveBeenCalledTimes(1)
+      expect(onWeb3ProviderSet).toHaveBeenCalledWith(provider)
+      expect(onConnectionSuccess).toHaveBeenCalledWith({
+        address: '0x1234',
+        connector: 'MetaMask',
+        provider,
       })
     })
   })
 
-  describe('Multiple Wallet Options', () => {
-    it('should render multiple wallet options when multiple includes are true', () => {
-      render(
-        <WalletConnect
-          onWeb3ProviderSet={mockOnWeb3ProviderSet}
-          includeMM
-          includeWC
-          includePrivy
-        />
-      )
+  it('only reports a successful connection once per transition', async () => {
+    const { rerender } = renderComponent()
+    const provider = { id: 'provider' }
+    const connector = {
+      name: 'MetaMask',
+      ready: true,
+      getProvider: jest.fn().mockResolvedValue(provider),
+    }
 
-      expect(screen.getByText('MetaMask')).toBeInTheDocument()
-      expect(screen.getByText('WalletConnect')).toBeInTheDocument()
-      expect(screen.getByText('Privy')).toBeInTheDocument()
+    accountState.address = '0x1234'
+    accountState.connector = connector
+    accountState.isConnected = true
+
+    rerender(
+      <WalletConnect
+        onWeb3ProviderSet={onWeb3ProviderSet}
+        onConnectionSuccess={onConnectionSuccess}
+      />
+    )
+
+    await waitFor(() => {
+      expect(onConnectionSuccess).toHaveBeenCalledTimes(1)
+    })
+
+    rerender(
+      <WalletConnect
+        onWeb3ProviderSet={onWeb3ProviderSet}
+        onConnectionSuccess={onConnectionSuccess}
+      />
+    )
+
+    await waitFor(() => {
+      expect(onConnectionSuccess).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  it('ignores connector callbacks when getProvider rejects', async () => {
+    const { connector } = connectWith({
+      getProviderImpl: jest.fn().mockRejectedValue(new Error('failed')),
+    })
+
+    renderComponent()
+
+    await waitFor(() => {
+      expect(connector.getProvider).toHaveBeenCalled()
+      expect(onWeb3ProviderSet).not.toHaveBeenCalled()
+      expect(onConnectionSuccess).not.toHaveBeenCalled()
+    })
+  })
+
+  it('skips callbacks when connection info is incomplete', async () => {
+    connectWith({ address: null })
+
+    renderComponent()
+
+    await waitFor(() => {
+      expect(onWeb3ProviderSet).not.toHaveBeenCalled()
+      expect(onConnectionSuccess).not.toHaveBeenCalled()
     })
   })
 })

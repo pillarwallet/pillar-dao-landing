@@ -5,6 +5,9 @@
 module.exports = {
   testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  transformIgnorePatterns: [
+    'node_modules/(?!(connectkit|wagmi|@wagmi|viem|@tanstack|zustand)/)'
+  ],
   moduleNameMapper: {
     '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@assets/(.*)$': '<rootDir>/src/assets/$1',
@@ -19,7 +22,9 @@ module.exports = {
     '**/__tests__/**/*.[jt]s?(x)',
     '**/?(*.)+(spec|test).[jt]s?(x)'
   ],
-  transform: {},
+  transform: {
+    '^.+\\.[tj]sx?$': '<rootDir>/__tests__/utils/esbuild-transform.cjs',
+  },
   collectCoverageFrom: [
     'src/components/**/*.{js,jsx}',
     'src/pages/**/*.{js,jsx}',

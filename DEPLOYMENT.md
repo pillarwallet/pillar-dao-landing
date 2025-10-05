@@ -245,8 +245,7 @@ jobs:
 |----------|---------|---------|
 | `PORT` | `3000` | Server port (VPS only) |
 | `VITE_USE_TESTNET` | `false` | Use Polygon Amoy testnet |
-| `VITE_PRIVY_APP_ID` | - | Privy authentication |
-| `VITE_WALLET_CONNECT_PROJECT_ID` | - | WalletConnect |
+| `VITE_WALLET_CONNECT_PROJECT_ID` | - | WalletConnect for ConnectKit |
 | `VITE_INFURA_ID` | - | Infura RPC endpoints |
 
 ---

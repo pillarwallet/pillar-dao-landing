@@ -1,27 +1,26 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import { useAccount, useDisconnect } from 'wagmi'
 import StakingFlow from '@components/staking/staking-flow'
+import { useAccount, useDisconnect } from 'wagmi'
 
-// Mock dependencies
-jest.mock('wagmi')
-jest.mock('next/dynamic', () => ({
+jest.mock('@etherspot/react-transaction-buidler', () => ({
   __esModule: true,
-  default: (fn) => {
-    const Component = fn.ssr === false ? () => <div>Mocked Dynamic Component</div> : fn
-    return Component
-  },
+  Etherspot: ({ onLogout }) => (
+    <div>
+      <div>Etherspot Panel</div>
+      <button type="button" onClick={onLogout}>
+        Mock Logout
+      </button>
+    </div>
+  ),
 }))
 
-describe('StakingFlow Component', () => {
+describe('StakingFlow', () => {
   const mockDisconnect = jest.fn()
-  const mockGetProvider = jest.fn()
 
   beforeEach(() => {
     jest.clearAllMocks()
 
-    // Default mock implementations
     useAccount.mockReturnValue({
-      address: undefined,
       isConnected: false,
       connector: null,
     })
@@ -31,189 +30,61 @@ describe('StakingFlow Component', () => {
     })
   })
 
-  describe('Rendering - Not Connected', () => {
-    it('should render sign-in component when user is not connected', () => {
-      render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" />)
-      expect(screen.getByText('Mocked Dynamic Component')).toBeInTheDocument()
+  const renderFlow = (props = {}) => render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" {...props} />)
+
+  it('renders ConnectKit button when wallet is not connected', () => {
+    renderFlow()
+
+    expect(screen.getByRole('heading', { name: 'Connect Wallet' })).toBeInTheDocument()
+    expect(screen.getByTestId('connectkit-button')).toBeInTheDocument()
+    expect(screen.queryByText('Etherspot Panel')).not.toBeInTheDocument()
+  })
+
+  it('shows Etherspot panel when wagmi connector resolves a provider', async () => {
+    const provider = { id: 'provider' }
+    const connector = {
+      ready: true,
+      getProvider: jest.fn().mockResolvedValue(provider),
+      disconnect: jest.fn(),
+    }
+
+    useAccount.mockReturnValue({
+      isConnected: true,
+      connector,
     })
 
-    it('should not render Etherspot panel when not connected', () => {
-      render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" />)
-      expect(screen.queryByText('Compatible browsers:')).not.toBeInTheDocument()
+    renderFlow()
+
+    await waitFor(() => {
+      expect(connector.getProvider).toHaveBeenCalledTimes(1)
+      expect(screen.getByText('Etherspot Panel')).toBeInTheDocument()
+      expect(screen.queryByTestId('connectkit-button')).not.toBeInTheDocument()
     })
   })
 
-  describe('Rendering - Connected via Wagmi', () => {
-    beforeEach(() => {
-      const mockProvider = { provider: 'test-wagmi-provider' }
-      mockGetProvider.mockResolvedValue(mockProvider)
+  it('handles provider resolution errors gracefully', async () => {
+    const connector = {
+      ready: true,
+      getProvider: jest.fn().mockRejectedValue(new Error('failed')),
+      disconnect: jest.fn(),
+    }
 
-      useAccount.mockReturnValue({
-        address: '0x1234567890123456789012345678901234567890',
-        isConnected: true,
-        connector: {
-          ready: true,
-          getProvider: mockGetProvider,
-          disconnect: jest.fn(),
-        },
-      })
+    useAccount.mockReturnValue({
+      isConnected: true,
+      connector,
     })
 
-    it('should not render sign-in when connected', () => {
-      render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" />)
-      // Will render mocked Etherspot instead
-      expect(screen.getByText('Mocked Dynamic Component')).toBeInTheDocument()
-    })
+    renderFlow()
 
-    it('should call getProvider when connector is ready and connected', async () => {
-      render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" />)
-
-      await waitFor(() => {
-        expect(mockGetProvider).toHaveBeenCalled()
-      })
-    })
-
-    it('should render browser compatibility message when Etherspot panel is shown', async () => {
-      render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" />)
-
-      await waitFor(() => {
-        // Check for the compatibility message
-        const compatMessage = screen.queryByText((content, element) => {
-          return element?.textContent?.includes('Compatible browsers:')
-        })
-        // This would be rendered if showEtherspotPanel is true
-        // In the mock, we're just checking component structure
-        expect(mockGetProvider).toHaveBeenCalled()
-      })
+    await waitFor(() => {
+      expect(connector.getProvider).toHaveBeenCalledTimes(1)
+      expect(screen.queryByText('Etherspot Panel')).not.toBeInTheDocument()
     })
   })
 
-  describe('Provider State Management', () => {
-    it('should not show Etherspot panel when provider is not set', () => {
-      render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" />)
-      expect(screen.queryByText('Compatible browsers:')).not.toBeInTheDocument()
-    })
-
-    it('should prioritize connectedWeb3Provider over wagmiProvider', async () => {
-      const mockProvider = { provider: 'test-provider' }
-      mockGetProvider.mockResolvedValue(mockProvider)
-
-      useAccount.mockReturnValue({
-        address: '0x1234567890123456789012345678901234567890',
-        isConnected: true,
-        connector: {
-          ready: true,
-          getProvider: mockGetProvider,
-          disconnect: jest.fn(),
-        },
-      })
-
-      render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" />)
-
-      await waitFor(() => {
-        expect(mockGetProvider).toHaveBeenCalled()
-      })
-    })
-  })
-
-  describe('Transaction Block Props', () => {
-    it('should accept defaultTransactionBlock prop', () => {
-      const { rerender } = render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" />)
-      expect(screen.getByText('Mocked Dynamic Component')).toBeInTheDocument()
-
-      // Change the transaction block
-      rerender(<StakingFlow defaultTransactionBlock="ANOTHER_BLOCK" />)
-      expect(screen.getByText('Mocked Dynamic Component')).toBeInTheDocument()
-    })
-
-    it('should accept shouldDisplayForm prop', () => {
-      render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" shouldDisplayForm={true} />)
-      expect(screen.getByText('Mocked Dynamic Component')).toBeInTheDocument()
-    })
-  })
-
-  describe('Logout Functionality', () => {
-    it('should have disconnect function available', () => {
-      useAccount.mockReturnValue({
-        address: '0x1234567890123456789012345678901234567890',
-        isConnected: true,
-        connector: {
-          ready: true,
-          getProvider: mockGetProvider,
-          disconnect: jest.fn(),
-        },
-      })
-
-      render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" />)
-
-      expect(mockDisconnect).toBeDefined()
-    })
-
-    it('should handle logout errors gracefully', () => {
-      mockDisconnect.mockRejectedValue(new Error('Disconnect failed'))
-
-      useAccount.mockReturnValue({
-        address: '0x1234567890123456789012345678901234567890',
-        isConnected: true,
-        connector: {
-          ready: true,
-          getProvider: mockGetProvider,
-          disconnect: jest.fn().mockRejectedValue(new Error('Disconnect failed')),
-        },
-      })
-
-      // Should not throw error during render
-      expect(() => {
-        render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" />)
-      }).not.toThrow()
-    })
-  })
-
-  describe('LocalStorage Constants', () => {
-    it('should export OPENLOGIN_STORE constant', () => {
-      const module = require('@components/staking/staking-flow')
-      expect(module.OPENLOGIN_STORE).toBe('openlogin_store')
-    })
-
-    it('should export WAGMI_STORE constant', () => {
-      const module = require('@components/staking/staking-flow')
-      expect(module.WAGMI_STORE).toBe('wagmi.store')
-    })
-  })
-
-  describe('Provider Cleanup', () => {
-    it('should handle null provider gracefully', () => {
-      mockGetProvider.mockResolvedValue(null)
-
-      useAccount.mockReturnValue({
-        address: '0x1234567890123456789012345678901234567890',
-        isConnected: true,
-        connector: {
-          ready: true,
-          getProvider: mockGetProvider,
-          disconnect: jest.fn(),
-        },
-      })
-
-      expect(() => {
-        render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" />)
-      }).not.toThrow()
-    })
-
-    it('should not call getProvider when connector is not ready', () => {
-      useAccount.mockReturnValue({
-        address: '0x1234567890123456789012345678901234567890',
-        isConnected: true,
-        connector: {
-          ready: false,
-          getProvider: mockGetProvider,
-          disconnect: jest.fn(),
-        },
-      })
-
-      render(<StakingFlow defaultTransactionBlock="PLR_STAKING_V2" />)
-
-      expect(mockGetProvider).not.toHaveBeenCalled()
-    })
+  it('exports OpenLogin and Wagmi store constants', () => {
+    const module = require('@components/staking/staking-flow')
+    expect(module.OPENLOGIN_STORE).toBe('openlogin_store')
+    expect(module.WAGMI_STORE).toBe('wagmi.store')
   })
 })

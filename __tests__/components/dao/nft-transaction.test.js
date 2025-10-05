@@ -3,9 +3,6 @@ import userEvent from '@testing-library/user-event'
 import { useAccount, useReadContract, useSwitchChain, useWriteContract } from 'wagmi'
 import NftTransaction from '@components/dao/nft-transaction'
 
-// Mock wagmi hooks
-jest.mock('wagmi')
-
 // Mock child components
 jest.mock('@components/dao/member-info', () => ({
   __esModule: true,

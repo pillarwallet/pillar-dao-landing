@@ -6,20 +6,20 @@ This project supports automatic switching between **Polygon Mainnet** and **Poly
 
 ### Using Mainnet (Default)
 
-Leave `NEXT_PUBLIC_USE_TESTNET` empty or set to `false` in your `.env` file:
+Leave `VITE_USE_TESTNET` empty or set to `false` in your `.env` file:
 
 ```bash
-NEXT_PUBLIC_USE_TESTNET=""
+VITE_USE_TESTNET=""
 # or
-NEXT_PUBLIC_USE_TESTNET="false"
+VITE_USE_TESTNET="false"
 ```
 
 ### Using Polygon Amoy Testnet
 
-Set `NEXT_PUBLIC_USE_TESTNET` to `true` in your `.env` file:
+Set `VITE_USE_TESTNET` to `true` in your `.env` file:
 
 ```bash
-NEXT_PUBLIC_USE_TESTNET="true"
+VITE_USE_TESTNET="true"
 ```
 
 That's it! The application will automatically use the correct contract addresses and chain configuration.
@@ -28,7 +28,7 @@ That's it! The application will automatically use the correct contract addresses
 
 ### Mainnet (Polygon)
 
-When `NEXT_PUBLIC_USE_TESTNET` is `false` or empty:
+When `VITE_USE_TESTNET` is `false` or empty:
 
 - **Chain ID**: 137 (0x89)
 - **Network**: Polygon Mainnet
@@ -39,7 +39,7 @@ When `NEXT_PUBLIC_USE_TESTNET` is `false` or empty:
 
 ### Testnet (Polygon Amoy)
 
-When `NEXT_PUBLIC_USE_TESTNET` is `true`:
+When `VITE_USE_TESTNET` is `true`:
 
 - **Chain ID**: 80002 (0x13882)
 - **Network**: Polygon Amoy Testnet
@@ -55,15 +55,15 @@ When `NEXT_PUBLIC_USE_TESTNET` is `true`:
 You can still manually override individual contract addresses if needed. Manual overrides take precedence over the automatic configuration:
 
 ```bash
-NEXT_PUBLIC_USE_TESTNET="true"
-NEXT_PUBLIC_DAO_CONTRACT="0xYourCustomAddress"  # This will override the testnet default
+VITE_USE_TESTNET="true"
+VITE_DAO_CONTRACT="0xYourCustomAddress"  # This will override the testnet default
 ```
 
 ## How It Works
 
 The configuration is managed by `config/contracts.js`, which:
 
-1. Checks the `NEXT_PUBLIC_USE_TESTNET` environment variable
+1. Checks the `VITE_USE_TESTNET` environment variable
 2. Loads the appropriate network configuration (mainnet or testnet)
 3. Allows manual overrides via individual environment variables
 4. Exports the final configuration for use throughout the application
@@ -80,9 +80,9 @@ The following components automatically use the correct network configuration:
 
 ### Testing on Polygon Amoy
 
-1. Create/update `.env.local`:
+1. Create/update `.env`:
    ```bash
-   NEXT_PUBLIC_USE_TESTNET="true"
+   VITE_USE_TESTNET="true"
    ```
 
 2. Restart the development server:
@@ -98,9 +98,9 @@ The following components automatically use the correct network configuration:
 
 ### Deploying to Production
 
-1. Ensure `.env.production` has testnet mode disabled:
+1. Ensure `.env` has testnet mode disabled:
    ```bash
-   NEXT_PUBLIC_USE_TESTNET="false"
+   VITE_USE_TESTNET="false"
    ```
 
 2. Or simply leave it empty (default is mainnet)
@@ -109,7 +109,7 @@ The following components automatically use the correct network configuration:
 
 ### Wrong network detected
 
-Make sure to restart your development server after changing `NEXT_PUBLIC_USE_TESTNET`:
+Make sure to restart your development server after changing `VITE_USE_TESTNET`:
 
 ```bash
 # Stop the server (Ctrl+C)
@@ -125,7 +125,7 @@ Check if you have manual overrides in your `.env` file. Manual overrides take pr
 Tests use mainnet configuration by default. If you need to test with testnet config, update `jest.setup.js`:
 
 ```javascript
-process.env.NEXT_PUBLIC_USE_TESTNET = 'true'
+process.env.VITE_USE_TESTNET = 'true'
 ```
 
 ## Configuration Reference
@@ -135,18 +135,17 @@ See `config/contracts.js` for the complete configuration structure and available
 ## Environment Variables
 
 ### Core Settings
-- `NEXT_PUBLIC_USE_TESTNET` - Set to "true" for testnet, "false" or empty for mainnet
+- `VITE_USE_TESTNET` - Set to "true" for testnet, "false" or empty for mainnet
 
 ### Optional Overrides (auto-configured if empty)
-- `NEXT_PUBLIC_POLYGON_CHAIN_ID` - Chain ID (137 for mainnet, 80002 for testnet)
-- `NEXT_PUBLIC_DAO_CONTRACT` - DAO contract address
-- `NEXT_PUBLIC_TOKEN` - PLR token contract address
-- `NEXT_PUBLIC_STAKE_AMOUNT` - Required stake amount
-- `NEXT_PUBLIC_CHAIN_EXPLORER` - Block explorer base URL
+- `VITE_POLYGON_CHAIN_ID` - Chain ID (137 for mainnet, 80002 for testnet)
+- `VITE_DAO_CONTRACT` - DAO contract address
+- `VITE_TOKEN` - PLR token contract address
+- `VITE_STAKE_AMOUNT` - Required stake amount
+- `VITE_CHAIN_EXPLORER` - Block explorer base URL
 
 ### Other Required Settings
-- `NEXT_PUBLIC_PRIVY_APP_ID` - Privy authentication app ID
-- `NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID` - WalletConnect project ID
-- `NEXT_PUBLIC_INFURA_ID` - Infura project ID for RPC endpoints
-- `NEXT_PUBLIC_NOTION_DATABASE` - Notion database ID
-- `NEXT_PUBLIC_NOTION_SECRET_KEY` - Notion API secret key
+- `VITE_WALLET_CONNECT_PROJECT_ID` - WalletConnect project ID for ConnectKit
+- `VITE_INFURA_ID` - Infura project ID for RPC endpoints
+- `NOTION_DATABASE` - Notion database ID
+- `NOTION_SECRET_KEY` - Notion API secret key

@@ -1,12 +1,8 @@
-// Learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom'
+require('@testing-library/jest-dom')
 
-// No Next.js mocks needed for Vite + React
-
-// Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: jest.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -18,52 +14,47 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 })
 
-// Mock wagmi hooks
+const defaultAccountState = {
+  address: null,
+  connector: null,
+  isConnected: false,
+}
+
+const useAccount = jest.fn(() => ({ ...defaultAccountState }))
+const useConnect = jest.fn(() => ({ connect: jest.fn(), connectors: [] }))
+const useDisconnect = jest.fn(() => ({ disconnect: jest.fn() }))
+const useReadContract = jest.fn(() => ({ data: undefined, isLoading: false }))
+const useWriteContract = jest.fn(() => ({ writeContract: jest.fn(), isLoading: false }))
+const useSwitchChain = jest.fn(() => ({ switchChain: jest.fn() }))
+
+const useConfig = jest.fn(() => ({ connectors: [] }))
+const createConfig = jest.fn(() => ({ connectors: [], publicClient: {}, webSocketPublicClient: {} }))
+const http = jest.fn(() => ({}))
+const WagmiProvider = ({ children }) => children
+
 jest.mock('wagmi', () => ({
-  useAccount: jest.fn(() => ({
-    address: undefined,
-    isConnected: false,
-    connector: null,
-  })),
-  useConnect: jest.fn(() => ({
-    connect: jest.fn(),
-    connectors: [],
-  })),
-  useDisconnect: jest.fn(() => ({
-    disconnect: jest.fn(),
-  })),
-  useReadContract: jest.fn(() => ({
-    data: undefined,
-    isLoading: false,
-  })),
-  useWriteContract: jest.fn(() => ({
-    writeContract: jest.fn(),
-    isLoading: false,
-  })),
-  useSwitchChain: jest.fn(() => ({
-    switchChain: jest.fn(),
-  })),
+  WagmiProvider,
+  createConfig,
+  http,
+  useConfig,
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useReadContract,
+  useWriteContract,
+  useSwitchChain,
 }))
 
-// Mock Privy hooks
-jest.mock('@privy-io/react-auth', () => ({
-  usePrivy: jest.fn(() => ({
-    ready: true,
-    authenticated: false,
-    login: jest.fn(),
-    logout: jest.fn(),
-    user: null,
-  })),
-  useWallets: jest.fn(() => ({
-    wallets: [],
-  })),
+jest.mock('wagmi/actions', () => ({
+  reconnect: jest.fn(),
 }))
 
-// Mock environment variables (Vite-style)
-process.env.VITE_PRIVY_APP_ID = 'test-privy-app-id'
+const connectkitMock = require('./__mocks__/connectkit.js')
+
+jest.mock('connectkit', () => connectkitMock)
 process.env.VITE_WALLET_CONNECT_PROJECT_ID = 'test-wallet-connect-id'
 process.env.VITE_INFURA_ID = 'test-infura-id'
-process.env.VITE_USE_TESTNET = 'false' // Use mainnet config for tests by default
+process.env.VITE_USE_TESTNET = 'false'
 process.env.VITE_POLYGON_CHAIN_ID = '137'
 process.env.VITE_DAO_CONTRACT = '0xc380f15Db7be87441d0723F19fBb440AEaa734aB'
 process.env.VITE_TOKEN = '0xa6b37fC85d870711C56FbcB8afe2f8dB049AE774'
