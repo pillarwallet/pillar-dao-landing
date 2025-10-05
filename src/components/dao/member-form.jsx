@@ -93,8 +93,10 @@ const Title = styled.h3`
   margin: 0;
 `;
 
-const Label = styled.div`
+const Label = styled.label`
   margin: 0.5rem 0.5px;
+  display: block;
+  cursor: pointer;
 `;
 
 const FormField = styled.div`
@@ -269,44 +271,44 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
       </HeaderWrapper>
       <div>
         <FormField>
-          <Label>Name</Label>
-          <Input type="text" value={name} onChange={(event) => setName(event.target.value)} />
+          <Label htmlFor="name">Name</Label>
+          <Input id="name" type="text" value={name} onChange={(event) => setName(event.target.value)} />
         </FormField>
 
         <FormField>
-          <Label>Email</Label>
-          <Input type="email" value={email} onChange={handleEmailChange} onBlur={handleEmailBlur} />
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" type="email" value={email} onChange={handleEmailChange} onBlur={handleEmailBlur} />
           {showEmailError && <FormError>Please enter a valid email address</FormError>}
         </FormField>
 
         <FormField>
-          <Label>Address 1</Label>
-          <Input type="text" value={address1} onChange={(event) => setAddress1(event.target.value)} />
+          <Label htmlFor="address1">Address 1</Label>
+          <Input id="address1" type="text" value={address1} onChange={(event) => setAddress1(event.target.value)} />
         </FormField>
 
         <FormField>
-          <Label>Address 2</Label>
-          <Input type="text" value={address2} onChange={(event) => setAddress2(event.target.value)} />
+          <Label htmlFor="address2">Address 2</Label>
+          <Input id="address2" type="text" value={address2} onChange={(event) => setAddress2(event.target.value)} />
         </FormField>
 
         <FormField>
-          <Label>City</Label>
-          <Input type="text" value={city} onChange={(event) => setCity(event.target.value)} />
+          <Label htmlFor="city">City</Label>
+          <Input id="city" type="text" value={city} onChange={(event) => setCity(event.target.value)} />
         </FormField>
 
         <FormField>
-          <Label>State</Label>
-          <Input type="text" value={state} onChange={(event) => setState(event.target.value)} />
+          <Label htmlFor="state">State</Label>
+          <Input id="state" type="text" value={state} onChange={(event) => setState(event.target.value)} />
         </FormField>
 
         <FormField>
-          <Label>Country</Label>
-          <Input type="text" value={country} onChange={(event) => setCountry(event.target.value)} />
+          <Label htmlFor="country">Country</Label>
+          <Input id="country" type="text" value={country} onChange={(event) => setCountry(event.target.value)} />
         </FormField>
 
         <FormField>
-          <Label>Zipcode</Label>
-          <Input type="text" value={zipcode} onChange={(event) => setZipcode(event.target.value)} />
+          <Label htmlFor="zipcode">Zipcode</Label>
+          <Input id="zipcode" type="text" value={zipcode} onChange={(event) => setZipcode(event.target.value)} />
         </FormField>
 
         {connector && (
@@ -316,12 +318,11 @@ const PlrDaoForm = ({ connector, defaultWalletAddress, defaultEmail, onLogout, o
         )}
 
         <FormField>
-          <Label>Wallet Address</Label>
+          <Label htmlFor="walletAddress">Wallet Address</Label>
           <Input
+            id="walletAddress"
             disabled={!!connector && walletAddress?.length}
             type="text"
-            id="last"
-            name="last"
             value={walletAddress}
             onChange={(event) => setWalletAddress(event.target.value)}
           />

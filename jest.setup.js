@@ -26,6 +26,7 @@ const useDisconnect = jest.fn(() => ({ disconnect: jest.fn() }))
 const useReadContract = jest.fn(() => ({ data: undefined, isLoading: false }))
 const useWriteContract = jest.fn(() => ({ writeContract: jest.fn(), isLoading: false }))
 const useSwitchChain = jest.fn(() => ({ switchChain: jest.fn() }))
+const useEnsName = jest.fn(() => ({ data: null, isLoading: false }))
 
 const useConfig = jest.fn(() => ({ connectors: [] }))
 const createConfig = jest.fn(() => ({ connectors: [], publicClient: {}, webSocketPublicClient: {} }))
@@ -43,6 +44,7 @@ jest.mock('wagmi', () => ({
   useReadContract,
   useWriteContract,
   useSwitchChain,
+  useEnsName,
 }))
 
 jest.mock('wagmi/actions', () => ({

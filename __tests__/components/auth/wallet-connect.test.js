@@ -70,9 +70,16 @@ describe('WalletConnect', () => {
   })
 
   it('calls callbacks when connector provides a provider', async () => {
-    const { connector, provider } = connectWith()
+    const { rerender } = renderComponent() // Start disconnected
 
-    renderComponent()
+    const { connector, provider } = connectWith() // Then connect
+
+    rerender(
+      <WalletConnect
+        onWeb3ProviderSet={onWeb3ProviderSet}
+        onConnectionSuccess={onConnectionSuccess}
+      />
+    )
 
     await waitFor(() => {
       expect(connector.getProvider).toHaveBeenCalledTimes(1)

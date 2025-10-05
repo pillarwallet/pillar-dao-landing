@@ -184,7 +184,8 @@ describe('MemberForm Component', () => {
     it('should submit form with correct data', async () => {
       const user = userEvent.setup()
       global.fetch.mockResolvedValueOnce({
-        json: () => Promise.resolve({ data: true }),
+        ok: true,
+        text: () => Promise.resolve(JSON.stringify({ data: true })),
       })
 
       render(<MemberForm {...defaultProps} />)
@@ -211,7 +212,8 @@ describe('MemberForm Component', () => {
     it('should call onSubmitForm callback on successful submission', async () => {
       const user = userEvent.setup()
       global.fetch.mockResolvedValueOnce({
-        json: () => Promise.resolve({ data: true }),
+        ok: true,
+        text: () => Promise.resolve(JSON.stringify({ data: true })),
       })
 
       render(<MemberForm {...defaultProps} />)
@@ -229,7 +231,8 @@ describe('MemberForm Component', () => {
     it('should show error message on submission failure', async () => {
       const user = userEvent.setup()
       global.fetch.mockResolvedValueOnce({
-        json: () => Promise.resolve({ data: null, message: 'Submission failed' }),
+        ok: true,
+        text: () => Promise.resolve(JSON.stringify({ data: null, message: 'Submission failed' })),
       })
 
       render(<MemberForm {...defaultProps} />)
@@ -256,14 +259,14 @@ describe('MemberForm Component', () => {
       await user.click(submitButton)
 
       await waitFor(() => {
-        expect(screen.getByText('Please try again.')).toBeInTheDocument()
+        expect(screen.getByText(/Failed to save form data to database/i)).toBeInTheDocument()
       })
     })
 
     it('should disable submit button while submitting', async () => {
       const user = userEvent.setup()
       global.fetch.mockImplementation(
-        () => new Promise((resolve) => setTimeout(() => resolve({ json: () => ({ data: true }) }), 100))
+        () => new Promise((resolve) => setTimeout(() => resolve({ ok: true, text: () => Promise.resolve(JSON.stringify({ data: true })) }), 100))
       )
 
       render(<MemberForm {...defaultProps} />)
@@ -292,7 +295,7 @@ describe('MemberForm Component', () => {
     it('should disable logout button while form is submitting', async () => {
       const user = userEvent.setup()
       global.fetch.mockImplementation(
-        () => new Promise((resolve) => setTimeout(() => resolve({ json: () => ({ data: true }) }), 100))
+        () => new Promise((resolve) => setTimeout(() => resolve({ ok: true, text: () => Promise.resolve(JSON.stringify({ data: true })) }), 100))
       )
 
       render(<MemberForm {...defaultProps} />)
