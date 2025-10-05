@@ -1,12 +1,14 @@
-[build]
-language = "nodejs"
+[phases.setup]
+nixPkgs = ["nodejs-18_x"]
 
-[build.packages]
-pnpm = "latest"
+[phases.install]
+cmds = ["npm ci"]
 
-[build.commands]
-install = "pnpm install --frozen-lockfile"
-build = "pnpm build"
+[phases.build]
+cmds = ["npm run build"]
 
 [start]
-command = "pnpm start"
+cmd = "npm start"
+
+[variables]
+NODE_ENV = "production"
