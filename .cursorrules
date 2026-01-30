@@ -1,0 +1,48 @@
+# Pillar DAO Project Rules
+
+## CRITICAL: Two Different Staking Systems
+
+**NEVER mix these up!** This project has TWO separate staking systems:
+
+### 1. Regular PLR Staking (/staking)
+- Uses: `UnstakeButton` component
+- Checks: stkPLR token balance (0x99b40...)
+- Contract: 0x826a26e65266c5834977D4f552d31b9e29F668d4
+- Function: unstake()
+
+### 2. DAO Governance Staking (/plr-dao-staking)
+- Uses: `DaoUnstakeButton` component
+- Checks: NFT membership ID
+- Contract: 0xc380f15Db7be87441d0723F19fBb440AEaa734aB (mainnet)
+- Function: withdraw()
+
+**Rule:** NEVER use `DaoUnstakeButton` on `/staking` page or `UnstakeButton` on `/plr-dao-staking` page!
+
+See [STAKING_COMPONENTS.md](./STAKING_COMPONENTS.md) for full details.
+
+## Environment Variables
+
+- Production uses Polygon mainnet (VITE_USE_TESTNET=false)
+- Development can use Polygon Amoy testnet (VITE_USE_TESTNET=true)
+- All contract addresses auto-switch based on VITE_USE_TESTNET
+
+## API Routes
+
+Frontend uses relative URLs for all APIs:
+```javascript
+fetch('/api/plr-dao-form', { ... })  // Always relative, never hardcoded
+```
+
+APIs work on all platforms (Cloudflare, Vercel, Railway, Render, VPS).
+
+## Code Style
+
+- Use ESM imports (import/export, not require)
+- Prefer const over let
+- Use styled-components for styling
+- Keep components small and focused
+- Add comments for complex logic
+
+## Deployment
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) and [QUICK_DEPLOY.md](./QUICK_DEPLOY.md)
